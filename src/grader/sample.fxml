@@ -1,8 +1,37 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="grader.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" gridLinesVisible="true" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="/grader/sample.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.Controller">
+   <Pane GridPane.columnIndex="0" GridPane.hgrow="always" GridPane.vgrow="always">
+      <children>
+          <Button layoutX="2.0" layoutY="50.0" onAction="#sayHellowWorld" text="Say 'Hello World'" />
+          <Label fx:id="helloWorld" layoutX="42.0" layoutY="115.0" />
+      </children></Pane>
+   <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.hgrow="always" GridPane.vgrow="always">
+     <tabs>
+       <Tab text="Assignments">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+       </Tab>
+       <Tab text="Students">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+       </Tab>
+     </tabs>
+   </TabPane>
+   <columnConstraints>
+      <ColumnConstraints percentWidth="20" />
+      <ColumnConstraints percentWidth="80" />
+   </columnConstraints>
 </GridPane>
