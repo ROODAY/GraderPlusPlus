@@ -6,6 +6,7 @@
 package gradingsystem;
 
 import java.util.Collection;
+import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +14,10 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import entity.Course;
+import entity.Student;
+import entity.StudentCourse;
+
+
 
 
 public class CourseClass {
@@ -54,7 +59,7 @@ public class CourseClass {
         emfactory.close();
     }
     
-    public static void find(int id) {
+    public void find(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         Course course = entitymanager.find( Course.class, id );
@@ -83,5 +88,45 @@ public class CourseClass {
         entitymanager.close();
         emfactory.close();
     }
+    
+    public Collection<Student> getStudents(int courseID) {
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        String queryString = "SELECT e FROM StudentCourse e WHERE e.courseId = " + courseID;
+        
+        Query query = entitymanager.createQuery(queryString);
+        Collection<StudentCourse> arr = query.getResultList();
+        
+        Collection<Student> students = new ArrayList<Student>();
+        
+        for (StudentCourse o : arr){
+            
+            System.out.println(o.getStudentId());
+            StudentClass student = new StudentClass();
+            Student ind = student.find(o.getStudentId());
+            System.out.println(ind);
+           
+            students.add(ind);
+          
+        }
+        
+        entitymanager.close();
+        emfactory.close();
+        
+        System.out.println(students);
+        
+        return students;
+    }
+    
+    
+    public void addStudent(int courseID, int studentID) {
+              
+        StudentCourseClass studentCourse = new StudentCourseClass();
+        studentCourse.create(courseID, studentID);
+                
+    }
+    
     
 }

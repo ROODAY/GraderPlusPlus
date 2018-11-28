@@ -21,7 +21,7 @@ public class StudentCourseClass {
     
     }
     
-    public static void create(int courseId, int studentId) {
+    public void create(int courseId, int studentId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();

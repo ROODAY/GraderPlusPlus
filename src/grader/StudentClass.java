@@ -57,15 +57,18 @@ public class StudentClass {
         emfactory.close();
     }
     
-    public static void find(int id) {
+    public Student find(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         Student student = entitymanager.find( Student.class, id );
-
+        
+        System.out.println(student);
         System.out.println("student ID = " + student.getId());
         System.out.println("student Name = " + student.getName());
         System.out.println("student Email = " + student.getEmail());
         System.out.println("student GPA = " + student.getGPA());
+        
+        return student;
     }
     
     public Collection<Student> findAll() {
@@ -74,6 +77,13 @@ public class StudentClass {
         
         Query query = entitymanager.createQuery("SELECT e FROM Student e");
         return (Collection<Student>) query.getResultList();
+        
+//        Collection<Student> arr = student.findAll();
+//        System.out.println(arr);
+//        
+//        for (Student o : arr){
+//            System.out.println(o.getId());
+//        }
     }
     
     public static void delete(int id) {
