@@ -61,7 +61,6 @@ public class Student {
 		double gpa = sum * 4 / 100;
 		BigDecimal dg = new BigDecimal(gpa);
 		this.GPA = dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-
 	}
 
 	public double getGPA() {
