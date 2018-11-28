@@ -39,7 +39,7 @@ public class Course {
 		}
 		return GPAlist;
 	}
-
+	// together fucntion
 
 	// student view
 	public void setStudentList(List<Student> stulist) {
@@ -47,8 +47,8 @@ public class Course {
 		this.studentList = stulist;
 	}
 
-	public void setCourseAssignmentList() {
-
+	public void setCourseAssignmentList(List<CourseAssignment> coulist) {
+		this.courseAssignmentList = coulist;
 	}
 
 	public void sortStdentListByName(){
@@ -88,13 +88,23 @@ public class Course {
 	// test use
 	public void printStudentInfo(){
 		for (int i = 0; i < studentList.size(); i++) {
-			System.out.println(studentList.get(i).getName());
-			System.out.println(studentList.get(i).getEmail());
-			System.out.println(studentList.get(i).getGroup());
-			System.out.println(studentList.get(i).getsID());
-			System.out.println(studentList.get(i).getGPA());
+			System.out.print(studentList.get(i).getName()+ "        ");
+			System.out.print(studentList.get(i).getEmail()+ "        ");
+			System.out.print(studentList.get(i).getGroup()+ "        ");
+			System.out.print(studentList.get(i).getsID()+ "        ");
+			System.out.print(studentList.get(i).getGPA()+ "        ");
 			System.out.println("*******************");
 		}
+	}
+
+	public void printAssignmentInfo(){
+		for (int i = 0; i < courseAssignmentList.size(); i++) {
+			System.out.print(courseAssignmentList.get(i).getAssigmentName()+ "        ");
+			System.out.print(courseAssignmentList.get(i).getAssignmentComments()+ "        ");
+			System.out.print(courseAssignmentList.get(i).getTotalPoints()+ "        ");
+			System.out.println();
+		}
+
 	}
 
 

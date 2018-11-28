@@ -49,16 +49,16 @@ public class DummyTest {
         sa2_2.setTotalScore(90);
         sa2_2.setScore();
 
-        StudentAssignment sa3 = new StudentAssignment();
-        sa3.setComments("good job");
-        sa3.setLostpoints(5);
-        sa3.setTotalScore(66);
-        sa3.setScore();
+        StudentAssignment sa2_3 = new StudentAssignment();
+        sa2_3.setComments("good job");
+        sa2_3.setLostpoints(5);
+        sa2_3.setTotalScore(66);
+        sa2_3.setScore();
 
         List<StudentAssignment> salist = new ArrayList<>();
-        salist.add(sa3);
-        salist.add(sa3);
-        salist.add(sa3);
+        salist.add(sa2_1);
+        salist.add(sa2_2);
+        salist.add(sa2_3);
 
         Student s2 = new Student();
         s2.setAssignments(salist);
@@ -67,21 +67,39 @@ public class DummyTest {
         s2.setName("Charles");
         s2.setsID("U7235");
 
+        CourseAssignment CS591_CA1 = new CourseAssignment();
+        CS591_CA1.setAssigmentName("HW1");
+        CS591_CA1.setAssignmentComments("Homework about BlackJack");
+        CS591_CA1.setTotalPoints(30);
+        CourseAssignment CS591_CA2 = new CourseAssignment();
+        CS591_CA2.setAssigmentName("Midterm");
+        CS591_CA2.setAssignmentComments("Midterm about OOD");
+        CS591_CA2.setTotalPoints(99);
+        CourseAssignment CS591_CA3 = new CourseAssignment();
+        CS591_CA3.setAssigmentName("Lab");
+        CS591_CA3.setAssignmentComments("Lab experiment");
+        CS591_CA3.setTotalPoints(66);
+        List<CourseAssignment> coulist = new ArrayList<>();
+        coulist.add(CS591_CA1);
+        coulist.add(CS591_CA2);
+        coulist.add(CS591_CA3);
+
         List<Student> stulist = new ArrayList<>();
         int[] weights_CS591 = new int[]{30,30,40};
         Course CS591 = new Course();
         CS591.setCourseName("CS591");
         CS591.setSemester("Fall");
         CS591.setYear(2018);
+
         CS591.setStudentList(stulist);
+
         CS591.addStudent(s1);
+
         CS591.addStudent(s2);
         CS591.setWeights(weights_CS591);
         CS591.setAllGPA();
-//        double[] GPAlist = CS591.getAllGPA();
-//        for (int i = 0; i < GPAlist.length;i++) {
-//            System.out.println(GPAlist[i]);
-//        }
+        CS591.setCourseAssignmentList(coulist);
+        CS591.printAssignmentInfo();
         CS591.printStudentInfo();
     }
 }
