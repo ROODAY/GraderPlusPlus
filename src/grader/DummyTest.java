@@ -99,7 +99,6 @@ public class DummyTest {
         CS591.setWeights(weights_CS591);
         CS591.setAllGPA();
         CS591.setCourseAssignmentList(coulist);
-        CS591.printAssignmentInfo();
-        CS591.printStudentInfo();
+        CS591.printStudentScore();
     }
 }

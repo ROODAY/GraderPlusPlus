@@ -51,7 +51,7 @@ public class Course {
 		this.courseAssignmentList = coulist;
 	}
 
-	public void sortStdentListByName(){
+	public void sortStdentListByName() {
 
 	}
 
@@ -86,14 +86,14 @@ public class Course {
 	}
 
 	// test use
-	public void printStudentInfo(){
+	public void printmoreStudentInfo(){
 		for (int i = 0; i < studentList.size(); i++) {
 			System.out.print(studentList.get(i).getName()+ "        ");
 			System.out.print(studentList.get(i).getEmail()+ "        ");
 			System.out.print(studentList.get(i).getGroup()+ "        ");
 			System.out.print(studentList.get(i).getsID()+ "        ");
 			System.out.print(studentList.get(i).getGPA()+ "        ");
-			System.out.println("*******************");
+			System.out.println();
 		}
 	}
 
@@ -106,6 +106,23 @@ public class Course {
 		}
 
 	}
+
+	public void printStudentScore(){
+        System.out.print("Name      ");
+	    for (CourseAssignment assignment: courseAssignmentList){
+            System.out.print(assignment.getAssigmentName() + "      ");
+        }
+        System.out.print("GPA       ");
+        System.out.println();
+        for (Student stu:studentList) {
+            System.out.print(stu.getName()+"        ");
+            List<StudentAssignment> asslist = stu.getAssignments();
+            for (StudentAssignment ass: asslist) {
+                System.out.print(ass.getScore() + "     ");
+            }
+            System.out.println(stu.getGPA());
+        }
+    }
 
 
 }
