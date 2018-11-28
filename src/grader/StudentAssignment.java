@@ -1,10 +1,36 @@
 package grader;
-
+import java.math.BigDecimal;
 public class StudentAssignment {
 	private double totalScore;
-	private double lostpoints;
+	private double lostPoints;
 	private double score;
 	private String comments;
+
+	public void setComments(String comments) {
+
+
+		this.comments = comments;
+	}
+
+	public void setTotalScore(double totalscore) {
+
+
+		this.totalScore = totalscore;
+	}
+
+	public void setLostpoints(double lostpoints) {
+		this.lostPoints = lostpoints;
+	}
+
+	public void  setScore(){
+		double score = (this.totalScore - this.lostPoints)*100 / this.totalScore;
+		BigDecimal dg = new BigDecimal(score);
+		this.score = dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+
+	public double getScore() {
+		return score;
+	}
 
 	public double getTotalscoreScore() {
 		return totalScore;
@@ -13,23 +39,4 @@ public class StudentAssignment {
 	public String getComments() {
 		return comments;
 	}
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
-	public void setTotalscoreScore(double totalscore) {
-		this.totalScore = totalscore;
-	}
-
-	public void setLostpoints(double lostpoints) {
-		this.lostpoints = lostpoints;
-	}
-
-	public void  setScore(){
-		this.score = (this.totalScore - this.lostpoints) / this.totalScore;
-	}
-
-
-
 }
