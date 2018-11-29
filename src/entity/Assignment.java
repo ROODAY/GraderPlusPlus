@@ -16,7 +16,7 @@ import javax.persistence.Id;
  * @author miguelvaldez
  */
 @Entity
-public class StudentCourse implements Serializable {
+public class Assignment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -25,17 +25,24 @@ public class StudentCourse implements Serializable {
     
     private int id;
     private int courseId;
-    private int studentId;
+    private String name;
+    private int possiblePoints;
+    private String type;
+    //private due date
+
     
     
-    public StudentCourse(int id, int courseId, int studentId) {
+    public Assignment(int id, int courseId, String name, int possiblePoints, String type) {
         super();
         this.id = id;
         this.courseId = courseId;
-        this.studentId = studentId;
+        this.name = name;
+        this.possiblePoints = possiblePoints;
+        this.type = type;
+   
     }
 
-    public StudentCourse( ) {
+    public Assignment() {
         super();
     }
     
@@ -48,6 +55,14 @@ public class StudentCourse implements Serializable {
         this.id = id;
     }
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public int getCourseId() {
         return courseId;
     }
@@ -56,12 +71,20 @@ public class StudentCourse implements Serializable {
         this.courseId = courseId;
     }
     
-    public int getStudentId() {
-        return studentId;
+    public int getPossiblePoints() {
+        return possiblePoints;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setPossiblePoints(int possiblePoints) {
+        this.possiblePoints = possiblePoints;
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -74,10 +97,10 @@ public class StudentCourse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StudentCourse)) {
+        if (!(object instanceof Assignment)) {
             return false;
         }
-        StudentCourse other = (StudentCourse) object;
+        Assignment other = (Assignment) object;
         if (this.id != other.id) {
             return false;
         }

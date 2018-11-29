@@ -12,25 +12,27 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import entity.StudentCourse;
+import entity.Assignment;
 
 
-public class StudentCourseClass {
+public class AssignmentClass {
     
     public static void main( String[ ] args ) {
     
     }
     
-    public void create(int courseId, int studentId) {
+    public void create(int courseId, String name, int possiblePoints, String type) {
+
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
-        StudentCourse course = new StudentCourse();
-        course.setCourseId(courseId);
-        course.setStudentId(studentId);
+        Assignment assignment = new Assignment();
+        assignment.setCourseId(courseId);
+        assignment.setPossiblePoints(possiblePoints);
+        assignment.setType(type);
 
-        entitymanager.persist( course );
+        entitymanager.persist( assignment );
         entitymanager.getTransaction().commit();
 
         entitymanager.close();
@@ -41,7 +43,7 @@ public class StudentCourseClass {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
-        StudentCourse course = entitymanager.find( StudentCourse.class, id );
+        Assignment course = entitymanager.find( Assignment.class, id );
 
         //before update
         System.out.println( course );
@@ -57,19 +59,18 @@ public class StudentCourseClass {
     public static void find(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
-        StudentCourse course = entitymanager.find( StudentCourse.class, id );
+        Assignment assignment = entitymanager.find( Assignment.class, id );
 
-        System.out.println("course ID = " + course.getId());
-        System.out.println("course CourseId = " + course.getCourseId());
-        System.out.println("course StudentId = " + course.getStudentId());
+        System.out.println("course ID = " + assignment.getId());
+        System.out.println("course CourseId = " + assignment.getCourseId());
     }
     
-    public Collection<StudentCourse> findAll() {
+    public Collection<Assignment> findAll() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         
-        Query query = entitymanager.createQuery("SELECT e FROM StudentCourse e");
-        return (Collection<StudentCourse>) query.getResultList();
+        Query query = entitymanager.createQuery("SELECT e FROM Assignment e");
+        return (Collection<Assignment>) query.getResultList();
     }
     
     public static void delete(int id) {
@@ -77,8 +78,8 @@ public class StudentCourseClass {
         EntityManager entitymanager = emfactory.createEntityManager( );
         entitymanager.getTransaction().begin();
 
-        StudentCourse course = entitymanager.find( StudentCourse.class, id );
-        entitymanager.remove( course );
+        Assignment assignment = entitymanager.find( Assignment.class, id );
+        entitymanager.remove( assignment );
         entitymanager.getTransaction().commit();
         entitymanager.close();
         emfactory.close();

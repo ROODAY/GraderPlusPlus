@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gradingsystem;
+package grader;
 
 import java.util.Collection;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import entity.Course;
 import entity.Student;
 import entity.StudentCourse;
 
-
+import entity.Assignment;
 
 
 public class CourseClass {
@@ -120,9 +120,27 @@ public class CourseClass {
         return students;
     }
     
+    public Collection<Assignment> getAssignments(int courseID) {
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        String queryString = "SELECT e FROM Assigment e WHERE e.courseId = " + courseID;
+        
+        Query query = entitymanager.createQuery(queryString);
+        Collection<Assignment> arr = query.getResultList();
+        
+        System.out.println(arr);
+        
+        entitymanager.close();
+        emfactory.close();
+        
+        return arr;
+    }
+    
     
     public void addStudent(int courseID, int studentID) {
-              
+        
         StudentCourseClass studentCourse = new StudentCourseClass();
         studentCourse.create(courseID, studentID);
                 
