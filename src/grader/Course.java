@@ -131,6 +131,9 @@ public class Course {
 		this.studentList.add(stu);
 	}
 
+	public List<Student> getStudentList() {
+		return studentList;
+	}
 	// assignment view
 
 	public void sortAssignmentByGrade(){

@@ -1,46 +1,46 @@
 package grader;
-
+import javafx.beans.property.SimpleStringProperty;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.*;
 public class Student {
-	private String name;
-	private String sID;
-	private String email;
-	private String group;
+	private SimpleStringProperty Name;
+	private SimpleStringProperty sID;
+	private SimpleStringProperty email;
+	private SimpleStringProperty group;
 	private double GPA;
 	private List<StudentAssignment> assignments;
 
 	public String getEmail() {
-		return email;
+		return email.get();
 	}
 
 	public String getGroup() {
-		return group;
+		return group.get();
 	}
 
 	public String getName() {
-		return name;
+		return Name.get();
 	}
 
 	public String getsID() {
-		return sID;
+		return sID.get();
 	}
 
 	public void setGroup(String group) {
-		this.group = group;
+		this.group = new SimpleStringProperty(group);
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.Name = new SimpleStringProperty(name);
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = new SimpleStringProperty(email);
 	}
 
 	public void setsID(String sID) {
-		this.sID = sID;
+		this.sID = new SimpleStringProperty(sID);
 	}
 
 	public void setAssignments(List<StudentAssignment> salist) {
