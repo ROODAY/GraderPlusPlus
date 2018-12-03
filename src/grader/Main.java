@@ -1,6 +1,7 @@
 package grader;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,12 @@ public class Main extends Application {
 
         SplitPane splitPane = (SplitPane) primaryStage.getScene().lookup("#splitPane");
         splitPane.setDividerPositions(0.15);
+
+        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+                splitPane.setDividerPositions(0.15);
+
+        primaryStage.widthProperty().addListener(stageSizeListener);
+        primaryStage.heightProperty().addListener(stageSizeListener);
     }
 
 

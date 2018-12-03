@@ -1,17 +1,42 @@
 package grader;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Optional;
 
 public class Controller {
     public Pane sidebar;
     public VBox semesterContainer;
+
+    private TitledPane generateSidebarTP(String paneText, String buttonText) {
+        try {
+            TitledPane semesterPane = FXMLLoader.load(getClass().getResource("sidebarTitledPane.fxml"));
+            semesterPane.setText(paneText);
+            Button addButton = ((Button)semesterPane.getContent().lookup("#addButton"));
+            addButton.setText(buttonText);
+            return  semesterPane;
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    private void fixWidths(Control node, Pane contentWrapper) {
+        node.setMinWidth(semesterContainer.getWidth());
+        semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(semesterContainer.getWidth()));
+        int index = contentWrapper.getChildren().size() - 1;
+        contentWrapper.getChildren().add(index, node);
+    }
 
     public void createNewSemester() {
         TextInputDialog dialog = new TextInputDialog("2018/Fall");
@@ -19,16 +44,10 @@ public class Controller {
         dialog.setContentText("Please enter the semester:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(semester -> {
-            Button addButton = new Button("Add Class");
-            VBox tpVBox = new VBox(addButton);
-            AnchorPane tpLayout = new AnchorPane(tpVBox);
-            AnchorPane.setTopAnchor(tpVBox, 0.0);
-            AnchorPane.setRightAnchor(tpVBox, 0.0);
-            AnchorPane.setBottomAnchor(tpVBox, 0.0);
-            AnchorPane.setLeftAnchor(tpVBox, 20.0);
-            TitledPane semesterPane = new TitledPane(semester, tpLayout);
-
-            addButton.setOnAction(action -> createNewClass(tpVBox));
+            TitledPane semesterPane = generateSidebarTP(semester, "Add Class");
+            Button addButton = ((Button)semesterPane.getContent().lookup("#addButton"));
+            VBox content = ((VBox)semesterPane.getContent().lookup("#contentWrapper"));
+            addButton.setOnAction(action -> createNewClass(content));
 
             semesterPane.setExpanded(false);
             semesterPane.setMinWidth(semesterContainer.getWidth());
@@ -44,22 +63,13 @@ public class Controller {
         dialog.setContentText("Please enter the Class:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(classname -> {
-            Button addButton = new Button("Add Section");
-            VBox tpVBox = new VBox(addButton);
-            AnchorPane tpLayout = new AnchorPane(tpVBox);
-            AnchorPane.setTopAnchor(tpVBox, 0.0);
-            AnchorPane.setRightAnchor(tpVBox, 0.0);
-            AnchorPane.setBottomAnchor(tpVBox, 0.0);
-            AnchorPane.setLeftAnchor(tpVBox, 20.0);
-            TitledPane classPane = new TitledPane(classname, tpLayout);
-
-            addButton.setOnAction(action -> createNewSection(tpVBox));
+            TitledPane classPane = generateSidebarTP(classname, "Add Section");
+            Button addButton = ((Button)classPane.getContent().lookup("#addButton"));
+            VBox content = ((VBox)classPane.getContent().lookup("#contentWrapper"));
+            addButton.setOnAction(action -> createNewSection(content));
 
             classPane.setExpanded(false);
-            classPane.setMinWidth(semesterContainer.getWidth());
-            semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> classPane.setMinWidth(semesterContainer.getWidth()));
-            int index = vbox.getChildren().size() - 1;
-            vbox.getChildren().add(index, classPane);
+            fixWidths(classPane, vbox);
         });
     }
 
@@ -68,20 +78,9 @@ public class Controller {
         dialog.setTitle("Add New Section");
         dialog.setContentText("Please enter the section:");
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(section -> {
-            VBox tpVBox = new VBox();
-            AnchorPane tpLayout = new AnchorPane(tpVBox);
-            AnchorPane.setTopAnchor(tpVBox, 0.0);
-            AnchorPane.setRightAnchor(tpVBox, 0.0);
-            AnchorPane.setBottomAnchor(tpVBox, 0.0);
-            AnchorPane.setLeftAnchor(tpVBox, 20.0);
-            TitledPane sectionPane = new TitledPane(section, tpLayout);
-
-            sectionPane.setExpanded(false);
-            sectionPane.setMinWidth(semesterContainer.getWidth());
-            semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> sectionPane.setMinWidth(semesterContainer.getWidth()));
-            int index = vbox.getChildren().size() - 1;
-            vbox.getChildren().add(index, sectionPane);
+        result.ifPresent(sectionName -> {
+            Button section = new Button(sectionName);
+            fixWidths(section, vbox);
         });
     }
 }
