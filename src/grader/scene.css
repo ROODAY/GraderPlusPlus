@@ -1,3 +1,9 @@
-.label {
-    -fx-font-size: 20;
+.assignment-name {
+    -fx-font-weight: bold;
+}
+
+.assignment {
+    -fx-font-size: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
 }
