@@ -10,24 +10,38 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import grader.Sidebar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <SplitPane fx:id="splitPane" dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="528.0" stylesheets="/grader/scene.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grader.Controller">
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="true">
+    <!--AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="true">
         <AnchorPane fx:id="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <VBox fx:id="semesterContainer" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Button layoutY="170.0" onAction="#createNewSemester" text="Add Semester" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         </AnchorPane>
-    </AnchorPane>
+    </AnchorPane-->
+    <Sidebar />
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
         <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Tab text="Assignments">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <VBox prefHeight="363.0" prefWidth="352.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-95.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="363.0" prefWidth="352.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <HBox>
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Name"/>
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Date Assigned"/>
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Type"/>
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Class Average"/>
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Submitted"/>
+                            </HBox>
                             <HBox spacing="20" styleClass="assignment">
-                                <Label styleClass="assignment-name" text="HW 1" />
+                                <Label HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="assignment-name" text="HW 1" />
                                 <Separator orientation="VERTICAL" />
-                                <Label text="Class Average: 94.5%" />
-                                <Label text="24/30 Submitted" />
-                                <Button text="More Info" />
+                                <Label HBox.hgrow="ALWAYS" maxWidth="Infinity" text="9/20/18" />
+                                <Label HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Homework" />
+                                <Label HBox.hgrow="ALWAYS" maxWidth="Infinity" text="Class Average: 94.5%" />
+                                <Label HBox.hgrow="ALWAYS" maxWidth="Infinity" text="24/30 Submitted" />
+                                <Button HBox.hgrow="ALWAYS" maxWidth="Infinity" text="More Info" />
                             </HBox>
                         </VBox>
                 </AnchorPane>
