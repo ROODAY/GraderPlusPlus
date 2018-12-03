@@ -5,6 +5,7 @@
     <class>entity.Student</class>
     <class>entity.StudentCourse</class>
     <class>entity.Course</class>
+    <class>entity.Assignment</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/CS591?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

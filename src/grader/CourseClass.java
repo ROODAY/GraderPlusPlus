@@ -16,7 +16,6 @@ import javax.persistence.Query;
 import entity.Course;
 import entity.Student;
 import entity.StudentCourse;
-
 import entity.Assignment;
 
 
@@ -26,7 +25,7 @@ public class CourseClass {
     
     }
     
-    public static void create(String name, int teacherId) {
+    public static void create(String name, int teacherId, int semesterId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
@@ -67,6 +66,7 @@ public class CourseClass {
         System.out.println("course ID = " + course.getId());
         System.out.println("course Name = " + course.getName());
         System.out.println("course Teacher = " + course.getTeacherId());
+        System.out.println("course Semester = " + course.getSemesterId());
     }
     
     public Collection<Course> findAll() {
@@ -139,11 +139,19 @@ public class CourseClass {
     }
     
     
-    public void addStudent(int courseID, int studentID) {
+    public void addStudent(int courseId, int studentId) {
         
         StudentCourseClass studentCourse = new StudentCourseClass();
-        studentCourse.create(courseID, studentID);
+        studentCourse.create(courseId, studentId);
                 
+    }
+    
+    public void addStudentsToCourse(Collection<Student> students, int courseId) {
+        
+        for (Student o : students){
+            
+            addStudent(courseId, o.getId());
+        }
     }
     
     

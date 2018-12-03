@@ -11,37 +11,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author miguelvaldez
- */
+
 @Entity
-public class Course implements Serializable {
+public class Semester implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     
-    
     private int id;
     private String name;
-    private int teacherId;
-    private int semesterId;
     
-    
-    public Course(int id, String name, int teacherId, int semesterId) {
+    public Semester(int id, String name) {
         super();
         this.id = id;
         this.name = name;
-        this.teacherId = teacherId;
-        this.semesterId = semesterId;
     }
 
-    public Course( ) {
+    public Semester() {
         super();
     }
-    
-    
+
     public int getId() {
         return id;
     }
@@ -57,22 +47,6 @@ public class Course implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-    
-    public int getSemesterId() {
-        return teacherId;
-    }
-
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
 
     @Override
     public int hashCode() {
@@ -84,10 +58,10 @@ public class Course implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Course)) {
+        if (!(object instanceof Semester)) {
             return false;
         }
-        Course other = (Course) object;
+        Semester other = (Semester) object;
         if (this.id != other.id) {
             return false;
         }
@@ -96,7 +70,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Course[ id=" + id + " ]";
+        return "entity.Semester[ id=" + id + " ]";
     }
     
 }
