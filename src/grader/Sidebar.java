@@ -3,11 +3,9 @@ package grader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -16,6 +14,8 @@ import java.util.Optional;
 
 public class Sidebar extends AnchorPane {
     @FXML private VBox semesterContainer;
+    @FXML private ScrollPane scrollContainer;
+    @FXML private AnchorPane sidebar;
 
     public Sidebar() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sidebar.fxml"));
@@ -30,13 +30,14 @@ public class Sidebar extends AnchorPane {
     }
 
 
-    private TitledPane generateSidebarTP(String paneText, String buttonText) {
+    private HBox generateSidebarTP(String paneText, String buttonText) {
         try {
-            TitledPane semesterPane = FXMLLoader.load(getClass().getResource("sidebarTitledPane.fxml"));
-            semesterPane.setText(paneText);
-            Button addButton = ((Button)semesterPane.getContent().lookup("#addButton"));
+            HBox wrapper = FXMLLoader.load(getClass().getResource("sidebarTitledPane.fxml"));
+            TitledPane pane = (TitledPane) wrapper.lookup("#titledPane");
+            pane.setText(paneText);
+            Button addButton = ((Button)pane.getContent().lookup("#addButton"));
             addButton.setText(buttonText);
-            return  semesterPane;
+            return  wrapper;
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -51,8 +52,10 @@ public class Sidebar extends AnchorPane {
     }
 
     private void fixWidths(Control node, Pane contentWrapper) {
-        node.setMinWidth(semesterContainer.getWidth());
-        semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(semesterContainer.getWidth()));
+        //semesterContainer.setMinWidth(sidebar.getWidth());
+        //sidebar.widthProperty().addListener((obs, oldScene, newScene) -> semesterContainer.setMinWidth(sidebar.getWidth()));
+        //node.setMinWidth(semesterContainer.getWidth());
+        //semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(semesterContainer.getWidth()));
         int index = contentWrapper.getChildren().size() - 1;
         contentWrapper.getChildren().add(index, node);
     }
@@ -61,16 +64,17 @@ public class Sidebar extends AnchorPane {
         TextInputDialog dialog = generateDialog("2018/Fall", "Add New Semester", "Please enter the semester:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(semester -> {
-            TitledPane semesterPane = generateSidebarTP(semester, "Add Class");
+            HBox wrapper = generateSidebarTP(semester, "Add Class");
+            TitledPane semesterPane = (TitledPane) wrapper.getChildren().toArray()[0];
             Button addButton = ((Button)semesterPane.getContent().lookup("#addButton"));
             VBox content = ((VBox)semesterPane.getContent().lookup("#contentWrapper"));
             addButton.setOnAction(action -> createNewClass(content));
 
             semesterPane.setExpanded(false);
-            semesterPane.setMinWidth(semesterContainer.getWidth());
+            //semesterPane.setMinWidth(semesterContainer.getWidth());
 
-            semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setMinWidth(semesterContainer.getWidth()));
-            semesterContainer.getChildren().add(semesterPane);
+            //semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setMinWidth(semesterContainer.getWidth()));
+            semesterContainer.getChildren().add(wrapper);
         });
     }
 
@@ -78,7 +82,8 @@ public class Sidebar extends AnchorPane {
         TextInputDialog dialog = generateDialog("CS 591", "Add New Class", "Please enter the Class:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(classname -> {
-            TitledPane classPane = generateSidebarTP(classname, "Add Section");
+            HBox wrapper = generateSidebarTP(classname, "Add Section");
+            TitledPane classPane = (TitledPane) wrapper.getChildren().toArray()[0];
             Button addButton = ((Button)classPane.getContent().lookup("#addButton"));
             VBox content = ((VBox)classPane.getContent().lookup("#contentWrapper"));
             addButton.setOnAction(action -> createNewSection(content));
