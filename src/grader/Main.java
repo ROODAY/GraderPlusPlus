@@ -13,10 +13,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/pik.jpg")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));
 
         Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
-        primaryStage.setTitle("Grader++");
+        primaryStage.setTitle("GradeBook");
         primaryStage.setScene(new Scene(root));
         primaryStage.setMaximized(true);
         primaryStage.show();
