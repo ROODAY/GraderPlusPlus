@@ -52,10 +52,8 @@ public class Sidebar extends AnchorPane {
     }
 
     private void fixWidths(Control node, Pane contentWrapper) {
-        //semesterContainer.setMinWidth(sidebar.getWidth());
-        //sidebar.widthProperty().addListener((obs, oldScene, newScene) -> semesterContainer.setMinWidth(sidebar.getWidth()));
-        //node.setMinWidth(semesterContainer.getWidth());
-        //semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(semesterContainer.getWidth()));
+        node.setMinWidth(contentWrapper.getWidth());
+        contentWrapper.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(contentWrapper.getWidth()));
         int index = contentWrapper.getChildren().size() - 1;
         contentWrapper.getChildren().add(index, node);
     }
@@ -71,9 +69,9 @@ public class Sidebar extends AnchorPane {
             addButton.setOnAction(action -> createNewClass(content));
 
             semesterPane.setExpanded(false);
-            //semesterPane.setMinWidth(semesterContainer.getWidth());
+            semesterPane.setMinWidth(scrollContainer.getWidth()-5);
 
-            //semesterContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setMinWidth(semesterContainer.getWidth()));
+            scrollContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setMinWidth(scrollContainer.getWidth()-5));
             semesterContainer.getChildren().add(wrapper);
         });
     }
