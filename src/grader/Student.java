@@ -12,10 +12,10 @@ import javafx.stage.Stage;
 import java.math.BigDecimal;
 import java.util.List;
 public class Student {
-	private SimpleStringProperty Name;
-	private SimpleStringProperty sID;
-	private SimpleStringProperty email;
-	private SimpleStringProperty group;
+	private String Name;
+	private String sID;
+	private String email;
+	private String group;
 	private double GPA;
 	private List<StudentAssignment> assignments;
 	private Button button;
@@ -27,49 +27,53 @@ public class Student {
 					@Override
 					public void handle(ActionEvent event) {
 						showinfo();
-//						final Stage dialog = new Stage();
-//						dialog.initModality(Modality.APPLICATION_MODAL);
+
+						final Stage dialog = new Stage();
+						dialog.initModality(Modality.APPLICATION_MODAL);
 //						dialog.initOwner(primaryStage);
-//						VBox dialogVbox = new VBox(20);
-//						dialogVbox.getChildren().add(new Text("This is a Dialog"));
-//						Scene dialogScene = new Scene(dialogVbox, 300, 200);
-//						dialog.setScene(dialogScene);
-//						dialog.initModality(Modality.NONE);
-//						dialog.show();
+						VBox dialogVbox = new VBox(20);
+						dialogVbox.getChildren().add(new Text("   Student Name:  " + Name + "        "));
+						dialogVbox.getChildren().add(new Text("   Student Email: " + email + "        "));
+						dialogVbox.getChildren().add(new Text("   Student ID: " + sID + "        "));
+						dialogVbox.getChildren().add(new Text("   Student Group: " + group + "        "));
+						Scene dialogScene = new Scene(dialogVbox, 300, 200);
+						dialog.setScene(dialogScene);
+						dialog.initModality(Modality.NONE);
+						dialog.show();
 					}
 				});
 	}
 
 	public String getEmail() {
-		return email.get();
+		return email;
 	}
 
 	public String getGroup() {
-		return group.get();
+		return group;
 	}
 
 	public String getName() {
-		return Name.get();
+		return Name;
 	}
 
 	public String getsID() {
-		return sID.get();
+		return sID;
 	}
 
 	public void setGroup(String group) {
-		this.group = new SimpleStringProperty(group);
+		this.group = group;
 	}
 
 	public void setName(String name) {
-		this.Name = new SimpleStringProperty(name);
+		this.Name = name;
 	}
 
 	public void setEmail(String email) {
-		this.email = new SimpleStringProperty(email);
+		this.email = email;
 	}
 
 	public void setsID(String sID) {
-		this.sID = new SimpleStringProperty(sID);
+		this.sID = sID;
 	}
 
 	public void setAssignments(List<StudentAssignment> salist) {

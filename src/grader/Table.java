@@ -146,7 +146,7 @@ public class Table extends Application {
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
         stage.setTitle("Table View Sample");
-        stage.setWidth(450);
+        stage.setWidth(800);
         stage.setHeight(500);
 
         final Label label = new Label("Student View");
