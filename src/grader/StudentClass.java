@@ -12,7 +12,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import entity.Student;
+
+
 
 
 public class StudentClass {
@@ -21,22 +27,55 @@ public class StudentClass {
     
     }
     
-    public static void create(String name, String email, double gpa) {
+    public static void create(int id, String name, String last_name, String email, String program) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
         Student student = new Student();
-        student.setEmail(email);
+        student.setId(id);
         student.setName(name);
-        student.setGPA(gpa);
+        student.setLastName(last_name);
+        student.setEmail(email);
+        student.setProgram(program);
 
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
 
         entitymanager.close();
         emfactory.close();
+    }
+    
+    public void uploadStudentsCSV(String location) {
+        
+        String csvFile = location;
+        String line = "";
+        String csvSplitBy = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            
+            while ((line = br.readLine()) != null) {
+              
+                // use comma as separator
+                String[] studentRow = line.split(csvSplitBy);
+                
+                if(studentRow.length > 0 && !studentRow[0].equals("ID")) {
+                    
+                    Student student = new Student();
+                    create(
+                        Integer.parseInt(studentRow[0]),
+                        studentRow[1],
+                        studentRow[2],
+                        studentRow[3],
+                        studentRow[4]
+                    );
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public static void update(int id) {
@@ -65,8 +104,8 @@ public class StudentClass {
         System.out.println(student);
         System.out.println("student ID = " + student.getId());
         System.out.println("student Name = " + student.getName());
+        System.out.println("student Last Name = " + student.getLastName());
         System.out.println("student Email = " + student.getEmail());
-        System.out.println("student GPA = " + student.getGPA());
         
         return student;
     }
@@ -78,12 +117,6 @@ public class StudentClass {
         Query query = entitymanager.createQuery("SELECT e FROM Student e");
         return (Collection<Student>) query.getResultList();
         
-//        Collection<Student> arr = student.findAll();
-//        System.out.println(arr);
-//        
-//        for (Student o : arr){
-//            System.out.println(o.getId());
-//        }
     }
     
     public static void delete(int id) {
@@ -101,4 +134,10 @@ public class StudentClass {
     public void addAssignment(int assignmentId, int studentId) {
         
     }
+    
+    public void getAssignments(int studentId, int courseId) {
+        
+    }
+    
+    //public void 
 }

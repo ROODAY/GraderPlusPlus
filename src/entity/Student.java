@@ -25,15 +25,18 @@ public class Student implements Serializable {
     
     private int id;
     private String name;
+    private String last_name;
     private String email;
-    private double gpa;
+    private String program;
     
-    public Student(int id, String name, String email, double gpa) {
+    
+    public Student(int id, String name, String last_name, String email, String program) {
         super();
         this.id = id;
         this.name = name;
+        this.last_name = last_name;
         this.email = email;
-        this.gpa = gpa;
+        this.program = program;
     }
 
     public Student( ) {
@@ -56,6 +59,14 @@ public class Student implements Serializable {
         this.name = name;
     }
     
+    public String getLastName() {
+        return last_name;
+    }
+
+    public void setLastName(String last_name) {
+        this.last_name = last_name;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -64,15 +75,14 @@ public class Student implements Serializable {
         this.email = email;
     }
     
-    public double getGPA() {
-        return gpa;
+    public String getProgram() {
+        return program;
     }
 
-    public void setGPA(double gpa) {
-        this.gpa = gpa;
+    public void setProgram(String program) {
+        this.program = program;
     }
-    
-    
+       
 
      @Override
     public int hashCode() {

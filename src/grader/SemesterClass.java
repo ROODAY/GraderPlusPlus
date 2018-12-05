@@ -21,6 +21,10 @@ import entity.Assignment;
 
 public class SemesterClass {
     
+    public static void main( String[ ] args ) {
+    
+    }
+    
     
     public static void create(String name) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
