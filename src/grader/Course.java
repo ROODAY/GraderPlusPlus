@@ -86,6 +86,10 @@ public class Course {
 		this.courseAssignmentList = coulist;
 	}
 
+	public List<CourseAssignment> getCourseAssignmentList() {
+		return courseAssignmentList;
+	}
+
 	public void sortStdentListByName() {
 
 	}

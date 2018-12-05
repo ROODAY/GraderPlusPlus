@@ -20,17 +20,19 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Table extends Application {
 
     private TableView<Student> table = new TableView<Student>();
     private final ObservableList<Student> data = FXCollections.observableArrayList();
+    private Course course;
 
     public static void main(String[] args) {
         launch(args);
     }
-    public void creatData(){
+    public void setCouse(){
 
         StudentAssignment sa1_1 = new StudentAssignment();
         sa1_1.setComments("not bad");
@@ -61,6 +63,7 @@ public class Table extends Application {
         s1.setGroup("undergraduate");
         s1.setName("John");
         s1.setsID("U12377");
+        s1.setButton();
 
 
         StudentAssignment sa2_1 = new StudentAssignment();
@@ -92,6 +95,7 @@ public class Table extends Application {
         s2.setGroup("graduate");
         s2.setName("Charles");
         s2.setsID("U7235");
+        s2.setButton();
 
         CourseAssignment CS591_CA1 = new CourseAssignment();
         CS591_CA1.setAssigmentName("HW1");
@@ -129,8 +133,14 @@ public class Table extends Application {
         CS591.setAssigenmentInfo();
 
 
-        data.add(CS591.getStudentList().get(0));
-        data.add(CS591.getStudentList().get(1));
+        this.course =  CS591;
+    }
+
+    public void addData(){
+        List<Student> students = course.getStudentList();
+        for (Student stu:students){
+            data.add(stu);
+        }
     }
     @Override
     public void start(Stage stage) {
@@ -143,57 +153,49 @@ public class Table extends Application {
         label.setFont(new Font("Arial", 20));
 
         table.setEditable(true);
-        creatData();
+        setCouse();
+        addData();
 
-        TableColumn NameCol = new TableColumn("Student Name");
-        NameCol.setMinWidth(100);
+        List<CourseAssignment> CA = course.getCourseAssignmentList();
+        TableColumn[] tableColumns = new TableColumn[CA.size()+3];
 
-        NameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
+
+
+        for (int i  = 1 ; i < CA.size()+1;i++){
+            tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
+            tableColumns[i].setMinWidth(100);
+            final int temp= i-1;
+            tableColumns[i].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+                    return new SimpleStringProperty(arg0.getValue().getAssignments().get(temp).getStringScore());
+                }
+            });
+        }
+
+        tableColumns[0] = new TableColumn("Student Name");
+        tableColumns[0].setMinWidth(100);
+        tableColumns[0].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getName());
             }
         });
 
-//
-        TableColumn emailCol = new TableColumn("Email");
-        emailCol.setMinWidth(100);
-        emailCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
+        tableColumns[CA.size() +1] = new TableColumn("GPA");
+        tableColumns[CA.size() +1].setMinWidth(100);
+        tableColumns[CA.size() +1].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getEmail());
+                return new SimpleStringProperty(arg0.getValue().getStringGPA());
             }
         });
-//
-        TableColumn groupCol = new TableColumn("Group");
-        groupCol.setMinWidth(100);
-        groupCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getGroup());
-            }
-        });
-
-        TableColumn IDCol = new TableColumn("Student ID");
-        IDCol.setMinWidth(100);
-        IDCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getsID());
-            }
-        });
-//
-//        TableColumn GPACol = new TableColumn("GPA");
-//        GPACol.setMinWidth(100);
-//        GPACol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
-//            @Override
-//            public ObservableValue<String> call(CellDataFeatures<Student, S> arg0) {
-//                return new SimpleStringProperty(arg0.getValue().getGPA());
-//            }
-//        });
+        tableColumns[CA.size() + 2] = new TableColumn("Action");
+        tableColumns[CA.size() + 2].setMinWidth(100);
+        tableColumns[CA.size() + 2].setCellValueFactory(new PropertyValueFactory<Student,String>("button"));
 
         table.setItems(data);
-        table.getColumns().addAll(NameCol,IDCol,groupCol,emailCol);
+        table.getColumns().addAll(tableColumns);
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
