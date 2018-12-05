@@ -27,3 +27,5 @@ out
 .idea/workspace.xml
 /build/
 /nbproject/private/
+
+/src/META-INF/persistence.xml

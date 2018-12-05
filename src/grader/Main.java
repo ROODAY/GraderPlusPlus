@@ -8,11 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.StudentClass;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        StudentClass.create("Jane Doe", "jane@bu.edu", 4.0);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));
 
         Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
