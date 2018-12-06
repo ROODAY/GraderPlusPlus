@@ -29,7 +29,11 @@ public class StudentAssignment {
 	}
 
 	public double getScore() {
-		return score;
+		return this.score;
+	}
+
+	public String getStringScore(){
+		return Double.toString(this.score);
 	}
 
 	public double getTotalscoreScore() {
