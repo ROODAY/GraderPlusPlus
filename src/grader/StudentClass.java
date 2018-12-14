@@ -19,13 +19,40 @@ import java.io.IOException;
 import entity.Student;
 
 
-
-
-public class StudentClass {
+class StudentClass extends DBClass {
     
-    public static void main( String[ ] args ) {
-    
+    @Override
+    public void delete(int id) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
+        EntityManager entitymanager = emfactory.createEntityManager( );
+        entitymanager.getTransaction().begin();
+
+        Student student = entitymanager.find( Student.class, id );
+        entitymanager.remove( student );
+        entitymanager.getTransaction().commit();
+        entitymanager.close();
+        emfactory.close();
     }
+    
+    @Override
+    public void update(int id) {
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        Student student = entitymanager.find( Student.class, id );
+
+        //before update
+        System.out.println( student );
+        student.setName("Luke");
+        entitymanager.getTransaction().commit( );
+
+        //after update
+        System.out.println( student );
+        entitymanager.close();
+        emfactory.close();
+    }
+    
     
     public static void create(int id, String name, String last_name, String email, String program) {
        
@@ -78,24 +105,6 @@ public class StudentClass {
         }
     }
     
-    public static void update(int id) {
-        
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
-        EntityManager entitymanager = emfactory.createEntityManager();
-        entitymanager.getTransaction().begin();
-        Student student = entitymanager.find( Student.class, id );
-
-        //before update
-        System.out.println( student );
-        student.setName("Luke");
-        entitymanager.getTransaction().commit( );
-
-        //after update
-        System.out.println( student );
-        entitymanager.close();
-        emfactory.close();
-    }
-    
     public Student find(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -118,18 +127,7 @@ public class StudentClass {
         return (Collection<Student>) query.getResultList();
         
     }
-    
-    public static void delete(int id) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
-        EntityManager entitymanager = emfactory.createEntityManager( );
-        entitymanager.getTransaction().begin();
-
-        Student student = entitymanager.find( Student.class, id );
-        entitymanager.remove( student );
-        entitymanager.getTransaction().commit();
-        entitymanager.close();
-        emfactory.close();
-    }
+   
     
     public void addAssignment(int assignmentId, int studentId) {
         
@@ -138,6 +136,5 @@ public class StudentClass {
     public void getAssignments(int studentId, int courseId) {
         
     }
-    
-    //public void 
+
 }
