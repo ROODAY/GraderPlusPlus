@@ -105,11 +105,6 @@ public class DummyTest {
         System.out.println();
         CS591.printmoreStudentInfo();
 
-        CS591.sortStudentListByGPALowtoHigh();
-        CS591.printStudentScore();
-        System.out.println();
-        CS591.sortStudentListByGPAHightoLow();
-        CS591.printStudentScore();
 
     }
 }
