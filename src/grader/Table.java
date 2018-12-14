@@ -1,4 +1,4 @@
-package model;
+package grader;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,6 +18,10 @@ import javafx.stage.Stage;
 import javafx.beans.value.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.*;
+import model.Course;
+import model.CourseAssignment;
+import model.Student;
+import model.StudentAssignment;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -142,25 +146,17 @@ public class Table extends Application {
             data.add(stu);
         }
     }
-    @Override
-    public void start(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Table View Sample");
-        stage.setWidth(800);
-        stage.setHeight(500);
 
-        final Label label = new Label("Student View");
-        label.setFont(new Font("Arial", 20));
-
+    public void setTable(){
         table.setEditable(true);
         setCouse();
         addData();
+        addTableContent();
+    }
 
+    public void addTableContent(){
         List<CourseAssignment> CA = course.getCourseAssignmentList();
         TableColumn[] tableColumns = new TableColumn[CA.size()+3];
-
-
-
         for (int i  = 1 ; i < CA.size()+1;i++){
             tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
             tableColumns[i].setMinWidth(100);
@@ -196,11 +192,23 @@ public class Table extends Application {
 
         table.setItems(data);
         table.getColumns().addAll(tableColumns);
+    }
+    @Override
+    public void start(Stage stage) {
+        Scene scene = new Scene(new Group());
+        stage.setTitle("Table View Sample");
+        stage.setWidth(800);
+        stage.setHeight(500);
+
+//        final Label label = new Label("Student View");
+//        label.setFont(new Font("Arial", 20));
+
+        setTable();
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table);
+        vbox.getChildren().addAll(table);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         stage.setScene(scene);
