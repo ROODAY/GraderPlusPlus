@@ -32,6 +32,7 @@ public class StudentClass {
         student.setName(name);
         student.setGPA(gpa);
 
+
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
 

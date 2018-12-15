@@ -1,6 +1,7 @@
 package model;
 
 import java.util.*;
+import java.math.BigDecimal;
 
 public class Course {
 	private Integer year;
@@ -26,6 +27,41 @@ public class Course {
 		this.year = year;
 	}
 
+	public void setAssigenmentInfo(){
+		for (int i = 0; i < courseAssignmentList.size();i++){
+		    double[] scoreList = new double[studentList.size()];
+		    for(int j = 0; j < studentList.size();j++){
+		        Student stu = studentList.get(j);
+                List<StudentAssignment> stulist = stu.getAssignments();
+                scoreList[j] = stulist.get(i).getScore();
+            }
+            double average;
+            double sum = 0;
+            double min = Integer.MAX_VALUE;
+            double max = Integer.MIN_VALUE;
+            for (double score:scoreList) {
+                sum += score;
+                if (score < min) {
+                    min = score;
+                }
+                if (score > max) {
+                    max = score;
+                }
+            }
+            courseAssignmentList.get(i).setMax(max);
+            courseAssignmentList.get(i).setMin(min);
+            average = sum/studentList.size();
+            BigDecimal dg = new BigDecimal(average);
+            double formatAverage = dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            courseAssignmentList.get(i).setAverge(formatAverage);
+            Arrays.sort(scoreList);
+            double median = scoreList[scoreList.length/2];
+            BigDecimal dm = new BigDecimal(median);
+            double formatMedian = dm.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            courseAssignmentList.get(i).setMedian(formatMedian);
+        }
+	}
+
 	public void setAllGPA() {
 		for (int i = 0; i < studentList.size();i++){
 			studentList.get(i).setGPA(weights);
@@ -39,7 +75,6 @@ public class Course {
 		}
 		return GPAlist;
 	}
-	// together fucntion
 
 	// student view
 	public void setStudentList(List<Student> stulist) {
@@ -51,57 +86,41 @@ public class Course {
 		this.courseAssignmentList = coulist;
 	}
 
-	public void sortStdentListByName() {
-
+	public List<CourseAssignment> getCourseAssignmentList() {
+		return courseAssignmentList;
 	}
 
-	public void sortStudentListByGrade(){
-
-	}
-
-	public void sortStudentByGroup(){
-
-	}
 
 	public void addStudent(Student stu){
 		this.studentList.add(stu);
 	}
 
+	public List<Student> getStudentList() {
+		return studentList;
+	}
 	// assignment view
-
-	public void sortAssignmentByGrade(){
-
-	}
-
-	public void getSortAssignmentBysubmit(){
-
-	}
-
-	public void addAssignment(){
-
-	}
-
-	public void showresult(){
-
-	}
 
 	// test use
 	public void printmoreStudentInfo(){
 		for (int i = 0; i < studentList.size(); i++) {
-			System.out.print(studentList.get(i).getName()+ "        ");
-			System.out.print(studentList.get(i).getEmail()+ "        ");
-			System.out.print(studentList.get(i).getGroup()+ "        ");
-			System.out.print(studentList.get(i).getsID()+ "        ");
-			System.out.print(studentList.get(i).getGPA()+ "        ");
+			System.out.print("Student Name: " + studentList.get(i).getName()+ "        ");
+			System.out.print("Student Email: " + studentList.get(i).getEmail()+ "        ");
+			System.out.print("Student Group: " + studentList.get(i).getGroup()+ "        ");
+			System.out.print("Student ID: " + studentList.get(i).getsID()+ "        ");
+			System.out.print("Student GPA " + studentList.get(i).getGPA()+ "        ");
 			System.out.println();
 		}
 	}
 
 	public void printAssignmentInfo(){
 		for (int i = 0; i < courseAssignmentList.size(); i++) {
-			System.out.print(courseAssignmentList.get(i).getAssigmentName()+ "        ");
-			System.out.print(courseAssignmentList.get(i).getAssignmentComments()+ "        ");
-			System.out.print(courseAssignmentList.get(i).getTotalPoints()+ "        ");
+			System.out.print("Assignment Name: " + courseAssignmentList.get(i).getAssigmentName()+ "        ");
+			System.out.print("Assignment Comment: "+courseAssignmentList.get(i).getAssignmentComments()+ "        ");
+			System.out.print("Total Points: "+ courseAssignmentList.get(i).getTotalPoints()+ "        ");
+            System.out.print("Average: "+courseAssignmentList.get(i).getAverge()+ "        ");
+            System.out.print("Median: "+courseAssignmentList.get(i).getMedian()+ "        ");
+            System.out.print("Max: "+courseAssignmentList.get(i).getMax()+ "        ");
+            System.out.print("Min: "+courseAssignmentList.get(i).getMin()+ "        ");
 			System.out.println();
 		}
 
@@ -123,6 +142,8 @@ public class Course {
             System.out.println(stu.getGPA());
         }
     }
+
+
 
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class DummyTest {
     public static void main(String[] args) {
-
         StudentAssignment sa1_1 = new StudentAssignment();
         sa1_1.setComments("not bad");
         sa1_1.setLostpoints(11);
@@ -100,5 +99,12 @@ public class DummyTest {
         CS591.setAllGPA();
         CS591.setCourseAssignmentList(coulist);
         CS591.printStudentScore();
+        CS591.setAssigenmentInfo();
+        System.out.println();
+        CS591.printAssignmentInfo();
+        System.out.println();
+        CS591.printmoreStudentInfo();
+
+
     }
 }
