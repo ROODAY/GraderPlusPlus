@@ -1,4 +1,4 @@
-package grader;
+package model;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class AssTable extends Application {
+public class Table extends Application {
 
-    private TableView<CourseAssignment> table = new TableView<CourseAssignment>();
-    private final ObservableList<CourseAssignment> data = FXCollections.observableArrayList();
+    private TableView<Student> table = new TableView<Student>();
+    private final ObservableList<Student> data = FXCollections.observableArrayList();
     private Course course;
 
     public static void main(String[] args) {
@@ -107,21 +107,18 @@ public class AssTable extends Application {
         CS591_CA1.setDate("09/01");
         CS591_CA1.setSubmitted("27/30");
         CS591_CA1.setTotalPoints(30);
-        CS591_CA1.setButton();
         CourseAssignment CS591_CA2 = new CourseAssignment();
         CS591_CA2.setAssigmentName("Midterm");
         CS591_CA2.setAssignmentComments("Midterm about OOD");
         CS591_CA2.setTotalPoints(99);
         CS591_CA2.setDate("010/01");
         CS591_CA2.setSubmitted("30/30");
-        CS591_CA2.setButton();
         CourseAssignment CS591_CA3 = new CourseAssignment();
         CS591_CA3.setAssigmentName("Lab");
         CS591_CA3.setAssignmentComments("Lab experiment");
         CS591_CA3.setTotalPoints(66);
         CS591_CA3.setDate("11/01");
         CS591_CA3.setSubmitted("22/30");
-        CS591_CA3.setButton();
         List<CourseAssignment> coulist = new ArrayList<>();
         coulist.add(CS591_CA1);
         coulist.add(CS591_CA2);
@@ -148,10 +145,11 @@ public class AssTable extends Application {
 
         this.course =  CS591;
     }
+
     public void addData(){
-        List<CourseAssignment> assignments = course.getCourseAssignmentList();
-        for (CourseAssignment ass:assignments){
-            data.add(ass);
+        List<Student> students = course.getStudentList();
+        for (Student stu:students){
+            data.add(stu);
         }
     }
 
@@ -164,57 +162,52 @@ public class AssTable extends Application {
 
     public void addTableContent(){
         List<CourseAssignment> CA = course.getCourseAssignmentList();
-        TableColumn[] tableColumns = new TableColumn[5];
+        TableColumn[] tableColumns = new TableColumn[CA.size()+3];
+        for (int i  = 1 ; i < CA.size()+1;i++){
+            tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
+            tableColumns[i].setMinWidth(100);
+            final int temp= i-1;
+            tableColumns[i].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+                    return new SimpleStringProperty(arg0.getValue().getAssignments().get(temp).getStringScore());
+                }
+            });
+        }
 
-        tableColumns[0] = new TableColumn("Assignment Name");
+        tableColumns[0] = new TableColumn("Student Name");
         tableColumns[0].setMinWidth(100);
-        tableColumns[0].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CourseAssignment, String>, ObservableValue<String>>() {
+        tableColumns[0].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(CellDataFeatures<CourseAssignment, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getAssigmentName());
+            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+                return new SimpleStringProperty(arg0.getValue().getName());
             }
         });
 
-        tableColumns[1] = new TableColumn("Assignment Date");
-        tableColumns[1].setMinWidth(100);
-        tableColumns[1].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CourseAssignment, String>, ObservableValue<String>>() {
+        tableColumns[CA.size() +1] = new TableColumn("GPA");
+        tableColumns[CA.size() +1].setMinWidth(100);
+        tableColumns[CA.size() +1].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(CellDataFeatures<CourseAssignment, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getDate());
+            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+                return new SimpleStringProperty(arg0.getValue().getStringGPA());
             }
         });
-
-        tableColumns[2] = new TableColumn("Assignment Average");
-        tableColumns[2].setMinWidth(100);
-        tableColumns[2].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CourseAssignment, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<CourseAssignment, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getStringAverage());
-            }
-        });
-        tableColumns[3] = new TableColumn("Submitted");
-        tableColumns[3].setMinWidth(100);
-        tableColumns[3].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CourseAssignment, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<CourseAssignment, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getSubmitted());
-            }
-        });
-
-        tableColumns[4] = new TableColumn("Action");
-        tableColumns[4].setMinWidth(100);
-        tableColumns[4].setCellValueFactory(new PropertyValueFactory<CourseAssignment,String>("button"));
+        tableColumns[CA.size() + 2] = new TableColumn("Action");
+        tableColumns[CA.size() + 2].setMinWidth(100);
+        tableColumns[CA.size() + 2].setCellValueFactory(new PropertyValueFactory<Student,String>("button"));
 
         table.setItems(data);
         table.getColumns().addAll(tableColumns);
     }
-
     @Override
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
         stage.setTitle("Table View Sample");
         stage.setWidth(800);
         stage.setHeight(500);
+
+//        final Label label = new Label("Student View");
+//        label.setFont(new Font("Arial", 20));
 
         setTable();
 
@@ -230,4 +223,3 @@ public class AssTable extends Application {
 
 
 }
-
