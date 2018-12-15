@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AssignmentTable extends AnchorPane{
-    @FXML private TableView<CourseAssignment> table;
+    @FXML private JFXTreeTableView<CourseAssignment> table;
     private final ObservableList<CourseAssignment> data = FXCollections.observableArrayList();
     private Course course;
 
@@ -158,7 +160,7 @@ public class AssignmentTable extends AnchorPane{
         table.setEditable(true);
         setCourse();
         addData();
-        addTableContent();
+        addTreeData();
     }
 
     private void addTableContent(){
@@ -204,7 +206,95 @@ public class AssignmentTable extends AnchorPane{
         tableColumns[4].setMinWidth(100);
         tableColumns[4].setCellValueFactory(new PropertyValueFactory<CourseAssignment,String>("button"));
 
-        table.setItems(data);
-        table.getColumns().addAll(tableColumns);
+        //table.setItems(data);
+        //table.getColumns().addAll(tableColumns);
     }
+
+    private void addTreeData() {
+        JFXTreeTableColumn<CourseAssignment, String> deptColumn = new JFXTreeTableColumn<>("Department");
+        deptColumn.setPrefWidth(150);
+        deptColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
+            if(deptColumn.validateValue(param)) return param.getValue().getValue().department;
+            else return deptColumn.getComputedValue(param);
+        });
+
+        JFXTreeTableColumn<CourseAssignment, String> empColumn = new JFXTreeTableColumn<>("Employee");
+        empColumn.setPrefWidth(150);
+        empColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
+            if(empColumn.validateValue(param)) return param.getValue().getValue().userName;
+            else return empColumn.getComputedValue(param);
+        });
+
+        JFXTreeTableColumn<CourseAssignment, String> ageColumn = new JFXTreeTableColumn<>("Age");
+        ageColumn.setPrefWidth(150);
+        ageColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
+            if(ageColumn.validateValue(param)) return param.getValue().getValue().age;
+            else return ageColumn.getComputedValue(param);
+        });
+
+
+        ageColumn.setCellFactory((TreeTableColumn<CourseAssignment, String> param) -> new GenericEditableTreeTableCell,
+                String>(new TextFieldEditorBuilder()));
+        ageColumn.setOnEditCommit((CellEditEvent<User, String> t)->{
+            ((CourseAssignment) t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue()).age
+                    .set(t.getNewValue());
+        });
+
+        empColumn.setCellFactory((TreeTableColumn<CourseAssignment, String> param) -> new GenericEditableTreeTableCell,
+                String>(new TextFieldEditorBuilder()));
+        empColumn.setOnEditCommit((CellEditEvent<User, String> t)->{
+            ((CourseAssignment) t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue())
+                    .userName.set(t.getNewValue());
+        });
+
+        deptColumn.setCellFactory((TreeTableColumn, String> param) ->
+                new GenericEditableTreeTableCell<CourseAssignment, String>(new TextFieldEditorBuilder()));
+        deptColumn.setOnEditCommit((CellEditEvent<CourseAssignment, String> t)->{
+            ((CourseAssignment) t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue()).department.
+                    set(t.getNewValue());
+        });
+
+
+// data
+        ObservableList<User> users = FXCollections.observableArrayList();
+        users.add(new User("Computer Department", "23","CD 1"));
+        users.add(new User("Sales Department", "22","Employee 1"));
+        users.add(new User("Sales Department", "22","Employee 2"));
+        users.add(new User("Sales Department", "25","Employee 4"));
+        users.add(new User("Sales Department", "25","Employee 5"));
+        users.add(new User("IT Department", "42","ID 2"));
+        users.add(new User("HR Department", "22","HR 1"));
+        users.add(new User("HR Department", "22","HR 2"));
+
+        for(int i = 0 ; i< 40000; i++){
+            users.add(new User("HR Department", i%10+"","HR 2" + i));
+        }
+        for(int i = 0 ; i< 40000; i++){
+            users.add(new User("Computer Department", i%20+"","CD 2" + i));
+        }
+
+        for(int i = 0 ; i< 40000; i++){
+            users.add(new User("IT Department", i%5+"","HR 2" + i));
+        }
+
+// build tree
+        final TreeItem<User> root = new RecursiveTreeItem<User>(users, RecursiveTreeObject::getChildren);
+
+        JFXTreeTableView<User> treeView = new JFXTreeTableView<User>(root, users);
+        treeView.setShowRoot(false);
+        treeView.setEditable(true);
+        treeView.getColumns().setAll(deptColumn, ageColumn, empColumn);
+
+        JFXTextField filterField = new JFXTextField();
+        filterField.textProperty().addListener((o,oldVal,newVal)->{
+            treeView.setPredicate(user -> user.getValue().age.get().contains(newVal)
+                    || user.getValue().department.get().contains(newVal)
+                    || user.getValue().userName.get().contains(newVal));
+        });
+
+        Label size = new Label();
+        size.textProperty().bind(Bindings.createStringBinding(()->treeView.getCurrentItemsCount()+"",
+                treeView.currentItemsCountProperty()));
+    }
+
 }

@@ -1,5 +1,6 @@
 package model;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -9,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class CourseAssignment {
+public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
     private String introduction;
     private String assignmentComments;
     private double totalPoints;
