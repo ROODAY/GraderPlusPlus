@@ -1,0 +1,33 @@
+#createSemesterButton {
+    -jfx-button-type: RAISED;
+    -fx-background-color: #F47E26;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+}
+
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #F47E26;
+}
+
+.split-pane-divider {
+    -fx-background-color: rgba(255, 146, 65, 0.5);
+    -fx-padding: 0 2px 0 2px;
+}
+
+.root { -fx-focus-color: transparent; }
+
+.flatBtn {
+    -jfx-button-type: FLAT;
+    -fx-background-color: #F47E26;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+.jfx-tab-pane .headers-region > .tab:hover {
+    -fx-cursor: hand;
+}

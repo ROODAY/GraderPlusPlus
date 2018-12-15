@@ -1,5 +1,7 @@
-package grader;
+package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -18,12 +20,13 @@ public class Sidebar extends AnchorPane {
     @FXML private AnchorPane sidebar;
 
     public Sidebar() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sidebar.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/sidebar.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
         try {
             loader.load();
+            JFXScrollPane.smoothScrolling(scrollContainer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -32,7 +35,7 @@ public class Sidebar extends AnchorPane {
 
     private HBox generateSidebarTP(String paneText, String buttonText) {
         try {
-            HBox wrapper = FXMLLoader.load(getClass().getResource("sidebarTitledPane.fxml"));
+            HBox wrapper = FXMLLoader.load(getClass().getResource("../view/sidebarTitledPane.fxml"));
             TitledPane pane = (TitledPane) wrapper.lookup("#titledPane");
             pane.setText(paneText);
             Button addButton = ((Button)pane.getContent().lookup("#addButton"));
@@ -52,8 +55,8 @@ public class Sidebar extends AnchorPane {
     }
 
     private void fixWidths(Control node, Pane contentWrapper) {
-        node.setMinWidth(contentWrapper.getWidth());
-        contentWrapper.widthProperty().addListener((obs, oldScene, newScene) -> node.setMinWidth(contentWrapper.getWidth()));
+        node.setPrefWidth(contentWrapper.getWidth());
+        contentWrapper.widthProperty().addListener((obs, oldScene, newScene) -> node.setPrefWidth(contentWrapper.getWidth()));
         int index = contentWrapper.getChildren().size() - 1;
         contentWrapper.getChildren().add(index, node);
     }
@@ -69,9 +72,9 @@ public class Sidebar extends AnchorPane {
             addButton.setOnAction(action -> createNewClass(content));
 
             semesterPane.setExpanded(false);
-            semesterPane.setMinWidth(scrollContainer.getWidth()-5);
+            semesterPane.setPrefWidth(scrollContainer.getWidth()-5);
 
-            scrollContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setMinWidth(scrollContainer.getWidth()-5));
+            scrollContainer.widthProperty().addListener((obs, oldScene, newScene) -> semesterPane.setPrefWidth(scrollContainer.getWidth()-5));
             semesterContainer.getChildren().add(wrapper);
         });
     }
@@ -95,7 +98,8 @@ public class Sidebar extends AnchorPane {
         TextInputDialog dialog = generateDialog("A1", "Add New Section", "Please enter the Section:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(sectionName -> {
-            Button section = new Button(sectionName);
+            JFXButton section = new JFXButton(sectionName);
+            section.getStyleClass().add("flatBtn");
             section.setAlignment(Pos.BASELINE_LEFT);
             fixWidths(section, vbox);
         });
