@@ -60,13 +60,12 @@ public class StudentTable extends AnchorPane{
         salist_1.add(sa1_2);
         salist_1.add(sa1_3);
 
-        Student s1 = new Student();
+        Student s1 = new Student("John","U12377","undergraduate");
         s1.setAssignments(salist_1);
         s1.setEmail("123@bu.edu");
         s1.setGroup("undergraduate");
         s1.setName("John");
         s1.setsID("U12377");
-        s1.setButton();
 
 
         StudentAssignment sa2_1 = new StudentAssignment();

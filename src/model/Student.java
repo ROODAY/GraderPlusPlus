@@ -1,9 +1,15 @@
 package model;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -12,35 +18,37 @@ import javafx.stage.Stage;
 import java.math.BigDecimal;
 import java.util.List;
 public class Student {
-	private String Name;
+	private StringProperty Name;
 	private String sID;
 	private String email;
 	private String group;
-	private double GPA;
+	private DoubleProperty GPA;
 	private List<StudentAssignment> assignments;
-	private Button button;
+	private JFXButton button;
 
-	public void setButton() {
-		this.button = new Button("more Info");
-		button.setOnAction(
-				new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-//						showinfo();
+	public Student(String name, String sID, String group) {
+		this.Name = new SimpleStringProperty(name);
+		this.sID = sID;
+		this.group = group;
+		initInfoButton();
+	}
 
-						final Stage dialog = new Stage();
-						dialog.initModality(Modality.APPLICATION_MODAL);
-//						dialog.initOwner(primaryStage);
-						VBox dialogVbox = new VBox(20);
-						dialogVbox.getChildren().add(new Text("   Student Name:  " + Name + "        "));
-						dialogVbox.getChildren().add(new Text("   Student Email: " + email + "        "));
-						dialogVbox.getChildren().add(new Text("   Student ID: " + sID + "        "));
-						dialogVbox.getChildren().add(new Text("   Student Group: " + group + "        "));
-						Scene dialogScene = new Scene(dialogVbox, 300, 200);
-						dialog.setScene(dialogScene);
-						dialog.initModality(Modality.NONE);
-						dialog.show();
-					}
+	public void initInfoButton() {
+		this.button = new JFXButton("More Info");
+		this.button.getStyleClass().add("flatBtn");
+		this.button.setOnAction(
+				event -> {
+					JFXDialog dialog = new JFXDialog();
+					VBox dialogVbox = new VBox(20);
+					dialogVbox.getChildren().add(new Text("   Student Name:  " + Name + "        "));
+					dialogVbox.getChildren().add(new Text("   Student Email: " + email + "        "));
+					dialogVbox.getChildren().add(new Text("   Student ID: " + sID + "        "));
+					dialogVbox.getChildren().add(new Text("   Student Group: " + group + "        "));
+					dialog.setContent(dialogVbox);
+
+					StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+
+					dialog.show(root);
 				});
 	}
 
@@ -52,7 +60,7 @@ public class Student {
 		return group;
 	}
 
-	public String getName() {
+	public StringProperty getName() {
 		return Name;
 	}
 
@@ -64,9 +72,6 @@ public class Student {
 		this.group = group;
 	}
 
-	public void setName(String name) {
-		this.Name = name;
-	}
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -93,16 +98,16 @@ public class Student {
 		}
 		double gpa = sum * 4 / 100;
 		BigDecimal dg = new BigDecimal(gpa);
-		this.GPA = dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		this.GPA = new SimpleDoubleProperty(dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 
-	public double getGPA() {
+	public DoubleProperty getGPA() {
 		return GPA;
 	}
 
-	public String getStringGPA(){
-		return Double.toString(this.GPA);
-	}
+//	public String getStringGPA(){
+//		return Double.toString(this.GPA);
+//	}
 
 	public List<StudentAssignment> getAssignments() {
 		return this.assignments;

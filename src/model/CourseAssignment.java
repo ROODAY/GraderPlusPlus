@@ -28,11 +28,11 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
     private JFXButton button;
 
 
-    public DoubleProperty totalPoints;
-    public StringProperty assignmentName;
-    public StringProperty dateAssigned;
-    public DoubleProperty classAverage;
-    public StringProperty assignmentType;
+    private DoubleProperty totalPoints;
+    private StringProperty assignmentName;
+    private StringProperty dateAssigned;
+    private DoubleProperty classAverage;
+    private StringProperty assignmentType;
 
     public CourseAssignment(String name, String type, double points, String date) {
         this.assignmentName = new SimpleStringProperty(name);
@@ -46,9 +46,21 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
         this.assignmentComments = assignmentComments;
     }
 
-    /*public void setAssigmentName(String assigmentName) {
-        this.assignmentName = assigmentName;
-    }*/
+    public StringProperty getAssignmentName() {
+        return assignmentName;
+    }
+
+    public DoubleProperty getClassAverage() {
+        return classAverage;
+    }
+
+    public StringProperty getAssignmentType() {
+        return assignmentType;
+    }
+
+    public StringProperty getDateAssigned() {
+        return dateAssigned;
+    }
 
     public void initInfoButton() {
         this.button = new JFXButton("More Info");
@@ -60,7 +72,7 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
                     dialogVbox.getChildren().add(new Text("   Assignment Min:  " + min + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment Max: " + max + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment median: " + median + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
+                    dialogVbox.getChildren().add(new Text("   Assignment Total Points: " + totalPoints.toString() + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment Comments : " + assignmentComments + "        "));
                     dialog.setContent(dialogVbox);
 

@@ -49,28 +49,28 @@ public class AssignmentTable extends AnchorPane{
         JFXTreeTableColumn<CourseAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
         nameColumn.setPrefWidth(150);
         nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
-            if(nameColumn.validateValue(param)) return param.getValue().getValue().assignmentName;
+            if(nameColumn.validateValue(param)) return param.getValue().getValue().getAssignmentName();
             else return nameColumn.getComputedValue(param);
         });
 
         JFXTreeTableColumn<CourseAssignment, String> typeColumn = new JFXTreeTableColumn<>("Type");
         typeColumn.setPrefWidth(150);
         typeColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
-            if(typeColumn.validateValue(param)) return param.getValue().getValue().assignmentType;
+            if(typeColumn.validateValue(param)) return param.getValue().getValue().getAssignmentType();
             else return typeColumn.getComputedValue(param);
         });
 
         JFXTreeTableColumn<CourseAssignment, String> dateAssignedColumn = new JFXTreeTableColumn<>("Date Assigned");
         dateAssignedColumn.setPrefWidth(150);
         dateAssignedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, String> param) ->{
-            if(dateAssignedColumn.validateValue(param)) return param.getValue().getValue().dateAssigned;
+            if(dateAssignedColumn.validateValue(param)) return param.getValue().getValue().getDateAssigned();
             else return dateAssignedColumn.getComputedValue(param);
         });
 
         JFXTreeTableColumn<CourseAssignment, Number> averageColumn = new JFXTreeTableColumn<>("Class Average");
         averageColumn.setPrefWidth(150);
         averageColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<CourseAssignment, Number> param) ->{
-            if(averageColumn.validateValue(param)) return param.getValue().getValue().classAverage;
+            if(averageColumn.validateValue(param)) return param.getValue().getValue().getClassAverage();
             else return averageColumn.getComputedValue(param);
         });
 
@@ -111,9 +111,9 @@ public class AssignmentTable extends AnchorPane{
         table.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 
         filter.textProperty().addListener((o,oldVal,newVal)->{
-            table.setPredicate(assignment -> assignment.getValue().assignmentName.get().contains(newVal)
-                    || assignment.getValue().dateAssigned.get().contains(newVal)
-                    || assignment.getValue().assignmentType.get().contains(newVal));
+            table.setPredicate(assignment -> assignment.getValue().getAssignmentName().get().contains(newVal)
+                    || assignment.getValue().getDateAssigned().get().contains(newVal)
+                    || assignment.getValue().getAssignmentType().get().contains(newVal));
         });
 
         Label size = new Label();

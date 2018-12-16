@@ -1,10 +1,14 @@
 package model;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 import java.math.BigDecimal;
 public class StudentAssignment {
 	private double totalScore;
 	private double lostPoints;
 	private double score;
 	private String comments;
+	private DoubleProperty showscore;
 
 	public void setComments(String comments) {
 
@@ -26,10 +30,15 @@ public class StudentAssignment {
 		double score = (this.totalScore - this.lostPoints)*100 / this.totalScore;
 		BigDecimal dg = new BigDecimal(score);
 		this.score = dg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		showscore = new SimpleDoubleProperty(score);
 	}
 
 	public double getScore() {
 		return this.score;
+	}
+
+	public DoubleProperty getShowscore() {
+		return showscore;
 	}
 
 	public String getStringScore(){
