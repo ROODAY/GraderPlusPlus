@@ -38,9 +38,6 @@ public class Main extends Application {
         double sceneWidth = primaryStage.getScene().getWidth();
         double sceneHeight = primaryStage.getScene().getHeight();
 
-        Collection<Student> students = StudentClass.findAll();
-        System.out.println(students);
-
         FadeTransition ft = new FadeTransition(Duration.millis(500), splash);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);

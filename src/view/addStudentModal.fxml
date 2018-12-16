@@ -15,19 +15,19 @@
     <Text fx:id="header" text="Add new Student" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
     <Label text="First Name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <JFXTextField fx:id="fnameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <Label text="Last Name" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <JFXTextField fx:id="lnameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="BU ID" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label text="BU ID (# only)" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <JFXTextField fx:id="buidField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Label text="Email" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <JFXTextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-    <Label text="Type" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-    <JFXComboBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+    <Label text="Program" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <JFXComboBox fx:id="programField" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <Label text="Undergrad" />
