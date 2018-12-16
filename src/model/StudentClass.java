@@ -158,5 +158,25 @@ public class StudentClass extends DBClass {
     }
     
     
+    public Collection<StudentAssignment> getAllStudentAssignments(int studentId) {
+        
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        String queryString = "SELECT e FROM StudentAssignment e WHERE e.studentId = " + studentId;
+        
+        Query query = entitymanager.createQuery(queryString);
+        Collection<StudentAssignment> arr = query.getResultList();
+        
+        System.out.println(arr);
+        
+        entitymanager.close();
+        emfactory.close();
+        
+        return arr;
+    }
+    
+    
 
 }

@@ -87,6 +87,26 @@ public class AssignmentClass {
     }
     
     
+    public Collection<StudentAssignment> getAllStudentwithAssignment(int assignmentId) {
+        
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        String queryString = "SELECT e FROM StudentAssignment e WHERE e.assignmentId = " + assignmentId;
+        
+        Query query = entitymanager.createQuery(queryString);
+        Collection<StudentAssignment> arr = query.getResultList();
+        
+        System.out.println(arr);
+        
+        entitymanager.close();
+        emfactory.close();
+        
+        return arr;
+    }
+    
+    
     
     
 }
