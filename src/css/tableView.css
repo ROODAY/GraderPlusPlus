@@ -1,0 +1,7 @@
+.tree-table-cell {
+    -fx-alignment: center ;
+}
+
+#filter {
+    -jfx-focus-color: #F47E26;
+}

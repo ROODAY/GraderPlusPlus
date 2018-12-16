@@ -29,7 +29,7 @@ public class StudentTable extends AnchorPane{
 
         try {
             fxmlLoader.load();
-            setTable();
+            //setTable();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -100,7 +100,7 @@ public class StudentTable extends AnchorPane{
         s2.setsID("U7235");
         s2.setButton();
 
-        CourseAssignment CS591_CA1 = new CourseAssignment();
+        /*CourseAssignment CS591_CA1 = new CourseAssignment();
         CS591_CA1.setAssigmentName("HW1");
         CS591_CA1.setAssignmentComments("Homework about BlackJack");
         CS591_CA1.setTotalPoints(30);
@@ -115,7 +115,7 @@ public class StudentTable extends AnchorPane{
         List<CourseAssignment> coulist = new ArrayList<>();
         coulist.add(CS591_CA1);
         coulist.add(CS591_CA2);
-        coulist.add(CS591_CA3);
+        coulist.add(CS591_CA3);*/
 
         List<Student> stulist = new ArrayList<>();
         int[] weights_CS591 = new int[]{30,30,40};
@@ -131,8 +131,8 @@ public class StudentTable extends AnchorPane{
         CS591.addStudent(s2);
         CS591.setWeights(weights_CS591);
         CS591.setAllGPA();
-        CS591.setCourseAssignmentList(coulist);
-        CS591.printStudentScore();
+        //CS591.setCourseAssignmentList(coulist);
+        //CS591.printStudentScore();
         CS591.setAssigenmentInfo();
 
 
@@ -156,7 +156,7 @@ public class StudentTable extends AnchorPane{
         List<CourseAssignment> CA = course.getCourseAssignmentList();
         TableColumn[] tableColumns = new TableColumn[CA.size()+3];
         for (int i  = 1 ; i < CA.size()+1;i++){
-            tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
+            //tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
             tableColumns[i].setMinWidth(100);
             final int temp= i-1;
             tableColumns[i].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {

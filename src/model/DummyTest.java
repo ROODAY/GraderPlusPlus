@@ -66,6 +66,7 @@ public class DummyTest {
         s2.setName("Charles");
         s2.setsID("U7235");
 
+        /*
         CourseAssignment CS591_CA1 = new CourseAssignment();
         CS591_CA1.setAssigmentName("HW1");
         CS591_CA1.setAssignmentComments("Homework about BlackJack");
@@ -104,7 +105,7 @@ public class DummyTest {
         CS591.printAssignmentInfo();
         System.out.println();
         CS591.printmoreStudentInfo();
-
+        */
 
     }
 }

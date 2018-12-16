@@ -112,7 +112,7 @@ public class Course {
 		}
 	}
 
-	public void printAssignmentInfo(){
+	/*public void printAssignmentInfo(){
 		for (int i = 0; i < courseAssignmentList.size(); i++) {
 			System.out.print("Assignment Name: " + courseAssignmentList.get(i).getAssigmentName()+ "        ");
 			System.out.print("Assignment Comment: "+courseAssignmentList.get(i).getAssignmentComments()+ "        ");
@@ -141,7 +141,7 @@ public class Course {
             }
             System.out.println(stu.getGPA());
         }
-    }
+    }*/
 
 
 

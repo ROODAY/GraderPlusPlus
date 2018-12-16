@@ -9,6 +9,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import controller.StudentTable?>
 <?import controller.AssignmentTable?>
+<?import javafx.scene.layout.StackPane?>
 <SplitPane fx:id="splitPane" dividerPositions="0.15" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
            stylesheets="/css/homeScreen.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeScreen">
     <Sidebar />
@@ -21,5 +22,6 @@
                 <StudentTable/>
             </Tab>
         </JFXTabPane>
+        <StackPane pickOnBounds="false" fx:id="dialogPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
     </AnchorPane>
 </SplitPane>

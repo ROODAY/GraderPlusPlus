@@ -1,10 +1,17 @@
 package model;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -13,34 +20,48 @@ import javafx.stage.Stage;
 public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
     private String introduction;
     private String assignmentComments;
-    private double totalPoints;
-    private String assignmentName;
     private double averge;
     private double median;
     private double max;
     private double min;
     private String submitted;
-    private String Date;
-    private Button button;
+    private JFXButton button;
+
+
+    public DoubleProperty totalPoints;
+    public StringProperty assignmentName;
+    public StringProperty dateAssigned;
+    public DoubleProperty classAverage;
+    public StringProperty assignmentType;
+
+    public CourseAssignment(String name, String type, double points, String date) {
+        this.assignmentName = new SimpleStringProperty(name);
+        this.assignmentType = new SimpleStringProperty(type);
+        this.totalPoints = new SimpleDoubleProperty(points);
+        this.dateAssigned = new SimpleStringProperty(date);
+        initInfoButton();
+    }
 
     public void setAssignmentComments(String assignmentComments) {
         this.assignmentComments = assignmentComments;
     }
 
-    public void setAssigmentName(String assigmentName) {
+    /*public void setAssigmentName(String assigmentName) {
         this.assignmentName = assigmentName;
-    }
+    }*/
 
-    public void setButton() {
-        this.button = new Button("more Info");
-        button.setOnAction(
+    public void initInfoButton() {
+        this.button = new JFXButton("More Info");
+        this.button.getStyleClass().add("flatBtn");
+        this.button.setOnAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
 //						showinfo();
 
-                        final Stage dialog = new Stage();
-                        dialog.initModality(Modality.APPLICATION_MODAL);
+                        final Stage test = new Stage();
+                        JFXDialog dialog = new JFXDialog();
+                        //dialog.initModality(Modality.APPLICATION_MODAL);
 //						dialog.initOwner(primaryStage);
                         VBox dialogVbox = new VBox(20);
                         dialogVbox.getChildren().add(new Text("   Assignment Min:  " + min + "        "));
@@ -48,17 +69,25 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
                         dialogVbox.getChildren().add(new Text("   Assignment median: " + median + "        "));
                         dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
                         dialogVbox.getChildren().add(new Text("   Assignment Comments : " + assignmentComments + "        "));
-                        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                        dialog.setScene(dialogScene);
-                        dialog.initModality(Modality.NONE);
-                        dialog.show();
+                        dialog.setContent(dialogVbox);
+                        //Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                        //dialog.setScene(dialogScene);
+                        //dialog.initModality(Modality.NONE);
+
+                        StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+
+                        dialog.show(root);
                     }
                 });
     }
 
-    public void setDate(String date) {
-        Date = date;
+    /*public void setDateAssigned(String dateAssigned) {
+        this.dateAssigned = dateAssigned;
     }
+
+    public void setTotalPoints(double totalPoints) {
+        this.totalPoints = totalPoints;
+    }*/
 
     public void setSubmitted(String submitted) {
         this.submitted = submitted;
@@ -68,28 +97,25 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
         this.introduction = introduction;
     }
 
-    public void setTotalPoints(double totalPoints) {
-        this.totalPoints = totalPoints;
-    }
 
     public Button getButton() {
         return button;
     }
 
-    public double getTotalPoints() {
+    /*public double getTotalPoints() {
         return totalPoints;
     }
 
-    public String getDate() {
-        return Date;
-    }
-
-    public String getSubmitted() {
-        return submitted;
+    public String getDateAssigned() {
+        return dateAssigned;
     }
 
     public String getAssigmentName() {
         return assignmentName;
+    }*/
+
+    public String getSubmitted() {
+        return submitted;
     }
 
     public String getAssignmentComments() {
