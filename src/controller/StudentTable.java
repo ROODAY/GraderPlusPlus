@@ -67,6 +67,7 @@ public class StudentTable extends AnchorPane implements Table{
 
                     Student student = StudentClass.create(buid, Sidebar.getCurrentSectionId(), fname, lname, email, program);
                     students.add(student);
+                    count.setText(students.size() + " Records");
                     dialog.close();
                 });
 
