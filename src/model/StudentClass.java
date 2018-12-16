@@ -54,7 +54,7 @@ public class StudentClass extends DBClass {
     }
     
     
-    public static void create(int id, String name, String last_name, String email, String program) {
+    public static void create(int id, int sectionId, String name, String last_name, String email, String program) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -62,6 +62,7 @@ public class StudentClass extends DBClass {
 
         Student student = new Student();
         student.setId(id);
+        student.setSectionId(sectionId);
         student.setName(name);
         student.setLastName(last_name);
         student.setEmail(email);
