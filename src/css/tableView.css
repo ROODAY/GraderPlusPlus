@@ -5,3 +5,7 @@
 #filter {
     -jfx-focus-color: #F47E26;
 }
+
+.recordCount {
+    -fx-font-weight: bold;
+}

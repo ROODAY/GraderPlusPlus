@@ -1,9 +1,16 @@
 package model;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -11,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.util.List;
-public class Student {
+public class Student extends RecursiveTreeObject<Student> {
 	private String Name;
 	private String sID;
 	private String email;
@@ -20,28 +27,34 @@ public class Student {
 	private List<StudentAssignment> assignments;
 	private Button button;
 
-	public void setButton() {
-		this.button = new Button("more Info");
-		button.setOnAction(
-				new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-//						showinfo();
+	public StringProperty firstName;
+	public StringProperty lastName;
+	public DoubleProperty currentGrade;
 
-						final Stage dialog = new Stage();
-						dialog.initModality(Modality.APPLICATION_MODAL);
-//						dialog.initOwner(primaryStage);
-						VBox dialogVbox = new VBox(20);
-						dialogVbox.getChildren().add(new Text("   Student Name:  " + Name + "        "));
-						dialogVbox.getChildren().add(new Text("   Student Email: " + email + "        "));
-						dialogVbox.getChildren().add(new Text("   Student ID: " + sID + "        "));
-						dialogVbox.getChildren().add(new Text("   Student Group: " + group + "        "));
-						Scene dialogScene = new Scene(dialogVbox, 300, 200);
-						dialog.setScene(dialogScene);
-						dialog.initModality(Modality.NONE);
-						dialog.show();
-					}
-				});
+	public Student(String fname, String lname, Double grade) {
+		this.firstName = new SimpleStringProperty(fname);
+		this.lastName = new SimpleStringProperty(lname);
+		this.currentGrade = new SimpleDoubleProperty(grade);
+
+		initInfoButton();
+	}
+
+	public void initInfoButton() {
+		this.button = new JFXButton("More Info");
+		this.button.getStyleClass().add("flatBtn");
+		button.setOnAction(event -> {
+			JFXDialog dialog = new JFXDialog();
+			VBox dialogVbox = new VBox(20);
+			dialogVbox.getChildren().add(new Text("   Student Name:  " + Name + "        "));
+			dialogVbox.getChildren().add(new Text("   Student Email: " + email + "        "));
+			dialogVbox.getChildren().add(new Text("   Student ID: " + sID + "        "));
+			dialogVbox.getChildren().add(new Text("   Student Group: " + group + "        "));
+			dialog.setContent(dialogVbox);
+
+			StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+
+			dialog.show(root);
+		});
 	}
 
 	public String getEmail() {
