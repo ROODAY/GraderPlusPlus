@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -13,10 +8,6 @@ import javax.persistence.Id;
 
 import java.util.Date;
 
-/**
- *
- * @author miguelvaldez
- */
 @Entity
 public class StudentAssignment implements Serializable {
 
@@ -24,13 +15,21 @@ public class StudentAssignment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     
+    
+    
     private int id;
     private String name;
-    private String comment;
+    private String description;
+    private String response;
     private int courseId;
-    private int possiblePoints;
-    private String type;
+    private int sectionId;
+    private int studentId;
+    private int assignmentId;
+    private int points;
 
+    
+    
+    
     public int getId() {
         return id;
     }
@@ -38,6 +37,71 @@ public class StudentAssignment implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    
+     public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+     public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+     public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+    
+     public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+    
+     public int getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
+    }
+    
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+    
+    public int getAssignmentId() {
+        return assignmentId;
+    }
+
+    public void setAssignmentId(int assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+    
+    public int getpoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+    
 
     @Override
     public int hashCode() {

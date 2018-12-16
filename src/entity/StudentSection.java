@@ -13,22 +13,56 @@ import javax.persistence.Id;
 
 /**
  *
+ * 
  * @author miguelvaldez
  */
 @Entity
-public class CourseAssignment implements Serializable {
+public class StudentSection implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
+    
     private int id;
+    private int sectionId;
+    private int studentId;
+    
+    
+    public StudentSection(int id, int sectionId, int studentId) {
+        super();
+        this.id = id;
+        this.sectionId = sectionId;
+        this.studentId = studentId;
+    }
 
+    public StudentSection( ) {
+        super();
+    }
+    
+    
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public int getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
+    }
+    
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -41,10 +75,10 @@ public class CourseAssignment implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CourseAssignment)) {
+        if (!(object instanceof StudentSection)) {
             return false;
         }
-        CourseAssignment other = (CourseAssignment) object;
+        StudentSection other = (StudentSection) object;
         if (this.id != other.id) {
             return false;
         }
@@ -53,7 +87,7 @@ public class CourseAssignment implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.CourseAssignment[ id=" + id + " ]";
+        return "entity.StudentSection[ id=" + id + " ]";
     }
     
 }
