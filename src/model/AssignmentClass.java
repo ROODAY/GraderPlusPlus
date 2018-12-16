@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import entity.Assignment;
+import entity.StudentAssignment;
 
 
 public class AssignmentClass {
@@ -21,7 +22,7 @@ public class AssignmentClass {
     
     }
     
-    public void create(int courseId, String name, int possiblePoints, int weight, String type) {
+    public Assignment create(int courseId, String name, int possiblePoints, int weight, String type) {
 
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -37,7 +38,49 @@ public class AssignmentClass {
 
         entitymanager.close();
         emfactory.close();
+        return assignment;
     }
+    
+    
+    public void addAssignmentToCourse(Assignment assignment) {
+        //get students in course sections
+        //create the student assignments
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        Query query = entitymanager.createQuery("SELECT e FROM Student e WHERE e.courseId = " +
+                assignment.getCourseId());
+        
+        Collection<Student> arr = query.getResultList();
+            
+        for (Student o : arr){
+            
+            entitymanager.getTransaction().begin();
+            
+            StudentAssignment sa = new StudentAssignment();
+            sa.setName(assignment.getName());
+            
+            sa.setCourseId(assignment.getCourseId());
+            sa.setSectionId(o.getSectionId());
+            sa.setStudentId(o.getId());
+            sa.setAssignmentId(assignment.getId());
+            sa.setPoints(0);
+            
+           
+
+            entitymanager.persist( student );
+            entitymanager.getTransaction().commit();
+            entitymanager.close();
+          
+        }
+        
+        
+        emfactory.close();
+        
+    }
+    
+    
     
     public static void update(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

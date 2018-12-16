@@ -20,6 +20,7 @@ public class Student implements Serializable {
     private int id;
     private int bu_id;
     private int sectionId;
+    private int courseId;
     private String name;
     private String last_name;
     private String email;
@@ -27,7 +28,7 @@ public class Student implements Serializable {
     
     
     
-    public Student(int bu_id, int sectionId, String name, String last_name, String email, String program) {
+    public Student(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program) {
         super();
         this.bu_id = bu_id;
         this.name = name;
@@ -35,6 +36,7 @@ public class Student implements Serializable {
         this.email = email;
         this.program = program;
         this.sectionId = sectionId;
+        this.courseId = courseId;
     }
 
     public Student( ) {
@@ -87,6 +89,14 @@ public class Student implements Serializable {
 
     public void setSectionId(int sectionId) {
         this.sectionId = sectionId;
+    }
+    
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
     
     public String getProgram() {
