@@ -36,6 +36,7 @@ public class Table extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     public void setCouse(){
 
         StudentAssignment sa1_1 = new StudentAssignment();
