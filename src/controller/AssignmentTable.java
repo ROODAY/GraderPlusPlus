@@ -1,32 +1,43 @@
 package controller;
 
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import entity.Assignment;
+import entity.Student;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import model.AssignmentClass;
 import model.Course;
 import model.CourseAssignment;
+import model.StudentClass;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
 public class AssignmentTable extends AnchorPane{
+    @FXML private AnchorPane assignmentPane;
     @FXML private JFXTreeTableView<CourseAssignment> table;
     @FXML private JFXTextField filter;
+    @FXML private JFXButton addAssignment;
     private final ObservableList<CourseAssignment> data = FXCollections.observableArrayList();
     private Course course;
 
@@ -37,14 +48,44 @@ public class AssignmentTable extends AnchorPane{
 
         try {
             fxmlLoader.load();
-            initializeTable();
+            //initializeTable();
+            initControls();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    private void initializeTable() {
+    private void initControls() {
         filter.setPromptText("Search...");
+        addAssignment.setOnAction(action -> {
+            JFXDialog dialog = new JFXDialog();
+            try {
+                GridPane node = FXMLLoader.load(getClass().getResource("../view/addAssignmentModal.fxml"));
+                dialog.setContent(node);
+                StackPane root = (StackPane) addAssignment.getScene().lookup("#dialogPane");
+                dialog.show(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    public void initializeTable(String sectionName, int sectionId) {
+        JFXSnackbar bar = new JFXSnackbar(assignmentPane);
+        Collection<Assignment> dbAssignments = AssignmentClass.findAll();
+        Collection<Student> dbStudents = StudentClass.findAll();
+
+        if (dbAssignments.size() == 0) {
+            bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Assignments found for Section " + sectionName)));
+        }
+        if (dbStudents.size() == 0) {
+            bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Students found for Section " + sectionName)));
+        }
+
+
+
+
 
         JFXTreeTableColumn<CourseAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
         nameColumn.setPrefWidth(150);

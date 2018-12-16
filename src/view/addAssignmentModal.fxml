@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.collections.FXCollections?>
+<GridPane hgap="5.0" stylesheets="/css/addAssignmentModal.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Text fx:id="header" text="Add new Assignment" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+    <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+
+    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Type" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <JFXComboBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <Label text="Homework" />
+                <Label text="Quiz" />
+                <Label text="Exam" />
+            </FXCollections>
+        </items>
+    </JFXComboBox>
+
+    <Label text="Total Points" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <JFXButton fx:id="createButton" text="Create" styleClass="flatBtn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+
+</GridPane>

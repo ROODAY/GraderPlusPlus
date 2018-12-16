@@ -16,10 +16,10 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
         <JFXTabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Tab text="Assignments">
-                <AssignmentTable/>
+                <AssignmentTable fx:id="assignments"/>
             </Tab>
             <Tab text="Students">
-                <StudentTable/>
+                <StudentTable fx:id="students"/>
             </Tab>
         </JFXTabPane>
         <StackPane pickOnBounds="false" fx:id="dialogPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>

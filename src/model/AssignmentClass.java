@@ -66,7 +66,7 @@ public class AssignmentClass {
         System.out.println("weight = " + assignment.getWeight());
     }
     
-    public Collection<Assignment> findAll() {
+    public static Collection<Assignment> findAll() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         

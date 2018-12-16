@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
@@ -9,17 +10,18 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root fx:id="assignmenttable" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="/css/tableView.css" type="javafx.scene.layout.AnchorPane" SplitPane.resizableWithParent="true" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<?import com.jfoenix.controls.JFXSnackbar?>
+<fx:root fx:id="assignmentPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="/css/tableView.css" type="javafx.scene.layout.AnchorPane" SplitPane.resizableWithParent="true" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox>
+            <JFXButton fx:id="addAssignment" styleClass="flatBtn" text="Add Assignment" />
             <Region HBox.hgrow="ALWAYS" />
             <JFXTextField fx:id="filter" />
          <VBox.margin>
-            <Insets bottom="10.0" right="20.0" top="10.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
          </VBox.margin>
         </HBox>
         <JFXTreeTableView fx:id="table" VBox.vgrow="ALWAYS" />
     </VBox>
-
 </fx:root>

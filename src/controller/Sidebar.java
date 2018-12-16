@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.JFXTabPane;
 import entity.Course;
 import entity.Section;
 import entity.Semester;
@@ -117,6 +118,15 @@ public class Sidebar extends AnchorPane {
         JFXButton section = new JFXButton(sectionName);
         section.getStyleClass().add("flatBtn");
         section.setAlignment(Pos.BASELINE_LEFT);
+
+        section.setOnAction(action -> {
+            SplitPane pane = (SplitPane)sidebar.getScene().lookup("#splitPane");
+            AnchorPane apane = (AnchorPane) pane.getItems().get(1);
+            JFXTabPane tabs = (JFXTabPane) apane.getChildren().get(0);
+            AssignmentTable table = (AssignmentTable) tabs.getTabs().get(0).getContent();
+            table.initializeTable(sectionName, sectionId);
+        });
+
         fixWidths(section, vbox);
     }
 
