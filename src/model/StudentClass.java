@@ -54,14 +54,14 @@ public class StudentClass extends DBClass {
     }
     
     
-    public static void create(int id, int sectionId, String name, String last_name, String email, String program) {
+    public static void create(int bu_id, int sectionId, String name, String last_name, String email, String program) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
         Student student = new Student();
-        student.setId(id);
+        student.setId(bu_id);
         student.setSectionId(sectionId);
         student.setName(name);
         student.setLastName(last_name);
@@ -91,13 +91,13 @@ public class StudentClass extends DBClass {
                 if(studentRow.length > 0 && !studentRow[0].equals("ID")) {
                     
                     Student student = new Student();
-                    create(
-                        Integer.parseInt(studentRow[0]),
-                        studentRow[1],
-                        studentRow[2],
-                        studentRow[3],
-                        studentRow[4]
-                    );
+//                    create(
+//                        Integer.parseInt(studentRow[0]),
+//                        studentRow[1],
+//                        studentRow[2],
+//                        studentRow[3],
+//                        studentRow[4]
+//                    );
                 }
             }
 
