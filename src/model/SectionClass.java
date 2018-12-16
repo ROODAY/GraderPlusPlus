@@ -71,6 +71,7 @@ public class SectionClass {
         return students;
     }
     
+    
     public static void addStudent(int sectionId, int studentId) {
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
@@ -97,6 +98,60 @@ public class SectionClass {
             addStudent(sectionId, o.getId());
         }
     }    
+    
+    //public static Collection<Student> get
+    public void handleSectionStudents(int sectionId, Collection<Student> newStudentRoster) {
+        
+        Collection<Student> studentsInSection = getStudents(sectionId);
+        
+        Collection<Student> newStudents = null;
+        
+        for (Student o : newStudentRoster){
+            
+            if(studentsInSection.contains(o)) {
+                
+                studentsInSection.remove(o);
+            } else {
+                
+                newStudents.add(o);
+            }
+        }
+        
+        //delete students that are not longer on list
+        for(Student o: studentsInSection) {
+            
+            StudentSection obj = findStudentSection(sectionId, o.getId());
+            
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
+            EntityManager entitymanager = emfactory.createEntityManager( );
+            entitymanager.getTransaction().begin();
+            StudentSection ss = entitymanager.find( StudentSection.class, obj.getId() );
+            entitymanager.remove( ss );
+            entitymanager.getTransaction().commit();   
+            entitymanager.close();
+            emfactory.close();
+        }
+        
+        //add new students
+        for(Student o: newStudents) {     
+            
+            addStudent(sectionId, o.getId());
+        }
+    }
+
+
+    public StudentSection findStudentSection(int sectionId, int studentId) {
+        
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        
+        Query query = entitymanager.createQuery("SELECT e FROM StudentSection e "
+                + "WHERE e.sectionId = " + sectionId + " AND e.studentId = " + studentId);
+        
+        Collection<StudentSection> list = query.getResultList();
+        
+        return list.iterator().next();
+    }
     
 }
 
