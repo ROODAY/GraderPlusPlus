@@ -19,7 +19,7 @@ import java.io.IOException;
 import entity.Student;
 
 
-class StudentClass extends DBClass {
+public class StudentClass extends DBClass {
     
     @Override
     public void delete(int id) {
@@ -119,7 +119,7 @@ class StudentClass extends DBClass {
         return student;
     }
     
-    public Collection<Student> findAll() {
+    public static Collection<Student> findAll() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         

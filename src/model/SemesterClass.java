@@ -20,28 +20,25 @@ import entity.Assignment;
 
 public class SemesterClass {
     
-    public static void main( String[ ] args ) {
-    
-    }
-    
-    
-    public static void create(String name) {
+    public static int create(String name) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
         Semester semester = new Semester();
         semester.setName(name);
-        
 
         entitymanager.persist( semester );
         entitymanager.getTransaction().commit();
+        //entitymanager.flush();
 
         entitymanager.close();
         emfactory.close();
+
+        return semester.getId();
     }
     
-    public Collection<Semester> findAll() {
+    public static Collection<Semester> findAll() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         
@@ -50,11 +47,11 @@ public class SemesterClass {
     }
     
     
-    public Collection<Course> getCourses(int semesterId) {
+    public static Collection<Course> getCourses(int semesterId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         
-        Query query = entitymanager.createQuery("SELECT e FROM Courses e WHERE e.semesterId = " + semesterId);
+        Query query = entitymanager.createQuery("SELECT e FROM Course e WHERE e.semesterId = " + semesterId);
         Collection<Course> arr = query.getResultList();
         
         return arr;

@@ -21,7 +21,7 @@ import javax.persistence.Query;
  */
 public class SectionClass {
 
-    public static void create(String name, int courseId) {
+    public static int create(String name, int courseId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
@@ -35,10 +35,12 @@ public class SectionClass {
 
         entitymanager.close();
         emfactory.close();
+
+        return section.getId();
     }
     
 
-    public Collection<Student> getStudents(int sectionID) {
+    public static Collection<Student> getStudents(int sectionID) {
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -69,7 +71,7 @@ public class SectionClass {
         return students;
     }
     
-    public void addStudent(int sectionId, int studentId) {
+    public static void addStudent(int sectionId, int studentId) {
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -88,7 +90,7 @@ public class SectionClass {
                 
     }
 
-    public void addStudentsToSection(Collection<Student> students, int sectionId) {
+    public static void addStudentsToSection(Collection<Student> students, int sectionId) {
 
         for (Student o : students){
 
