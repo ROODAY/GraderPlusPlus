@@ -15,7 +15,7 @@
 
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox>
-            <JFXButton fx:id="addAssignment" styleClass="flatBtn" text="Add Assignment" />
+            <JFXButton fx:id="addAssignment" styleClass="flatBtn" text="Add Assignment" disable="true"/>
             <Label fx:id="count" styleClass="recordCount">
             <HBox.margin>
                <Insets left="20.0" />

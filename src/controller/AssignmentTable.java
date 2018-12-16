@@ -77,6 +77,8 @@ public class AssignmentTable extends AnchorPane implements Table {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Assignments found for Section " + sectionName)));
         }
 
+        addAssignment.setDisable(false);
+
 
         JFXTreeTableColumn<CourseAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
         nameColumn.setPrefWidth(150);
