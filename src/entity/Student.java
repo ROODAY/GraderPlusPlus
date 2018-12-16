@@ -18,19 +18,23 @@ public class Student implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     
     private int id;
+    private int bu_id;
+    private int sectionId;
     private String name;
     private String last_name;
     private String email;
     private String program;
     
     
-    public Student(int id, String name, String last_name, String email, String program) {
+    
+    public Student(int bu_id, int sectionId, String name, String last_name, String email, String program) {
         super();
-        this.id = id;
+        this.bu_id = bu_id;
         this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.program = program;
+        this.sectionId = sectionId;
     }
 
     public Student( ) {
@@ -43,6 +47,14 @@ public class Student implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public int getBUId() {
+        return bu_id;
+    }
+
+    public void setBUId(int bu_id) {
+        this.bu_id = bu_id;
     }
     
     public String getName() {
@@ -67,6 +79,14 @@ public class Student implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public int getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
     }
     
     public String getProgram() {
