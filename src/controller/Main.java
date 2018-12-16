@@ -16,6 +16,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         //StudentClass.create("Jane Doe", "jane@bu.edu", 4.0);
+        //StudentClass student = new StudentClass();
+        //student.uploadStudentsCSV("/Users/miguelvaldez/Desktop/students_roster.csv");
 
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));

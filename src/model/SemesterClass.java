@@ -16,10 +16,13 @@ import javax.persistence.Query;
 import entity.Course;
 import entity.Semester;
 import entity.Student;
-import entity.StudentCourse;
 import entity.Assignment;
 
 public class SemesterClass {
+    
+    public static void main( String[ ] args ) {
+    
+    }
     
     
     public static void create(String name) {
@@ -45,6 +48,7 @@ public class SemesterClass {
         Query query = entitymanager.createQuery("SELECT e FROM Semester e");
         return (Collection<Semester>) query.getResultList();
     }
+    
     
     public Collection<Course> getCourses(int semesterId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

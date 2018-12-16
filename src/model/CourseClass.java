@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 import entity.Course;
 import entity.Student;
-import entity.StudentCourse;
+import entity.StudentSection;
 import entity.Assignment;
 
 
@@ -89,36 +89,6 @@ public class CourseClass {
         emfactory.close();
     }
     
-    public Collection<Student> getStudents(int courseID) {
-        
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
-        EntityManager entitymanager = emfactory.createEntityManager();
-        
-        String queryString = "SELECT e FROM StudentCourse e WHERE e.courseId = " + courseID;
-        
-        Query query = entitymanager.createQuery(queryString);
-        Collection<StudentCourse> arr = query.getResultList();
-        
-        Collection<Student> students = new ArrayList<Student>();
-        
-        for (StudentCourse o : arr){
-            
-            System.out.println(o.getStudentId());
-            StudentClass student = new StudentClass();
-            Student ind = student.find(o.getStudentId());
-            System.out.println(ind);
-           
-            students.add(ind);
-          
-        }
-        
-        entitymanager.close();
-        emfactory.close();
-        
-        System.out.println(students);
-        
-        return students;
-    }
     
     public Collection<Assignment> getAssignments(int courseID) {
         
@@ -137,22 +107,4 @@ public class CourseClass {
         
         return arr;
     }
-    
-    
-    public void addStudent(int courseId, int studentId) {
-        
-        StudentCourseClass studentCourse = new StudentCourseClass();
-        studentCourse.create(courseId, studentId);
-                
-    }
-    
-    public void addStudentsToCourse(Collection<Student> students, int courseId) {
-        
-        for (Student o : students){
-            
-            addStudent(courseId, o.getId());
-        }
-    }
-    
-    
 }

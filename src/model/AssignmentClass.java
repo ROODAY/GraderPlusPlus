@@ -21,7 +21,7 @@ public class AssignmentClass {
     
     }
     
-    public void create(int courseId, String name, int possiblePoints, String type) {
+    public void create(int courseId, String name, int possiblePoints, int weight, String type) {
 
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -61,8 +61,9 @@ public class AssignmentClass {
         EntityManager entitymanager = emfactory.createEntityManager();
         Assignment assignment = entitymanager.find( Assignment.class, id );
 
-        System.out.println("course ID = " + assignment.getId());
-        System.out.println("course CourseId = " + assignment.getCourseId());
+        System.out.println("assignment ID = " + assignment.getId());
+        System.out.println("course Id = " + assignment.getCourseId());
+        System.out.println("weight = " + assignment.getWeight());
     }
     
     public Collection<Assignment> findAll() {
