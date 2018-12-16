@@ -5,7 +5,7 @@
  */
 package grader;
 
-import entity.Course;
+import entity.Section;
 import entity.Student;
 import entity.StudentSection;
 import java.util.ArrayList;
@@ -21,6 +21,22 @@ import javax.persistence.Query;
  */
 public class SectionClass {
 
+    public static void create(String name, int courseId) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+
+        Section section = new Section();
+        section.setName(name);
+        section.setCourseId(courseId);
+
+        entitymanager.persist( section );
+        entitymanager.getTransaction().commit();
+
+        entitymanager.close();
+        emfactory.close();
+    }
+    
 
     public Collection<Student> getStudents(int sectionID) {
         
