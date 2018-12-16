@@ -79,7 +79,6 @@ public class Student {
 	public void setAssignments(List<StudentAssignment> salist) {
 		// dummy set
 		this.assignments = salist;
-
 	}
 
 	public void setGPA(int[] weights) {

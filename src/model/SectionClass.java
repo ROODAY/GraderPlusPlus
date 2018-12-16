@@ -99,7 +99,7 @@ public class SectionClass {
         }
     }    
     
-    //public static Collection<Student> get
+    
     public void handleSectionStudents(int sectionId, Collection<Student> newStudentRoster) {
         
         Collection<Student> studentsInSection = getStudents(sectionId);
@@ -120,12 +120,21 @@ public class SectionClass {
         //delete students that are not longer on list
         for(Student o: studentsInSection) {
             
-            StudentSection obj = findStudentSection(sectionId, o.getId());
+            
             
             EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
             EntityManager entitymanager = emfactory.createEntityManager( );
             entitymanager.getTransaction().begin();
-            StudentSection ss = entitymanager.find( StudentSection.class, obj.getId() );
+            
+            
+            StudentSection ss = findStudentSection(sectionId, o.getId());
+            
+            //also delete all studentassignments from this student
+            //delete all student assignments that have this studentSectionId
+            //deleteStudentsAssignments(ss.getId());
+            
+            
+            
             entitymanager.remove( ss );
             entitymanager.getTransaction().commit();   
             entitymanager.close();
@@ -154,4 +163,3 @@ public class SectionClass {
     }
     
 }
-
