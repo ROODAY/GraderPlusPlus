@@ -1,4 +1,4 @@
-package grader;
+package model;
 import java.math.BigDecimal;
 public class StudentAssignment {
 	private double totalScore;

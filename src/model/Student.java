@@ -1,4 +1,4 @@
-package grader;
+package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,7 +26,7 @@ public class Student {
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						showinfo();
+//						showinfo();
 
 						final Stage dialog = new Stage();
 						dialog.initModality(Modality.APPLICATION_MODAL);

@@ -1,0 +1,15 @@
+.titled-pane > .title
+{
+    -fx-background-color: #F47E26;
+    -fx-background-radius: 0;
+}
+
+.titled-pane > .title > .text {
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+
+.titled-pane > .title > .arrow-button .arrow
+{
+    -fx-background-color: white;
+}

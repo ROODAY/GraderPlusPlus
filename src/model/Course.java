@@ -1,4 +1,4 @@
-package grader;
+package model;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -90,46 +90,6 @@ public class Course {
 		return courseAssignmentList;
 	}
 
-	public void sortStdentListByName() {
-
-	}
-
-	public void sortStudentListByGPAHightoLow(){
-        Comparator<Student> GPAHL = new Comparator<Student>() {
-            public int compare(Student o1, Student o2) {
-                if (o1.getGPA() > o2.getGPA()) {
-                    return -1;
-                } else if (o1.getGPA() < o2.getGPA()) {
-                    return 1;
-                }else {
-                    return 0;
-                }
-            }
-        };
-
-        Collections.sort(studentList,GPAHL);
-	}
-
-    public void sortStudentListByGPALowtoHigh(){
-        Comparator<Student> GPALH = new Comparator<Student>() {
-            public int compare(Student o1, Student o2) {
-                if (o1.getGPA() > o2.getGPA()) {
-                    return 1;
-                } else if (o1.getGPA() < o2.getGPA()) {
-                    return -1;
-                }else {
-                    return 0;
-                }
-            }
-        };
-        Collections.sort(studentList,GPALH);
-    }
-
-
-
-	public void sortStudentByGroup(){
-
-	}
 
 	public void addStudent(Student stu){
 		this.studentList.add(stu);
@@ -139,22 +99,6 @@ public class Course {
 		return studentList;
 	}
 	// assignment view
-
-	public void sortAssignmentByGrade(){
-
-	}
-
-	public void getSortAssignmentBysubmit(){
-
-	}
-
-	public void addAssignment(){
-
-	}
-
-	public void showresult(){
-
-	}
 
 	// test use
 	public void printmoreStudentInfo(){
@@ -168,7 +112,7 @@ public class Course {
 		}
 	}
 
-	public void printAssignmentInfo(){
+	/*public void printAssignmentInfo(){
 		for (int i = 0; i < courseAssignmentList.size(); i++) {
 			System.out.print("Assignment Name: " + courseAssignmentList.get(i).getAssigmentName()+ "        ");
 			System.out.print("Assignment Comment: "+courseAssignmentList.get(i).getAssignmentComments()+ "        ");
@@ -197,7 +141,7 @@ public class Course {
             }
             System.out.println(stu.getGPA());
         }
-    }
+    }*/
 
 
 

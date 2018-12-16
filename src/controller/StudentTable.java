@@ -1,37 +1,40 @@
-package grader;
-
-import javafx.application.Application;
+package controller;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import java.io.IOException;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.beans.value.*;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.util.*;
-
+import javafx.util.Callback;
+import model.Course;
+import model.CourseAssignment;
+import model.Student;
+import model.StudentAssignment;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Table extends Application {
-
-    private TableView<Student> table = new TableView<Student>();
+public class StudentTable extends AnchorPane{
+    @FXML private TableView<Student> table;
     private final ObservableList<Student> data = FXCollections.observableArrayList();
     private Course course;
 
-    public static void main(String[] args) {
-        launch(args);
+    public StudentTable() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/studentTable.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+            //setTable();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
+
     public void setCouse(){
 
         StudentAssignment sa1_1 = new StudentAssignment();
@@ -97,7 +100,7 @@ public class Table extends Application {
         s2.setsID("U7235");
         s2.setButton();
 
-        CourseAssignment CS591_CA1 = new CourseAssignment();
+        /*CourseAssignment CS591_CA1 = new CourseAssignment();
         CS591_CA1.setAssigmentName("HW1");
         CS591_CA1.setAssignmentComments("Homework about BlackJack");
         CS591_CA1.setTotalPoints(30);
@@ -112,7 +115,7 @@ public class Table extends Application {
         List<CourseAssignment> coulist = new ArrayList<>();
         coulist.add(CS591_CA1);
         coulist.add(CS591_CA2);
-        coulist.add(CS591_CA3);
+        coulist.add(CS591_CA3);*/
 
         List<Student> stulist = new ArrayList<>();
         int[] weights_CS591 = new int[]{30,30,40};
@@ -128,8 +131,8 @@ public class Table extends Application {
         CS591.addStudent(s2);
         CS591.setWeights(weights_CS591);
         CS591.setAllGPA();
-        CS591.setCourseAssignmentList(coulist);
-        CS591.printStudentScore();
+        //CS591.setCourseAssignmentList(coulist);
+        //CS591.printStudentScore();
         CS591.setAssigenmentInfo();
 
 
@@ -142,32 +145,23 @@ public class Table extends Application {
             data.add(stu);
         }
     }
-    @Override
-    public void start(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Table View Sample");
-        stage.setWidth(800);
-        stage.setHeight(500);
 
-        final Label label = new Label("Student View");
-        label.setFont(new Font("Arial", 20));
-
-        table.setEditable(true);
+    public void setTable(){
         setCouse();
         addData();
+        addTableContent();
+    }
 
+    public void addTableContent(){
         List<CourseAssignment> CA = course.getCourseAssignmentList();
         TableColumn[] tableColumns = new TableColumn[CA.size()+3];
-
-
-
         for (int i  = 1 ; i < CA.size()+1;i++){
-            tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
+            //tableColumns[i] = new TableColumn(CA.get(i-1).getAssigmentName());
             tableColumns[i].setMinWidth(100);
             final int temp= i-1;
             tableColumns[i].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
                 @Override
-                public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> arg0) {
                     return new SimpleStringProperty(arg0.getValue().getAssignments().get(temp).getStringScore());
                 }
             });
@@ -177,7 +171,7 @@ public class Table extends Application {
         tableColumns[0].setMinWidth(100);
         tableColumns[0].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getName());
             }
         });
@@ -186,7 +180,7 @@ public class Table extends Application {
         tableColumns[CA.size() +1].setMinWidth(100);
         tableColumns[CA.size() +1].setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(CellDataFeatures<Student, String> arg0) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getStringGPA());
             }
         });
@@ -196,16 +190,5 @@ public class Table extends Application {
 
         table.setItems(data);
         table.getColumns().addAll(tableColumns);
-
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table);
-
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-        stage.setScene(scene);
-        stage.show();
     }
-
-
 }
