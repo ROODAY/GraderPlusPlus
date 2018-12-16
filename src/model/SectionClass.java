@@ -45,30 +45,30 @@ public class SectionClass {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         
-        String queryString = "SELECT e FROM StudentSection e WHERE e.sectionId = " + sectionID;
+        String queryString = "SELECT e FROM Student e WHERE e.sectionId = " + sectionID;
         
         Query query = entitymanager.createQuery(queryString);
-        Collection<StudentSection> arr = query.getResultList();
+        Collection<Student> arr = query.getResultList();
         
-        Collection<Student> students = new ArrayList<Student>();
-        
-        for (StudentSection o : arr){
-            
-            System.out.println(o.getStudentId());
-            StudentClass student = new StudentClass();
-            Student ind = student.find(o.getStudentId());
-            System.out.println(ind);
-           
-            students.add(ind);
-          
-        }
+//        Collection<Student> students = new ArrayList<Student>();
+//        
+//        for (StudentSection o : arr){
+//            
+//            System.out.println(o.getStudentId());
+//            StudentClass student = new StudentClass();
+//            Student ind = student.find(o.getStudentId());
+//            System.out.println(ind);
+//           
+//            students.add(ind);
+//          
+//        }
         
         entitymanager.close();
         emfactory.close();
         
-        System.out.println(students);
+        System.out.println(arr);
         
-        return students;
+        return arr;
     }
     
     
