@@ -53,21 +53,20 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
     public void initInfoButton() {
         this.button = new JFXButton("More Info");
         this.button.getStyleClass().add("flatBtn");
-        this.button.setOnAction(
-                event -> {
-                    JFXDialog dialog = new JFXDialog();
-                    VBox dialogVbox = new VBox(20);
-                    dialogVbox.getChildren().add(new Text("   Assignment Min:  " + min + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignment Max: " + max + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignment median: " + median + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignment Comments : " + assignmentComments + "        "));
-                    dialog.setContent(dialogVbox);
+        this.button.setOnAction(event -> {
+            JFXDialog dialog = new JFXDialog();
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().add(new Text("   Assignment Min:  " + min + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment Max: " + max + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment median: " + median + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment Comments : " + assignmentComments + "        "));
+            dialog.setContent(dialogVbox);
 
-                    StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+            StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
 
-                    dialog.show(root);
-                });
+            dialog.show(root);
+        });
     }
 
     /*public void setDateAssigned(String dateAssigned) {

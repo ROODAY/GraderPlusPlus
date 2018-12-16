@@ -4,18 +4,22 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<?import com.jfoenix.controls.JFXSnackbar?>
 <fx:root fx:id="assignmentPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="/css/tableView.css" type="javafx.scene.layout.AnchorPane" SplitPane.resizableWithParent="true" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox>
             <JFXButton fx:id="addAssignment" styleClass="flatBtn" text="Add Assignment" />
+            <Label fx:id="count" styleClass="recordCount">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin></Label>
             <Region HBox.hgrow="ALWAYS" />
             <JFXTextField fx:id="filter" />
          <VBox.margin>

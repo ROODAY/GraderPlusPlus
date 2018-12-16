@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTabPane;
 import entity.Course;
 import entity.Section;
 import entity.Semester;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -26,6 +27,17 @@ public class Sidebar extends AnchorPane {
     @FXML private VBox semesterContainer;
     @FXML private ScrollPane scrollContainer;
     @FXML private AnchorPane sidebar;
+
+    private static int currentSectionID;
+    private static String currentSectionName;
+
+    public static int getCurrentSectionId() {
+        return currentSectionID;
+    }
+
+    public static String getCurrentSectionName() {
+        return currentSectionName;
+    }
 
     public Sidebar() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/sidebar.fxml"));
@@ -120,11 +132,17 @@ public class Sidebar extends AnchorPane {
         section.setAlignment(Pos.BASELINE_LEFT);
 
         section.setOnAction(action -> {
+            currentSectionID = sectionId;
+            currentSectionName = sectionName;
+
             SplitPane pane = (SplitPane)sidebar.getScene().lookup("#splitPane");
             AnchorPane apane = (AnchorPane) pane.getItems().get(1);
-            JFXTabPane tabs = (JFXTabPane) apane.getChildren().get(0);
-            AssignmentTable table = (AssignmentTable) tabs.getTabs().get(0).getContent();
-            table.initializeTable(sectionName, sectionId);
+            ObservableList<Tab> tabs = ((JFXTabPane) apane.getChildren().get(0)).getTabs();
+
+            for (Tab tab : tabs) {
+                Table table = (Table)tab.getContent();
+                table.initializeTable(sectionName, sectionId);
+            }
         });
 
         fixWidths(section, vbox);

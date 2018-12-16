@@ -52,7 +52,6 @@ public class Main extends Application {
             ft2.setToValue(1.0);
             ft2.play();
             primaryStage.setScene(new Scene(home, sceneWidth, sceneHeight));
-            //primaryStage.setMaximized(true);
 
 
             SplitPane splitPane = (SplitPane) primaryStage.getScene().lookup("#splitPane");

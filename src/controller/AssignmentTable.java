@@ -33,13 +33,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
-public class AssignmentTable extends AnchorPane{
+public class AssignmentTable extends AnchorPane implements Table {
     @FXML private AnchorPane assignmentPane;
     @FXML private JFXTreeTableView<CourseAssignment> table;
     @FXML private JFXTextField filter;
     @FXML private JFXButton addAssignment;
-    private final ObservableList<CourseAssignment> data = FXCollections.observableArrayList();
-    private Course course;
+    @FXML private Label count;
 
     public AssignmentTable() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/assignmentTable.fxml"));
@@ -48,7 +47,6 @@ public class AssignmentTable extends AnchorPane{
 
         try {
             fxmlLoader.load();
-            //initializeTable();
             initControls();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
@@ -74,17 +72,10 @@ public class AssignmentTable extends AnchorPane{
     public void initializeTable(String sectionName, int sectionId) {
         JFXSnackbar bar = new JFXSnackbar(assignmentPane);
         Collection<Assignment> dbAssignments = AssignmentClass.findAll();
-        Collection<Student> dbStudents = StudentClass.findAll();
 
         if (dbAssignments.size() == 0) {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Assignments found for Section " + sectionName)));
         }
-        if (dbStudents.size() == 0) {
-            bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Students found for Section " + sectionName)));
-        }
-
-
-
 
 
         JFXTreeTableColumn<CourseAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
@@ -157,8 +148,7 @@ public class AssignmentTable extends AnchorPane{
                     || assignment.getValue().assignmentType.get().contains(newVal));
         });
 
-        Label size = new Label();
-        size.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+"",
+        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records",
                 table.currentItemsCountProperty()));
     }
 
