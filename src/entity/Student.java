@@ -5,29 +5,25 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import connector.StudentConnector;
 import controller.Sidebar;
 import controller.Table;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import model.AssignmentClass;
-import model.StudentClass;
-import model.WeightClass;
+import connector.WeightsConnector;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -101,7 +97,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
 
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
 
-                Collection<StudentAssignment> dbassignments = StudentClass.getAssignmentsbyStudent(id);
+                Collection<StudentAssignment> dbassignments = StudentConnector.getAssignmentsbyStudent(id);
                 ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
                 assignments.addAll(dbassignments);
 
@@ -141,13 +137,13 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 JFXButton saveChanges = (JFXButton) dialogVbox.lookup("#saveGrades");
                 saveChanges.setOnAction(saveEvent -> {
                     for (StudentAssignment sa : assignments) {
-                        StudentClass.updateStudentAssignment(sa);
+                        StudentConnector.updateStudentAssignment(sa);
                     }
 
                     localstudent.comments = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
                     localstudent.participation = Double.parseDouble(((JFXTextField)dialogVbox.lookup("#participation")).getText());
                     localstudent.ec = Double.parseDouble(((JFXTextField)dialogVbox.lookup("#extraCredit")).getText());
-                    StudentClass.updateStudent(localstudent);
+                    StudentConnector.updateStudent(localstudent);
 
                     dialog.close();
                     ((JFXTreeTableView)button.getScene().lookup("#table")).refresh();
@@ -155,7 +151,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
 
                 JFXButton delete = (JFXButton) dialogVbox.lookup("#delete");
                 delete.setOnAction(saveEvent -> {
-                    StudentClass.deleteStudent(id);
+                    StudentConnector.delete(id);
 
                     SplitPane pane = (SplitPane)button.getScene().lookup("#splitPane");
                     AnchorPane apane = (AnchorPane) pane.getItems().get(1);
@@ -285,9 +281,9 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     }
 
     public double getGrade() {
-        Collection<StudentAssignment> assignments = StudentClass.getAllStudentAssignments(id);
+        Collection<StudentAssignment> assignments = StudentConnector.getAllStudentAssignments(id);
         int weightType = program.equals("Undergrad") ? 0 : 1;
-        Collection<Weights> courseWeights = WeightClass.getWeightsForCourse(courseId);
+        Collection<Weights> courseWeights = WeightsConnector.getWeightsForCourse(courseId);
         Weights weights = courseWeights.stream()
                 .filter(uw -> uw.getType() == weightType)
                 .findAny()

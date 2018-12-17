@@ -1,29 +1,22 @@
 package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import entity.Assignment;
 import entity.Student;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
-import javafx.beans.property.SimpleStringProperty;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
-import model.SectionClass;
-import model.StudentClass;
+import connector.SectionConnector;
+import connector.StudentConnector;
 
-import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentTable extends AnchorPane implements Table{
@@ -66,7 +59,7 @@ public class StudentTable extends AnchorPane implements Table{
                     String email = ((JFXTextField)node.lookup("#emailField")).getText();
                     String program = ((Label)((JFXComboBox)node.lookup("#programField")).getValue()).getText();
 
-                    Student student = StudentClass.create(buid, Sidebar.getCurrentSectionId(), Sidebar.getCurrentCourseId(), fname, lname, email, program, "", 0.0, 0.0);
+                    Student student = StudentConnector.create(buid, Sidebar.getCurrentSectionId(), Sidebar.getCurrentCourseId(), fname, lname, email, program, "", 0.0, 0.0);
                     students.add(student);
                     dialog.close();
                 });
@@ -81,7 +74,7 @@ public class StudentTable extends AnchorPane implements Table{
     public void initializeTable(String sectionName, int sectionId) {
         students.clear();
         JFXSnackbar bar = new JFXSnackbar(studentPane);
-        Collection<Student> dbStudents = SectionClass.getStudents(sectionId);
+        Collection<Student> dbStudents = SectionConnector.getStudents(sectionId);
         if (dbStudents.size() == 0) {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Students found for Section " + sectionName)));
         } else {

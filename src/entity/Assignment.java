@@ -9,7 +9,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import controller.AssignmentTable;
+import connector.StudentConnector;
 import controller.Sidebar;
 import controller.Table;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -22,8 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import model.AssignmentClass;
-import model.StudentClass;
+import connector.AssignmentConnector;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -83,14 +82,14 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
             try {
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
 
-                Collection<StudentAssignment> dbassignments = AssignmentClass.getAllStudentwithAssignment(id);
+                Collection<StudentAssignment> dbassignments = AssignmentConnector.getAllStudentwithAssignment(id);
                 ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
                 assignments.addAll(dbassignments);
 
-                double avg = assignments.stream()
+                double avg = Math.round(assignments.stream()
                         .mapToInt(StudentAssignment::getpoints)
                         .average()
-                        .orElse(0);
+                        .orElse(0) * 100) / 100;
                 double min = assignments.stream()
                         .mapToInt(StudentAssignment::getpoints)
                         .min()
@@ -110,10 +109,10 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 assignments.addListener((ListChangeListener<StudentAssignment>) c -> {
                     while (c.next()) {
                         if (c.wasPermutated() || c.wasUpdated()) {
-                            double avg1 = assignments.stream()
+                            double avg1 = Math.round(assignments.stream()
                                     .mapToInt(StudentAssignment::getpoints)
                                     .average()
-                                    .orElse(0);
+                                    .orElse(0) * 100) / 100;
                             double min1 = assignments.stream()
                                     .mapToInt(StudentAssignment::getpoints)
                                     .min()
@@ -164,11 +163,11 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 JFXButton saveChanges = (JFXButton) dialogVbox.lookup("#saveGrades");
                 saveChanges.setOnAction(saveEvent -> {
                     for (StudentAssignment sa : assignments) {
-                        StudentClass.updateStudentAssignment(sa);
+                        StudentConnector.updateStudentAssignment(sa);
                     }
 
                     localassignment.description = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
-                    AssignmentClass.updateAssignment(localassignment);
+                    AssignmentConnector.updateAssignment(localassignment);
 
                     //AssignmentTable.getTable().refresh();
 
@@ -178,7 +177,7 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
 
                 JFXButton delete = (JFXButton) dialogVbox.lookup("#delete");
                 delete.setOnAction(saveEvent -> {
-                    AssignmentClass.delete(id);
+                    AssignmentConnector.delete(id);
 
                     SplitPane pane = (SplitPane)button.getScene().lookup("#splitPane");
                     AnchorPane apane = (AnchorPane) pane.getItems().get(1);
@@ -208,7 +207,7 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
     }
 
     public double getClassAverage() {
-        Collection<StudentAssignment> assignments = AssignmentClass.getAllStudentwithAssignment(id);
+        Collection<StudentAssignment> assignments = AssignmentConnector.getAllStudentwithAssignment(id);
         return Math.round(assignments.stream()
                 .mapToInt(StudentAssignment::getpoints)
                 .average()

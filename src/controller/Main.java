@@ -10,17 +10,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import entity.Student;
-import model.StudentClass;
-
-import java.util.Collection;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //StudentClass.create(5, "Jane", "Doe", "jane@bu.edu", "BU");
-        //StudentClass student = new StudentClass();
+        //StudentConnector.create(5, "Jane", "Doe", "jane@bu.edu", "BU");
+        //StudentConnector student = new StudentConnector();
         //student.uploadStudentsCSV("/Users/miguelvaldez/Desktop/students_roster.csv");
 
 

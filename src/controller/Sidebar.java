@@ -5,21 +5,16 @@ import entity.Course;
 import entity.Section;
 import entity.Semester;
 import entity.Weights;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.*;
-import model.CourseClass;
-import model.SectionClass;
-import model.SemesterClass;
-import model.WeightClass;
+import connector.CourseConnector;
+import connector.SectionConnector;
+import connector.SemesterConnector;
+import connector.WeightsConnector;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -58,14 +53,14 @@ public class Sidebar extends AnchorPane {
             loader.load();
             JFXScrollPane.smoothScrolling(scrollContainer);
 
-            Collection<Semester> semesters = SemesterClass.findAll();
+            Collection<Semester> semesters = SemesterConnector.findAll();
             for (Semester semester : semesters) {
                 VBox semesterPaneContent = initSemesterPane(semester.getName(), semester.getId());
-                Collection<Course> courses = SemesterClass.getCourses(semester.getId());
+                Collection<Course> courses = SemesterConnector.getCourses(semester.getId());
 
                 for (Course course : courses) {
                     VBox classPaneContent = initClassPane(course.getName(), course.getId(), semesterPaneContent);
-                    Collection<Section> sections = CourseClass.getSections(course.getId());
+                    Collection<Section> sections = CourseConnector.getSections(course.getId());
 
                     for (Section section : sections) {
                         initSectionButton(section.getName(), section.getId(), classPaneContent);
@@ -146,16 +141,16 @@ public class Sidebar extends AnchorPane {
             try {
                 GridPane dialogContent = FXMLLoader.load(getClass().getResource("../view/courseSettingsModal.fxml"));
 
-                Collection<Weights> weights = WeightClass.getWeightsForCourse(classId);
+                Collection<Weights> weights = WeightsConnector.getWeightsForCourse(classId);
 
                 Weights ugrad = weights.stream()
                         .filter(uw -> uw.getType() == 0)
                         .findAny()
-                        .orElse(WeightClass.create(classId, 0, 50, 30, 15, 5));
+                        .orElse(WeightsConnector.create(classId, 0, 50, 30, 15, 5));
                 Weights grad = weights.stream()
                         .filter(uw -> uw.getType() == 1)
                         .findAny()
-                        .orElse(WeightClass.create(classId, 1, 50, 30, 15, 5));
+                        .orElse(WeightsConnector.create(classId, 1, 50, 30, 15, 5));
 
                 JFXSlider hwField = ((JFXSlider)dialogContent.lookup("#hwField"));
                 hwField.setValue(ugrad.getHwWeight());
@@ -202,8 +197,8 @@ public class Sidebar extends AnchorPane {
                         grad.setExamWeight((int) gExamField.getValue());
                         grad.setParticipationWeight((int) gPartField.getValue());
 
-                        WeightClass.updateWeights(ugrad);
-                        WeightClass.updateWeights(grad);
+                        WeightsConnector.updateWeights(ugrad);
+                        WeightsConnector.updateWeights(grad);
 
                         dialog.close();
                     }
@@ -248,7 +243,7 @@ public class Sidebar extends AnchorPane {
         TextInputDialog dialog = generateDialog("2018/Fall", "Add New Semester", "Please enter the semester:");
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(semester -> {
-            int semesterId = SemesterClass.create(semester);
+            int semesterId = SemesterConnector.create(semester);
             initSemesterPane(semester, semesterId);
         });
     }
@@ -258,7 +253,7 @@ public class Sidebar extends AnchorPane {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(classname -> {
             int semesterId = (int) vbox.getProperties().get("semesterId");
-            int classId = CourseClass.create(classname, 1, semesterId, "");
+            int classId = CourseConnector.create(classname, 1, semesterId, "");
             initClassPane(classname, classId, vbox);
         });
     }
@@ -268,7 +263,7 @@ public class Sidebar extends AnchorPane {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(sectionName -> {
             int classId = (int) vbox.getProperties().get("classId");
-            int sectionId = SectionClass.create(sectionName, classId);
+            int sectionId = SectionConnector.create(sectionName, classId);
             initSectionButton(sectionName, sectionId, vbox);
         });
     }

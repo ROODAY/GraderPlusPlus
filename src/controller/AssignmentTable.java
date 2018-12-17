@@ -3,14 +3,10 @@ package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import entity.Assignment;
-import entity.Student;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
@@ -19,19 +15,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
-import model.AssignmentClass;
-import model.Course;
-import model.CourseAssignment;
-import model.StudentClass;
+import connector.AssignmentConnector;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Random;
 
 public class AssignmentTable extends AnchorPane implements Table {
     @FXML private AnchorPane assignmentPane;
@@ -72,8 +60,8 @@ public class AssignmentTable extends AnchorPane implements Table {
                     String type = ((Label)((JFXComboBox)node.lookup("#typeField")).getValue()).getText();
                     String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 
-                    Assignment assignment = AssignmentClass.create(Sidebar.getCurrentCourseId(), name, points, type, date, "");
-                    AssignmentClass.addAssignmentToCourse(assignment);
+                    Assignment assignment = AssignmentConnector.create(Sidebar.getCurrentCourseId(), name, points, type, date, "");
+                    AssignmentConnector.addAssignmentToCourse(assignment);
                     assignments.add(assignment);
                     dialog.close();
                 });
@@ -87,7 +75,7 @@ public class AssignmentTable extends AnchorPane implements Table {
     public void initializeTable(String sectionName, int sectionId) {
         assignments.clear();
         JFXSnackbar bar = new JFXSnackbar(assignmentPane);
-        Collection<Assignment> dbAssignments = AssignmentClass.findAllInCourse(Sidebar.getCurrentCourseId());
+        Collection<Assignment> dbAssignments = AssignmentConnector.findAllInCourse(Sidebar.getCurrentCourseId());
         if (dbAssignments.size() == 0) {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Assignments found for Section " + sectionName)));
         } else {

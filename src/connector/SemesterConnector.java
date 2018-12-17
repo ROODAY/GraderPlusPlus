@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
 import java.util.Collection;
-import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,10 +14,8 @@ import javax.persistence.Query;
 
 import entity.Course;
 import entity.Semester;
-import entity.Student;
-import entity.Assignment;
 
-public class SemesterClass {
+public class SemesterConnector {
     
     public static int create(String name) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

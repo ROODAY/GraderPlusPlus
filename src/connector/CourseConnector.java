@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
 import java.util.Collection;
-import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,10 +14,9 @@ import javax.persistence.Query;
 
 import entity.*;
 import entity.Course;
-import entity.Student;
 
 
-public class CourseClass {
+public class CourseConnector {
     
     public static void main( String[ ] args ) {
     

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
-import entity.StudentAssignment;
 import entity.Weights;
 
 import javax.persistence.EntityManager;
@@ -18,7 +17,7 @@ import java.util.Collection;
  *
  * @author miguelvaldez
  */
-public class WeightClass {
+public class WeightsConnector {
     
     public static Weights create(int courseId, int type, int examWeight, int quizWeight, int hwWeight, int participationWeight) {
        

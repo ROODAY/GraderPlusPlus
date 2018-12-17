@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
 import java.util.Collection;
 
@@ -17,7 +17,7 @@ import entity.StudentAssignment;
 import entity.Student;
 
 
-public class AssignmentClass {
+public class AssignmentConnector {
     
     public static void main( String[ ] args ) {
     

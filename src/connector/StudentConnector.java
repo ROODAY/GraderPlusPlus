@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
 import java.util.Collection;
 
@@ -21,32 +21,9 @@ import entity.StudentAssignment;
 import entity.Assignment;
 
 
-public class StudentClass extends DBClass {
-    
-    @Override
-    public void delete(int id) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
-        EntityManager entitymanager = emfactory.createEntityManager( );
-        entitymanager.getTransaction().begin();
+public class StudentConnector {
 
-        Student student = entitymanager.find( Student.class, id );
-        entitymanager.remove( student );
-        entitymanager.getTransaction().commit();
-        
-        Collection<StudentAssignment> sas = getAssignmentsbyStudent(id);
-        
-        for(StudentAssignment sa : sas) {
-            StudentAssignment s = entitymanager.find( StudentAssignment.class, id);
-            
-            entitymanager.remove(s);
-            entitymanager.getTransaction().commit();
-        }        
-        
-        entitymanager.close();
-        emfactory.close();
-    }
-
-    public static void deleteStudent(int id) {
+    public static void delete(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
         EntityManager entitymanager = emfactory.createEntityManager( );
 
@@ -73,10 +50,9 @@ public class StudentClass extends DBClass {
         entitymanager.close();
         emfactory.close();
     }
-    
-    @Override
+
     public void update(int id) {
-        
+
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
@@ -118,7 +94,7 @@ public class StudentClass extends DBClass {
         entitymanager.getTransaction().commit();
         
         //check if that course has assignments, if it does, create the student assignments
-        CourseClass cc = new CourseClass();
+        CourseConnector cc = new CourseConnector();
         
         Collection<Assignment> assignments = cc.getAssignments(courseId);
         

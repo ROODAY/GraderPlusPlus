@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package connector;
 
 import entity.Section;
 import entity.Student;
 import entity.StudentSection;
-import java.util.ArrayList;
+
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
  *
  * @author miguelvaldez
  */
-public class SectionClass {
+public class SectionConnector {
 
     public static int create(String name, int courseId) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
@@ -55,7 +55,7 @@ public class SectionClass {
 //        for (StudentSection o : arr){
 //            
 //            System.out.println(o.getStudentId());
-//            StudentClass student = new StudentClass();
+//            StudentConnector student = new StudentConnector();
 //            Student ind = student.find(o.getStudentId());
 //            System.out.println(ind);
 //           
