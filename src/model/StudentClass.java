@@ -171,7 +171,7 @@ public class StudentClass extends DBClass {
     }
     
     
-    public Collection<StudentAssignment> getAllStudentAssignments(int studentId) {
+    public static Collection<StudentAssignment> getAllStudentAssignments(int studentId) {
         
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

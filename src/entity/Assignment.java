@@ -9,6 +9,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import controller.AssignmentTable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,19 +79,32 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
             try {
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
 
+                Collection<StudentAssignment> dbassignments = AssignmentClass.getAllStudentwithAssignment(id);
+                ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
+                assignments.addAll(dbassignments);
+
+                double avg = assignments.stream()
+                        .mapToInt(StudentAssignment::getpoints)
+                        .average()
+                        .orElse(0);
+                double min = assignments.stream()
+                        .mapToInt(StudentAssignment::getpoints)
+                        .min()
+                        .orElse(0);
+                double max = assignments.stream()
+                        .mapToInt(StudentAssignment::getpoints)
+                        .max()
+                        .orElse(0);
+
                 ((Text)dialogVbox.lookup("#header")).setText("Grade " + name + " (" + dateAssigned + ")");
                 ((Label)dialogVbox.lookup("#totalPoints")).setText("Total Points: " + totalPoints);
-                ((Label)dialogVbox.lookup("#average")).setText("Average Score: " + 0);
-                ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + 0);
-                ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + 0);
+                ((Label)dialogVbox.lookup("#average")).setText("Average Score: " + avg);
+                ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + min);
+                ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + max);
                 ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localassignment.description);
 
                 dialog.setContent(dialogVbox);
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
-
-                Collection<StudentAssignment> dbassignments = AssignmentClass.getAllStudentwithAssignment(id);
-                ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
-                assignments.addAll(dbassignments);
 
                 JFXTreeTableColumn<StudentAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
                 nameColumn.setPrefWidth(150);
@@ -129,7 +143,10 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                     localassignment.description = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
                     AssignmentClass.updateAssignment(localassignment);
 
+                    //AssignmentTable.getTable().refresh();
+
                     dialog.close();
+                    ((JFXTreeTableView)button.getScene().lookup("#table")).refresh();
                 });
 
 
@@ -148,7 +165,11 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
     }
 
     public double getClassAverage() {
-        return 0.0;
+        Collection<StudentAssignment> assignments = AssignmentClass.getAllStudentwithAssignment(id);
+        return Math.round(assignments.stream()
+                .mapToInt(StudentAssignment::getpoints)
+                .average()
+                .orElse(0) / totalPoints * 100 * 100) / 100.0;
     }
 
     public void setId(int id) {

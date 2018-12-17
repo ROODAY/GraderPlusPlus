@@ -132,6 +132,14 @@ public class AssignmentClass {
         entitymanager.close();
         emfactory.close();
     }
+
+    public static Collection<Assignment> findAllInCourse(int courseid) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
+        Query query = entitymanager.createQuery("SELECT e FROM Assignment e WHERE e.courseId = " + courseid);
+        return (Collection<Assignment>) query.getResultList();
+    }
     
     
     public static Collection<StudentAssignment> getAllStudentwithAssignment(int assignmentId) {

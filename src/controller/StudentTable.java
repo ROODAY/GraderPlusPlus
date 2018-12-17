@@ -105,7 +105,7 @@ public class StudentTable extends AnchorPane implements Table{
         programColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, String> param) ->
                 new ReadOnlyObjectWrapper<>(param.getValue().getValue().getProgram()));
 
-        JFXTreeTableColumn<Student, Number> gradeColumn = new JFXTreeTableColumn<>("Current Grade");
+        JFXTreeTableColumn<Student, Number> gradeColumn = new JFXTreeTableColumn<>("Current Grade (%)");
         gradeColumn.setPrefWidth(150);
         gradeColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Student, Number> param) ->
                 new ReadOnlyObjectWrapper<>(param.getValue().getValue().getGrade()));

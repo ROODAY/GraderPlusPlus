@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.AssignmentClass;
 import model.StudentClass;
+import model.WeightClass;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -46,8 +47,6 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     private String program;
     
     private String comments;
-
-    private double grade;
     
     
     
@@ -80,7 +79,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeStudentModal.fxml"));
 
                 ((Text)dialogVbox.lookup("#header")).setText(first_name + " " + last_name);
-                ((Label)dialogVbox.lookup("#currentGrade")).setText("Current Grade: " + grade);
+                ((Label)dialogVbox.lookup("#currentGrade")).setText("Current Grade: " + getGrade());
                 ((Label)dialogVbox.lookup("#program")).setText("Program: " + program);
                 ((Label)dialogVbox.lookup("#email")).setText("Email: " + email);
                 ((Label)dialogVbox.lookup("#buid")).setText("BU ID: U" + bu_id);
@@ -137,6 +136,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                     StudentClass.updateStudent(localstudent);
 
                     dialog.close();
+                    ((JFXTreeTableView)button.getScene().lookup("#table")).refresh();
                 });
 
                 dialog.show(root);
@@ -247,11 +247,19 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     }
 
     public double getGrade() {
-        return grade;
-    }
+        Collection<StudentAssignment> assignments = StudentClass.getAllStudentAssignments(id);
+        int weightType = program.equals("Undergrad") ? 0 : 1;
+        Collection<Weights> courseWeights = WeightClass.getWeightsForCourse(courseId);
+        Weights weights = courseWeights.stream()
+                .filter(uw -> uw.getType() == weightType)
+                .findAny()
+                .orElse(new Weights(courseId, weightType));
 
-    public void setGrade(double grade) {
-        this.grade = grade;
+        //assignments.stream().filter(a -> a.ge)
+
+        //Homework Quiz Exam
+
+        return 0.0;
     }
 
     public int getCourseId() {

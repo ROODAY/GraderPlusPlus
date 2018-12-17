@@ -87,7 +87,7 @@ public class AssignmentTable extends AnchorPane implements Table {
     public void initializeTable(String sectionName, int sectionId) {
         assignments.clear();
         JFXSnackbar bar = new JFXSnackbar(assignmentPane);
-        Collection<Assignment> dbAssignments = AssignmentClass.findAll();
+        Collection<Assignment> dbAssignments = AssignmentClass.findAllInCourse(Sidebar.getCurrentCourseId());
         if (dbAssignments.size() == 0) {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Assignments found for Section " + sectionName)));
         } else {
@@ -112,10 +112,11 @@ public class AssignmentTable extends AnchorPane implements Table {
         dateAssignedColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Assignment, String> param) ->
                 new ReadOnlyObjectWrapper<>(param.getValue().getValue().getDateAssigned()));
 
-        JFXTreeTableColumn<Assignment, Number> averageColumn = new JFXTreeTableColumn<>("Class Average");
+        JFXTreeTableColumn<Assignment, Number> averageColumn = new JFXTreeTableColumn<>("Class Average (%)");
         averageColumn.setPrefWidth(150);
         averageColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<Assignment, Number> param) ->
                 new ReadOnlyObjectWrapper<>(param.getValue().getValue().getClassAverage()));
+
 
         JFXTreeTableColumn<Assignment, Button> actionColumn = new JFXTreeTableColumn<>("");
         actionColumn.setPrefWidth(150);
