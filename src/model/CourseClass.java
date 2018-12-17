@@ -24,7 +24,7 @@ public class CourseClass {
     
     }
     
-    public static int create(String name, int teacherId, int semesterId) {
+    public static int create(String name, int teacherId, int semesterId, String comments) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
@@ -33,6 +33,7 @@ public class CourseClass {
         course.setName(name);
         course.setTeacherId(teacherId);
         course.setSemesterId(semesterId);
+        course.setComments(comments);
 
         entitymanager.persist( course );
         entitymanager.getTransaction().commit();
@@ -119,5 +120,21 @@ public class CourseClass {
 
         return arr;
 
+    }
+    
+    public void updateCourse(Course sa) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        
+        Course na = entitymanager.find( Course.class, sa.getId());
+        
+        na.setComments(sa.getComments());
+        entitymanager.getTransaction().commit( );
+
+        //after update
+        System.out.println( na );
+        entitymanager.close();
+        emfactory.close();
     }
 }
