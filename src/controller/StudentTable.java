@@ -79,6 +79,7 @@ public class StudentTable extends AnchorPane implements Table{
     }
 
     public void initializeTable(String sectionName, int sectionId) {
+        students.clear();
         JFXSnackbar bar = new JFXSnackbar(studentPane);
         Collection<Student> dbStudents = SectionClass.getStudents(sectionId);
         if (dbStudents.size() == 0) {

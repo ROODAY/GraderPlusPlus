@@ -8,11 +8,13 @@ package entity;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,17 +64,15 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
         button.getStyleClass().add("flatBtn");
         button.setOnAction(event -> {
             JFXDialog dialog = new JFXDialog();
-            VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text("   Assignment Min:  " + 0 + "        "));
-            dialogVbox.getChildren().add(new Text("   Assignment Max: " + 0 + "        "));
-            dialogVbox.getChildren().add(new Text("   Assignment median: " + 0 + "        "));
-            dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
-            dialogVbox.getChildren().add(new Text("   Assignment Comments : "  + "        "));
-            dialog.setContent(dialogVbox);
+            try {
+                VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
+                dialog.setContent(dialogVbox);
+                StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+                dialog.show(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
-
-            dialog.show(root);
         });
 
         return button;

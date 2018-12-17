@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.controls.JFXTabPane;
 import entity.Course;
@@ -9,14 +10,14 @@ import entity.Semester;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.layout.*;
 import model.CourseClass;
 import model.SectionClass;
 import model.SemesterClass;
@@ -136,6 +137,22 @@ public class Sidebar extends AnchorPane {
                 currentCourseId = classId;
             }
         });
+
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Course Settings");
+        item1.setOnAction(event -> {
+            JFXDialog dialog = new JFXDialog();
+            try {
+                GridPane dialogContent = FXMLLoader.load(getClass().getResource("../view/courseSettingsModal.fxml"));
+                dialog.setContent(dialogContent);
+                StackPane root = (StackPane) classPane.getScene().lookup("#dialogPane");
+                dialog.show(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        contextMenu.getItems().addAll(item1);
+        classPane.setOnContextMenuRequested(event -> contextMenu.show(classPane, event.getScreenX(), event.getScreenY()));
 
         return content;
     }

@@ -84,6 +84,7 @@ public class AssignmentTable extends AnchorPane implements Table {
     }
 
     public void initializeTable(String sectionName, int sectionId) {
+        assignments.clear();
         JFXSnackbar bar = new JFXSnackbar(assignmentPane);
         Collection<Assignment> dbAssignments = AssignmentClass.findAll();
         if (dbAssignments.size() == 0) {
