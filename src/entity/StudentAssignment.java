@@ -19,6 +19,8 @@ public class StudentAssignment implements Serializable {
     
     private int id;
     private String name;
+    private String studentName;
+    private String studentLastName;
     private String description;
     private String response;
     private int courseId;
@@ -27,6 +29,24 @@ public class StudentAssignment implements Serializable {
     private int assignmentId;
     private int points;
 
+    public StudentAssignment(int id, String name, String studentName, String studentLastName, int sectionId, int studentId, int assignmentId, int courseId,  int points, String type) {
+        super();
+        this.id = id;
+        this.courseId = courseId;
+        this.sectionId = sectionId;
+        this.studentId = studentId;
+        this.assignmentId = assignmentId;
+        this.name = name;
+        this.studentName = studentName;
+        this.studentLastName = studentLastName;
+        this.points = points;
+    }
+
+    
+    
+    public StudentAssignment() {
+        super();
+    }
     
     
     
@@ -38,12 +58,28 @@ public class StudentAssignment implements Serializable {
         this.id = id;
     }
     
-     public String getName() {
+    public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+    
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
     }
     
      public String getDescription() {
