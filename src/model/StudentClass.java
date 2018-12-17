@@ -191,7 +191,7 @@ public class StudentClass extends DBClass {
         
         StudentAssignment na = entitymanager.find( StudentAssignment.class, sa.getId());
         
-        na.setName("Luke");
+        na.setPoints(sa.getpoints());
         entitymanager.getTransaction().commit( );
 
         //after update
