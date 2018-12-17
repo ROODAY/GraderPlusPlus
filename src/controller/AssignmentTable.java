@@ -73,6 +73,7 @@ public class AssignmentTable extends AnchorPane implements Table {
                     String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 
                     Assignment assignment = AssignmentClass.create(Sidebar.getCurrentCourseId(), name, points, type, date);
+                    AssignmentClass.addAssignmentToCourse(assignment);
                     assignments.add(assignment);
                     dialog.close();
                 });

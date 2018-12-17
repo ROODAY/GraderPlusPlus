@@ -8,6 +8,7 @@
     <class>entity.Semester</class>
     <class>entity.Section</class>
     <class>entity.Course</class>
+    <class>entity.StudentAssignment</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gradebook?autoReconnect=true&amp;useSSL=false"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

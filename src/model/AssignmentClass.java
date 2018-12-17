@@ -45,7 +45,7 @@ public class AssignmentClass {
     }
     
     
-    public void addAssignmentToCourse(Assignment assignment) {
+    public static void addAssignmentToCourse(Assignment assignment) {
         //get students in course sections
         //create the student assignments
         
@@ -74,9 +74,11 @@ public class AssignmentClass {
             
             entitymanager.persist( sa );
             entitymanager.getTransaction().commit();
-            entitymanager.close();
           
         }
+
+
+        entitymanager.close();
         
         emfactory.close();
     }
@@ -130,7 +132,7 @@ public class AssignmentClass {
     }
     
     
-    public Collection<StudentAssignment> getAllStudentwithAssignment(int assignmentId) {
+    public static Collection<StudentAssignment> getAllStudentwithAssignment(int assignmentId) {
         
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

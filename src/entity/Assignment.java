@@ -5,17 +5,26 @@
  */
 package entity;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
+import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.AssignmentClass;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -68,6 +77,38 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
                 dialog.setContent(dialogVbox);
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+
+                Collection<StudentAssignment> dbassignments = AssignmentClass.getAllStudentwithAssignment(id);
+                ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
+                assignments.addAll(dbassignments);
+
+                JFXTreeTableColumn<StudentAssignment, String> nameColumn = new JFXTreeTableColumn<>("Name");
+                nameColumn.setPrefWidth(150);
+                nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<StudentAssignment, String> param) -> {
+                        StudentAssignment obj = param.getValue().getValue();
+                        return new ReadOnlyObjectWrapper<>(obj.getStudentName() + " " + obj.getStudentLastName());
+                });
+
+                JFXTreeTableColumn<StudentAssignment, Number> gradeColumn = new JFXTreeTableColumn<>("Grade");
+                gradeColumn.setPrefWidth(150);
+                gradeColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<StudentAssignment, Number> param) ->
+                        new ReadOnlyObjectWrapper<>(param.getValue().getValue().getpoints()));
+
+
+                gradeColumn.setCellFactory((TreeTableColumn<StudentAssignment, Number> param) -> new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder()));
+                gradeColumn.setOnEditCommit((TreeTableColumn.CellEditEvent<StudentAssignment, Number> t)->{
+                    t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue().setPoints((Integer) t.getNewValue());
+                });
+
+                final TreeItem<StudentAssignment> tableroot = new RecursiveTreeItem<>(assignments, RecursiveTreeObject::getChildren);
+                JFXTreeTableView<StudentAssignment> treeView = (JFXTreeTableView<StudentAssignment>) dialogVbox.lookup("#table");
+                treeView.setShowRoot(false);
+                treeView.setRoot(tableroot);
+                treeView.setEditable(true);
+                treeView.getColumns().setAll(nameColumn, gradeColumn);
+                treeView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+
+
                 dialog.show(root);
             } catch (IOException e) {
                 e.printStackTrace();
