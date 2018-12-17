@@ -1,12 +1,10 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXScrollPane;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.*;
 import entity.Course;
 import entity.Section;
 import entity.Semester;
+import entity.Weights;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -21,6 +19,7 @@ import javafx.scene.layout.*;
 import model.CourseClass;
 import model.SectionClass;
 import model.SemesterClass;
+import model.WeightClass;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -144,6 +143,46 @@ public class Sidebar extends AnchorPane {
             JFXDialog dialog = new JFXDialog();
             try {
                 GridPane dialogContent = FXMLLoader.load(getClass().getResource("../view/courseSettingsModal.fxml"));
+
+                Collection<Weights> weights = WeightClass.getWeightsForCourse(classId);
+
+                Weights ugrad = weights.stream()
+                        .filter(uw -> uw.getType() == 0)
+                        .findAny()
+                        .orElse(null);
+                Weights grad = weights.stream()
+                        .filter(uw -> uw.getType() == 1)
+                        .findAny()
+                        .orElse(null);
+
+                if (ugrad == null) {
+                    ugrad = new Weights(classId, 0);
+                }
+                if (grad == null) {
+                    grad = new Weights(classId, 1);
+                }
+
+                JFXSlider hwField = ((JFXSlider)dialogContent.lookup("#hwField"));
+                hwField.setValue(ugrad.getHwWeight());
+                JFXSlider quizField = ((JFXSlider)dialogContent.lookup("#quizField"));
+                quizField.setValue(ugrad.getQuizWeight());
+                JFXSlider examField = ((JFXSlider)dialogContent.lookup("#examField"));
+                examField.setValue(ugrad.getExamWeight());
+                JFXSlider partField = ((JFXSlider)dialogContent.lookup("#partField"));
+                partField.setValue(ugrad.getParticipationWeight());
+
+                JFXSlider gHwField = ((JFXSlider)dialogContent.lookup("#gHwField"));
+                gHwField.setValue(ugrad.getHwWeight());
+                JFXSlider gQuizField = ((JFXSlider)dialogContent.lookup("#gQuizField"));
+                gQuizField.setValue(ugrad.getQuizWeight());
+                JFXSlider gExamField = ((JFXSlider)dialogContent.lookup("#gExamField"));
+                gExamField.setValue(ugrad.getExamWeight());
+                JFXSlider gPartField = ((JFXSlider)dialogContent.lookup("#gPartField"));
+                gPartField.setValue(ugrad.getParticipationWeight());
+
+                JFXButton saveButton = (JFXButton) dialogContent.lookup("#saveWeights");
+                Label error = (Label) dialogContent.lookup("#error");
+
                 dialog.setContent(dialogContent);
                 StackPane root = (StackPane) classPane.getScene().lookup("#dialogPane");
                 dialog.show(root);

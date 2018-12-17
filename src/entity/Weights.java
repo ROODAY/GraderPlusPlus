@@ -30,6 +30,19 @@ public class Weights implements Serializable {
     private int homeworkWeight;
     private int participationWeight;
 
+    public Weights(int courseId, int type) {
+        super();
+        this.courseId = courseId;
+        this.type = type;
+        this.examWeight = 50;
+        this.quizWeight = 30;
+        this.homeworkWeight = 15;
+        this.participationWeight = 5;
+    }
+
+    public Weights() {
+    }
+
     public int getId() {
         return id;
     }

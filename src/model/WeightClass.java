@@ -5,9 +5,14 @@
  */
 package model;
 
+import entity.StudentAssignment;
+import entity.Weights;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.util.Collection;
 
 /**
  *
@@ -34,19 +39,34 @@ public class WeightClass {
         entitymanager.close();
         emfactory.close();
     }
+
+    public static Collection<Weights> getWeightsForCourse(int courseid) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
+        String queryString = "SELECT e FROM Weights e WHERE e.courseId = " + courseid;
+
+        Query query = entitymanager.createQuery(queryString);
+        Collection<Weights> arr = query.getResultList();
+
+        entitymanager.close();
+        emfactory.close();
+
+        return arr;
+    }
     
-    public void updateWeights(entity.Weights sa) {
+    public static void updateWeights(Weights weights) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
         
-        entity.Weights na = entitymanager.find( entity.Weights.class, sa.getId());
+        entity.Weights na = entitymanager.find( entity.Weights.class, weights.getId());
         
-        na.setType(sa.getType());
-        na.setHwWeight(sa.getHwWeight());
-        na.setQuizWeight(sa.getQuizWeight());
-        na.setExamWeight(sa.getExamWeight());
-        na.setParticipationWeight(sa.getParticipationWeight());
+        na.setType(weights.getType());
+        na.setHwWeight(weights.getHwWeight());
+        na.setQuizWeight(weights.getQuizWeight());
+        na.setExamWeight(weights.getExamWeight());
+        na.setParticipationWeight(weights.getParticipationWeight());
         entitymanager.getTransaction().commit( );
 
         //after update
