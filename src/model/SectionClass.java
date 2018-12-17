@@ -119,9 +119,7 @@ public class SectionClass {
         
         //delete students that are not longer on list
         for(Student o: studentsInSection) {
-            
-            
-            
+               
             EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
             EntityManager entitymanager = emfactory.createEntityManager( );
             entitymanager.getTransaction().begin();

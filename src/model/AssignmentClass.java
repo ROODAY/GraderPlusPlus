@@ -14,6 +14,7 @@ import javax.persistence.Query;
 
 import entity.Assignment;
 import entity.StudentAssignment;
+import entity.Student;
 
 
 public class AssignmentClass {
@@ -67,17 +68,12 @@ public class AssignmentClass {
             sa.setAssignmentId(assignment.getId());
             sa.setPoints(0);
             
-           
-
-            entitymanager.persist( student );
+            entitymanager.persist( sa );
             entitymanager.getTransaction().commit();
             entitymanager.close();
           
         }
-        
-        
         emfactory.close();
-        
     }
     
     
