@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import entity.Student;
+import entity.StudentAssignment;
 
 
 public class StudentClass extends DBClass {
@@ -179,6 +180,24 @@ public class StudentClass extends DBClass {
         emfactory.close();
         
         return arr;
+    }
+    
+    
+    
+    public void updateStudentAssignment(StudentAssignment sa) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        
+        StudentAssignment na = entitymanager.find( StudentAssignment.class, sa.getId());
+        
+        na.setName("Luke");
+        entitymanager.getTransaction().commit( );
+
+        //after update
+        System.out.println( na );
+        entitymanager.close();
+        emfactory.close();
     }
     
     
