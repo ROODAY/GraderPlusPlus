@@ -45,6 +45,34 @@ public class StudentClass extends DBClass {
         entitymanager.close();
         emfactory.close();
     }
+
+    public static void deleteStudent(int id) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
+        EntityManager entitymanager = emfactory.createEntityManager( );
+
+
+        Collection<StudentAssignment> sas = getAssignmentsbyStudent(id);
+
+
+        for(StudentAssignment sa : sas) {
+            entitymanager.getTransaction().begin();
+            StudentAssignment s = entitymanager.find( StudentAssignment.class, sa.getId());
+
+            entitymanager.remove(s);
+            entitymanager.getTransaction().commit();
+        }
+
+        entitymanager.getTransaction().begin();
+
+        Student student = entitymanager.find( Student.class, id );
+        entitymanager.remove( student );
+        entitymanager.getTransaction().commit();
+
+
+
+        entitymanager.close();
+        emfactory.close();
+    }
     
     @Override
     public void update(int id) {
@@ -96,8 +124,10 @@ public class StudentClass extends DBClass {
         
         if(assignments.size() > 0) {
             for(Assignment a : assignments) {
-                
-                
+
+                entitymanager.getTransaction().begin();
+
+
                 StudentAssignment sa = new StudentAssignment();
                 sa.setName(a.getName());
                 sa.setStudentName(student.getFirst_name());

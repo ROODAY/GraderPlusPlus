@@ -5,12 +5,16 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import controller.Sidebar;
+import controller.Table;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -147,6 +151,22 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
 
                     dialog.close();
                     ((JFXTreeTableView)button.getScene().lookup("#table")).refresh();
+                });
+
+                JFXButton delete = (JFXButton) dialogVbox.lookup("#delete");
+                delete.setOnAction(saveEvent -> {
+                    StudentClass.deleteStudent(id);
+
+                    SplitPane pane = (SplitPane)button.getScene().lookup("#splitPane");
+                    AnchorPane apane = (AnchorPane) pane.getItems().get(1);
+                    ObservableList<Tab> tabs = ((JFXTabPane) apane.getChildren().get(0)).getTabs();
+
+                    for (Tab tab : tabs) {
+                        Table table = (Table)tab.getContent();
+                        table.initializeTable(Sidebar.getCurrentSectionName(), Sidebar.getCurrentSectionId());
+                    }
+
+                    dialog.close();
                 });
 
                 dialog.show(root);

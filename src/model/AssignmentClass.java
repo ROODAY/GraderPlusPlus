@@ -125,24 +125,24 @@ public class AssignmentClass {
     public static void delete(int id) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "GradingSystemPU" );
         EntityManager entitymanager = emfactory.createEntityManager( );
+
+
+        Collection<StudentAssignment> sas = getAllStudentwithAssignment(id);
+
+        for(StudentAssignment sa : sas) {
+            entitymanager.getTransaction().begin();
+            StudentAssignment s = entitymanager.find( StudentAssignment.class, sa.getId());
+
+            entitymanager.remove(s);
+            entitymanager.getTransaction().commit();
+        }
+
         entitymanager.getTransaction().begin();
 
         Assignment assignment = entitymanager.find( Assignment.class, id );
         entitymanager.remove( assignment );
         entitymanager.getTransaction().commit();
-        
-        
-        //delete all the student assignments with this assignment id
-        Collection<StudentAssignment> sas = getAllStudentwithAssignment(id);
-        
-        for(StudentAssignment sa : sas) {
-            StudentAssignment s = entitymanager.find( StudentAssignment.class, id);
-            
-            entitymanager.remove(s);
-            entitymanager.getTransaction().commit();
-        }
-        
-        
+
         
         entitymanager.close();
         emfactory.close();
