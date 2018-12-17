@@ -208,6 +208,7 @@ public class StudentClass extends DBClass {
         Student na = entitymanager.find( Student.class, sa.getId());
         
         na.setComments(sa.getComments());
+        na.setEc(sa.getEc());
         entitymanager.getTransaction().commit( );
 
         //after update
