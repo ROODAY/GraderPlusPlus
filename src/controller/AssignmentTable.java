@@ -2,9 +2,12 @@ package controller;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import connector.StudentConnector;
 import entity.Assignment;
+import entity.Student;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -55,15 +58,26 @@ public class AssignmentTable extends AnchorPane implements Table {
 
                 Button createBtn = (Button)node.lookup("#createButton");
                 createBtn.setOnAction(act -> {
-                    String name = ((JFXTextField)node.lookup("#nameField")).getText();
-                    int points = Integer.parseInt(((JFXTextField)node.lookup("#pointsField")).getText());
-                    String type = ((Label)((JFXComboBox)node.lookup("#typeField")).getValue()).getText();
-                    String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+                    node.lookup("#loader").setVisible(true);
 
-                    Assignment assignment = AssignmentConnector.create(Sidebar.getCurrentCourseId(), name, points, type, date, "");
-                    AssignmentConnector.addAssignmentToCourse(assignment);
-                    assignments.add(assignment);
-                    dialog.close();
+
+                    Task task = new Task<Void>() {
+                        @Override public Void call() {
+                            String name = ((JFXTextField)node.lookup("#nameField")).getText();
+                            int points = Integer.parseInt(((JFXTextField)node.lookup("#pointsField")).getText());
+                            String type = ((Label)((JFXComboBox)node.lookup("#typeField")).getValue()).getText();
+                            String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+
+                            Assignment assignment = AssignmentConnector.create(Sidebar.getCurrentCourseId(), name, points, type, date, "");
+                            AssignmentConnector.addAssignmentToCourse(assignment);
+                            assignments.add(assignment);
+                            dialog.close();
+                            return null;
+                        }
+                    };
+                    new Thread(task).start();
+
+
                 });
             } catch (IOException e) {
                 e.printStackTrace();

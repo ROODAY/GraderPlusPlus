@@ -5,12 +5,15 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import connector.AssignmentConnector;
 import connector.StudentConnector;
 import controller.Sidebar;
 import controller.Table;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -151,18 +154,28 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
 
                 JFXButton delete = (JFXButton) dialogVbox.lookup("#delete");
                 delete.setOnAction(saveEvent -> {
-                    StudentConnector.delete(id);
+                    root.lookup("#loader").setVisible(true);
 
-                    SplitPane pane = (SplitPane)button.getScene().lookup("#splitPane");
-                    AnchorPane apane = (AnchorPane) pane.getItems().get(1);
-                    ObservableList<Tab> tabs = ((JFXTabPane) apane.getChildren().get(0)).getTabs();
+                    Task task = new Task<Void>() {
+                        @Override public Void call() {
+                            StudentConnector.delete(id);
+                            return null;
+                        }
+                    };
+                    task.setOnSucceeded(taskDone -> {
+                        SplitPane pane = (SplitPane)button.getScene().lookup("#splitPane");
+                        AnchorPane apane = (AnchorPane) pane.getItems().get(1);
+                        ObservableList<Tab> tabs = ((JFXTabPane) apane.getChildren().get(0)).getTabs();
 
-                    for (Tab tab : tabs) {
-                        Table table = (Table)tab.getContent();
-                        table.initializeTable(Sidebar.getCurrentSectionName(), Sidebar.getCurrentSectionId());
-                    }
+                        for (Tab tab : tabs) {
+                            Table table = (Table)tab.getContent();
+                            table.initializeTable(Sidebar.getCurrentSectionName(), Sidebar.getCurrentSectionId());
+                        }
 
-                    dialog.close();
+                        dialog.close();
+                    });
+                    new Thread(task).start();
+
                 });
 
                 dialog.show(root);

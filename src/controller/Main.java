@@ -15,13 +15,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //StudentConnector.create(5, "Jane", "Doe", "jane@bu.edu", "BU");
-        //StudentConnector student = new StudentConnector();
-        //student.uploadStudentsCSV("/Users/miguelvaldez/Desktop/students_roster.csv");
-
-
-
-
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));
 
         Parent splash = FXMLLoader.load(getClass().getResource("../view/splashScreen.fxml"));
@@ -34,13 +27,13 @@ public class Main extends Application {
         double sceneWidth = primaryStage.getScene().getWidth();
         double sceneHeight = primaryStage.getScene().getHeight();
 
-        FadeTransition ft = new FadeTransition(Duration.millis(500), splash);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), splash);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
         ft.play();
 
         ft.setOnFinished(event -> {
-            FadeTransition ft2 = new FadeTransition(Duration.millis(1000), home);
+            FadeTransition ft2 = new FadeTransition(Duration.millis(250), home);
             ft2.setFromValue(0.0);
             ft2.setToValue(1.0);
             ft2.play();

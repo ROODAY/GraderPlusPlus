@@ -3,6 +3,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import entity.Student;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -53,15 +54,24 @@ public class StudentTable extends AnchorPane implements Table{
 
                 Button createBtn = (Button)node.lookup("#createButton");
                 createBtn.setOnAction(act -> {
-                    String fname = ((JFXTextField)node.lookup("#fnameField")).getText();
-                    String lname = ((JFXTextField)node.lookup("#lnameField")).getText();
-                    int buid = Integer.parseInt(((JFXTextField)node.lookup("#buidField")).getText());
-                    String email = ((JFXTextField)node.lookup("#emailField")).getText();
-                    String program = ((Label)((JFXComboBox)node.lookup("#programField")).getValue()).getText();
+                    node.lookup("#loader").setVisible(true);
 
-                    Student student = StudentConnector.create(buid, Sidebar.getCurrentSectionId(), Sidebar.getCurrentCourseId(), fname, lname, email, program, "", 0.0, 0.0);
-                    students.add(student);
-                    dialog.close();
+
+                    Task task = new Task<Void>() {
+                        @Override public Void call() {
+                            String fname = ((JFXTextField)node.lookup("#fnameField")).getText();
+                            String lname = ((JFXTextField)node.lookup("#lnameField")).getText();
+                            int buid = Integer.parseInt(((JFXTextField)node.lookup("#buidField")).getText());
+                            String email = ((JFXTextField)node.lookup("#emailField")).getText();
+                            String program = ((Label)((JFXComboBox)node.lookup("#programField")).getValue()).getText();
+
+                            Student student = StudentConnector.create(buid, Sidebar.getCurrentSectionId(), Sidebar.getCurrentCourseId(), fname, lname, email, program, "", 0.0, 0.0);
+                            students.add(student);
+                            dialog.close();
+                            return null;
+                        }
+                    };
+                    new Thread(task).start();
                 });
 
             } catch (IOException e) {

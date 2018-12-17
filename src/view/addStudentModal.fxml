@@ -11,6 +11,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.collections.FXCollections?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <GridPane hgap="5.0" stylesheets="/css/addAssignmentModal.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <Text fx:id="header" text="Add new Student" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
@@ -36,6 +37,7 @@
         </items>
     </JFXComboBox>
 
+    <JFXSpinner fx:id="loader" GridPane.rowIndex="6" GridPane.columnIndex="0" visible="false" />
     <JFXButton fx:id="createButton" text="Create" styleClass="flatBtn" GridPane.columnIndex="1" GridPane.rowIndex="6" />
     <columnConstraints>
         <ColumnConstraints />

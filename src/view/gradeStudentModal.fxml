@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Text?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <VBox fx:id="modalWrapper" stylesheets="/css/gradeModal.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <GridPane hgap="5.0" vgap="10.0">
@@ -58,6 +59,7 @@
       </padding></JFXTreeTableView>
 
     <HBox alignment="CENTER_RIGHT" spacing="15">
+        <JFXSpinner fx:id="loader" visible="false" />
         <JFXButton fx:id="delete" styleClass="flatBtn" text="Delete Student" />
         <JFXButton fx:id="saveGrades" styleClass="flatBtn" text="Save Changes" />
       <padding>
