@@ -10,7 +10,8 @@
 
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import com.jfoenix.controls.JFXButton?>
-<VBox fx:id="modalWrapper" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="modalWrapper" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+    stylesheets="/css/gradeModal.css">
 
     <GridPane hgap="5.0" vgap="10.0">
         <Text fx:id="header" text="Grade Assignment" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -43,5 +44,5 @@
 
     <JFXTreeTableView fx:id="table" prefHeight="500" />
 
-    <JFXButton fx:id="saveGrades" text="Save Changes" />
+    <JFXButton fx:id="saveGrades" text="Save Changes" styleClass="flatBtn"/>
 </VBox>

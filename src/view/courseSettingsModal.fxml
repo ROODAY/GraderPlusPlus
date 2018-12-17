@@ -9,7 +9,8 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import javafx.scene.control.Label?>
 <?import com.jfoenix.controls.JFXButton?>
-<GridPane hgap="5.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="5.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="/css/gradeModal.css">
 
     <Text fx:id="header" text="Adjust Weights" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
 
