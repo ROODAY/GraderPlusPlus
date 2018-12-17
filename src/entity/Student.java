@@ -21,6 +21,9 @@ import model.WeightClass;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -86,7 +89,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 ((Label)dialogVbox.lookup("#program")).setText("Program: " + program);
                 ((Label)dialogVbox.lookup("#email")).setText("Email: " + email);
                 ((Label)dialogVbox.lookup("#buid")).setText("BU ID: U" + bu_id);
-                ((JFXTextField)dialogVbox.lookup("#participation")).setText("");
+                ((JFXTextField)dialogVbox.lookup("#participation")).setText(String.valueOf(participation));
                 ((JFXTextField)dialogVbox.lookup("#extraCredit")).setText(String.valueOf(ec));
                 ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localstudent.comments);
 
@@ -138,6 +141,8 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                     }
 
                     localstudent.comments = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
+                    localstudent.participation = Double.parseDouble(((JFXTextField)dialogVbox.lookup("#participation")).getText());
+                    localstudent.ec = Double.parseDouble(((JFXTextField)dialogVbox.lookup("#extraCredit")).getText());
                     StudentClass.updateStudent(localstudent);
 
                     dialog.close();
@@ -268,11 +273,21 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 .findAny()
                 .orElse(new Weights(courseId, weightType));
 
-        //assignments.stream().filter(a -> a.ge)
+        List<StudentAssignment> hwList = assignments.stream().filter(a -> a.getType().equals("Homework")).collect(Collectors.toList());
+        List<StudentAssignment> quizList = assignments.stream().filter(a -> a.getType().equals("Quiz")).collect(Collectors.toList());
+        List<StudentAssignment> examList = assignments.stream().filter(a -> a.getType().equals("Exam")).collect(Collectors.toList());
 
-        //Homework Quiz Exam
+        double hwScore = hwList.size() > 0 ? (double) hwList.stream().mapToInt(StudentAssignment::getpoints).sum() / hwList.stream().mapToInt(StudentAssignment::getTotalPoints).sum() * 100 : 0.0;
+        double quizScore = quizList.size() > 0 ? (double) quizList.stream().mapToInt(StudentAssignment::getpoints).sum() / quizList.stream().mapToInt(StudentAssignment::getTotalPoints).sum() * 100 : 0.0;
+        double examScore = examList.size() > 0 ? (double) examList.stream().mapToInt(StudentAssignment::getpoints).sum() / examList.stream().mapToInt(StudentAssignment::getTotalPoints).sum() * 100 : 0.0;
 
-        return 0.0;
+        double finalGrade = hwScore * (weights.getHwWeight() / 100.0)
+                          + quizScore * (weights.getQuizWeight() / 100.0)
+                          + examScore * (weights.getExamWeight() / 100.0)
+                          + participation * (weights.getParticipationWeight() / 100.0)
+                          + ec;
+
+        return Math.round(finalGrade * 100) / 100.0;
     }
 
     public int getCourseId() {

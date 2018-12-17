@@ -12,6 +12,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import controller.AssignmentTable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -102,6 +103,29 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + min);
                 ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + max);
                 ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localassignment.description);
+
+                assignments.addListener((ListChangeListener<StudentAssignment>) c -> {
+                    while (c.next()) {
+                        if (c.wasPermutated() || c.wasUpdated()) {
+                            double avg1 = assignments.stream()
+                                    .mapToInt(StudentAssignment::getpoints)
+                                    .average()
+                                    .orElse(0);
+                            double min1 = assignments.stream()
+                                    .mapToInt(StudentAssignment::getpoints)
+                                    .min()
+                                    .orElse(0);
+                            double max1 = assignments.stream()
+                                    .mapToInt(StudentAssignment::getpoints)
+                                    .max()
+                                    .orElse(0);
+
+                            ((Label)dialogVbox.lookup("#average")).setText("Average Score: " + avg1);
+                            ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + min1);
+                            ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + max1);
+                        }
+                    }
+                });
 
                 dialog.setContent(dialogVbox);
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
