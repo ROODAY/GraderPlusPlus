@@ -52,6 +52,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     
     public Student(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program, String comments) {
         super();
+        this.id = bu_id;
         this.bu_id = bu_id;
         this.courseId = courseId;
         this.first_name = name;
@@ -67,6 +68,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     }
 
     public Button getInfoButton() {
+        Student localstudent = this;
         Button button = new JFXButton("Grade");
         button.getStyleClass().add("flatBtn");
         button.setOnAction(event -> {
@@ -80,12 +82,13 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 ((Label)dialogVbox.lookup("#program")).setText("Program: " + program);
                 ((Label)dialogVbox.lookup("#email")).setText("Email: " + email);
                 ((Label)dialogVbox.lookup("#buid")).setText("BU ID: U" + bu_id);
+                ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localstudent.comments);
 
                 dialog.setContent(dialogVbox);
 
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
 
-                Collection<StudentAssignment> dbassignments = AssignmentClass.getAllStudentwithAssignment(id);
+                Collection<StudentAssignment> dbassignments = StudentClass.getAssignmentsbyStudent(id);
                 ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
                 assignments.addAll(dbassignments);
 
@@ -93,7 +96,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 nameColumn.setPrefWidth(150);
                 nameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<StudentAssignment, String> param) -> {
                     StudentAssignment obj = param.getValue().getValue();
-                    return new ReadOnlyObjectWrapper<>(obj.getStudentName() + " " + obj.getStudentLastName());
+                    return new ReadOnlyObjectWrapper<>(obj.getName());
                 });
 
                 JFXTreeTableColumn<StudentAssignment, Number> gradeColumn = new JFXTreeTableColumn<>("Grade");
@@ -108,12 +111,17 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                     sa.setPoints(Integer.parseInt(String.valueOf(t.getNewValue())));
                 });
 
+                JFXTreeTableColumn<StudentAssignment, Number> totalPointsColumn = new JFXTreeTableColumn<>("Total Points");
+                totalPointsColumn.setPrefWidth(150);
+                totalPointsColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<StudentAssignment, Number> param) ->
+                        new ReadOnlyObjectWrapper<>(param.getValue().getValue().getTotalPoints()));
+
                 final TreeItem<StudentAssignment> tableroot = new RecursiveTreeItem<>(assignments, RecursiveTreeObject::getChildren);
                 JFXTreeTableView<StudentAssignment> treeView = (JFXTreeTableView<StudentAssignment>) dialogVbox.lookup("#table");
                 treeView.setShowRoot(false);
                 treeView.setRoot(tableroot);
                 treeView.setEditable(true);
-                treeView.getColumns().setAll(nameColumn, gradeColumn);
+                treeView.getColumns().setAll(nameColumn, gradeColumn, totalPointsColumn);
                 treeView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
 
 
@@ -122,6 +130,10 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                     for (StudentAssignment sa : assignments) {
                         StudentClass.updateStudentAssignment(sa);
                     }
+
+                    localstudent.comments = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
+                    StudentClass.updateStudent(localstudent);
+
                     dialog.close();
                 });
 

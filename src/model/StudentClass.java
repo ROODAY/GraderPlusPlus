@@ -63,6 +63,7 @@ public class StudentClass extends DBClass {
 
         Student student = new Student();
         student.setId(bu_id);
+        student.setBUId(bu_id);
         student.setSectionId(sectionId);
         student.setCourseId(courseId);
         student.setFirst_name(name);
@@ -143,7 +144,7 @@ public class StudentClass extends DBClass {
         
     }
     
-    public Collection<StudentAssignment> getStudentAssignmentsBySection(int studentId) {
+    public static Collection<StudentAssignment> getAssignmentsbyStudent(int studentId) {
         
         
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
@@ -200,7 +201,7 @@ public class StudentClass extends DBClass {
         emfactory.close();
     }
     
-    public void updateStudent(Student sa) {
+    public static void updateStudent(Student sa) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
