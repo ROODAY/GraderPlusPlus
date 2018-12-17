@@ -63,7 +63,7 @@ public class StudentClass extends DBClass {
         Student student = new Student();
         student.setId(bu_id);
         student.setSectionId(sectionId);
-        student.setSectionId(courseId);
+        student.setCourseId(courseId);
         student.setFirst_name(name);
         student.setLastName(last_name);
         student.setEmail(email);

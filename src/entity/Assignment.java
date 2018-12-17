@@ -5,6 +5,14 @@
  */
 package entity;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +24,7 @@ import javax.persistence.Id;
  * @author miguelvaldez
  */
 @Entity
-public class Assignment implements Serializable {
+public class Assignment extends RecursiveTreeObject<Assignment> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,9 +56,34 @@ public class Assignment implements Serializable {
     public Assignment() {
         super();
     }
+
+    public Button getInfoButton() {
+        Button button = new JFXButton("More Info");
+        button.getStyleClass().add("flatBtn");
+        button.setOnAction(event -> {
+            JFXDialog dialog = new JFXDialog();
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().add(new Text("   Assignment Min:  " + 0 + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment Max: " + 0 + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment median: " + 0 + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignemnt Total Points: " + totalPoints + "        "));
+            dialogVbox.getChildren().add(new Text("   Assignment Comments : "  + "        "));
+            dialog.setContent(dialogVbox);
+
+            StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
+
+            dialog.show(root);
+        });
+
+        return button;
+    }
     
     public int getId() {
         return id;
+    }
+
+    public double getClassAverage() {
+        return 0.0;
     }
 
     public void setId(int id) {

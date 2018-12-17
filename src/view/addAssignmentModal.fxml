@@ -16,13 +16,10 @@
     <Text fx:id="header" text="Add new Assignment" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
     <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-
-
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <JFXTextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <Label text="Type" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-
-    <JFXComboBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <JFXComboBox fx:id="typeField" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <Label text="Homework" />
@@ -33,8 +30,7 @@
     </JFXComboBox>
 
     <Label text="Total Points" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-
-    <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <JFXTextField fx:id="pointsField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <JFXButton fx:id="createButton" text="Create" styleClass="flatBtn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    <columnConstraints>

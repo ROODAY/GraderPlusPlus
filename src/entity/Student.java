@@ -29,6 +29,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     private int id;
     private int bu_id;
     private int sectionId;
+    private int courseId;
     private String first_name;
     private String last_name;
     private String email;
@@ -38,9 +39,10 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     
     
     
-    public Student(int bu_id, int sectionId, String name, String last_name, String email, String program) {
+    public Student(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program) {
         super();
         this.bu_id = bu_id;
+        this.courseId = courseId;
         this.first_name = name;
         this.last_name = last_name;
         this.email = email;
@@ -160,5 +162,13 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
 
     public void setGrade(double grade) {
         this.grade = grade;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }

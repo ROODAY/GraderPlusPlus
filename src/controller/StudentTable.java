@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import model.SectionClass;
 import model.StudentClass;
 
 import java.nio.charset.Charset;
@@ -79,7 +80,7 @@ public class StudentTable extends AnchorPane implements Table{
 
     public void initializeTable(String sectionName, int sectionId) {
         JFXSnackbar bar = new JFXSnackbar(studentPane);
-        Collection<Student> dbStudents = StudentClass.findAll();
+        Collection<Student> dbStudents = SectionClass.getStudents(sectionId);
         if (dbStudents.size() == 0) {
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new JFXSnackbarLayout("No Students found for Section " + sectionName)));
         } else {
@@ -131,7 +132,7 @@ public class StudentTable extends AnchorPane implements Table{
                     || assignment.getValue().getLastName().contains(newVal));
         });
 
-        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records", table.currentItemsCountProperty()));
+        //count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records", table.currentItemsCountProperty()));
     }
 
 }
