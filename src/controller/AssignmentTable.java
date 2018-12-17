@@ -150,8 +150,7 @@ public class AssignmentTable extends AnchorPane implements Table {
                     || assignment.getValue().assignmentType.get().contains(newVal));
         });
 
-        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records",
-                table.currentItemsCountProperty()));
+        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records", table.currentItemsCountProperty()));
     }
 
 }

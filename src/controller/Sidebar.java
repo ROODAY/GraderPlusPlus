@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTabPane;
 import entity.Course;
 import entity.Section;
 import entity.Semester;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,11 +30,17 @@ public class Sidebar extends AnchorPane {
     @FXML private ScrollPane scrollContainer;
     @FXML private AnchorPane sidebar;
 
-    private static int currentSectionID;
+    private static int currentCourseId;
+
+    private static int currentSectionId;
     private static String currentSectionName;
 
+    public static int getCurrentCourseId() {
+        return currentCourseId;
+    }
+
     public static int getCurrentSectionId() {
-        return currentSectionID;
+        return currentSectionId;
     }
 
     public static String getCurrentSectionName() {
@@ -123,6 +131,12 @@ public class Sidebar extends AnchorPane {
         classPane.setExpanded(false);
         fixWidths(classPane, vbox);
 
+        classPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                currentCourseId = classId;
+            }
+        });
+
         return content;
     }
 
@@ -132,7 +146,7 @@ public class Sidebar extends AnchorPane {
         section.setAlignment(Pos.BASELINE_LEFT);
 
         section.setOnAction(action -> {
-            currentSectionID = sectionId;
+            currentSectionId = sectionId;
             currentSectionName = sectionName;
 
             SplitPane pane = (SplitPane)sidebar.getScene().lookup("#splitPane");
