@@ -113,13 +113,14 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 treeView.setEditable(true);
                 treeView.getColumns().setAll(nameColumn, gradeColumn);
                 treeView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
-                
+
 
                 JFXButton saveChanges = (JFXButton) dialogVbox.lookup("#saveGrades");
                 saveChanges.setOnAction(saveEvent -> {
                     for (StudentAssignment sa : assignments) {
                         StudentClass.updateStudentAssignment(sa);
                     }
+                    dialog.close();
                 });
 
 
