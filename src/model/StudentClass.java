@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import entity.Student;
 import entity.StudentAssignment;
+import entity.Assignment;
 
 
 public class StudentClass extends DBClass {
@@ -73,11 +74,43 @@ public class StudentClass extends DBClass {
         student.setComments(comments);
         student.setEc(ec);
         student.setParticipation(participation);
+        
 
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
-
         entitymanager.close();
+        
+        //check if that course has assignments, if it does, create the student assignments
+        CourseClass cc = new CourseClass();
+        
+        Collection<Assignment> assignments = cc.getAssignments(courseId);
+        
+        if(assignments.size() > 0) {
+            for(Assignment a : assignments) {
+                
+                entitymanager.getTransaction().begin();
+                
+                StudentAssignment sa = new StudentAssignment();
+                sa.setName(a.getName());
+                sa.setStudentName(student.getFirst_name());
+                sa.setStudentLastName(student.getLastName());
+                sa.setCourseId(a.getCourseId());
+                sa.setSectionId(student.getSectionId());
+                sa.setTotalPoints(a.getTotalPoints());
+                sa.setType(a.getType());
+                sa.setStudentId(student.getId());
+                sa.setAssignmentId(a.getId());
+                sa.setPoints(0);
+                
+                
+                entitymanager.persist( sa );
+                entitymanager.getTransaction().commit();
+                entitymanager.close();
+                
+            }
+        }
+
+        
         emfactory.close();
 
         return student;
