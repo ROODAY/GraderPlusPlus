@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.*;
+import connector.*;
 import entity.Course;
 import entity.Section;
 import entity.Semester;
@@ -11,11 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import connector.CourseConnector;
-import connector.SectionConnector;
-import connector.SemesterConnector;
-import connector.WeightsConnector;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,6 +26,10 @@ public class Sidebar extends AnchorPane {
     @FXML private VBox semesterContainer;
     @FXML private ScrollPane scrollContainer;
     @FXML private AnchorPane sidebar;
+
+    private Stage rootStage;
+
+    private FileChooser fileChooser = new FileChooser();
 
     private static int currentCourseId;
 
@@ -70,6 +74,10 @@ public class Sidebar extends AnchorPane {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setRootStage(Stage stage) {
+        rootStage = stage;
     }
 
     private HBox generateSidebarTP(String paneText, String buttonText) {
@@ -134,8 +142,24 @@ public class Sidebar extends AnchorPane {
             }
         });
 
+
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("Course Settings");
+        MenuItem fileChoose = new MenuItem("Import Students");
+        fileChoose.setOnAction(event -> {
+            File file = fileChooser.showOpenDialog(rootStage);
+            System.out.println(file.getAbsolutePath());
+            StudentConnector.uploadStudentsCSV(file.getAbsolutePath(), currentCourseId, currentSectionId);
+
+            SplitPane pane = (SplitPane)sidebar.getScene().lookup("#splitPane");
+            AnchorPane apane = (AnchorPane) pane.getItems().get(1);
+            ObservableList<Tab> tabs = ((JFXTabPane) apane.getChildren().get(0)).getTabs();
+
+            for (Tab tab : tabs) {
+                Table table = (Table)tab.getContent();
+                table.initializeTable(currentSectionName, currentSectionId);
+            }
+        });
         item1.setOnAction(event -> {
             JFXDialog dialog = new JFXDialog();
             try {
@@ -211,7 +235,7 @@ public class Sidebar extends AnchorPane {
                 e.printStackTrace();
             }
         });
-        contextMenu.getItems().addAll(item1);
+        contextMenu.getItems().addAll(item1, fileChoose);
         classPane.setOnContextMenuRequested(event -> contextMenu.show(classPane, event.getScreenX(), event.getScreenY()));
 
         return content;

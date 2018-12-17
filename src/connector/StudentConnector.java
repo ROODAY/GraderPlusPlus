@@ -128,7 +128,7 @@ public class StudentConnector {
         return student;
     }
     
-    public void uploadStudentsCSV(String location, int courseId, int sectionId) {
+    public static void uploadStudentsCSV(String location, int courseId, int sectionId) {
         
         String csvFile = location;
         String line = "";
@@ -145,8 +145,7 @@ public class StudentConnector {
                 
                 if(studentRow.length > 0 && !studentRow[0].equals("ID")) {
                     
-                    Student student = new Student();
-                    create(
+                    Student student = create(
                         Integer.parseInt(studentRow[0]),
                         sectionId,
                         courseId,
@@ -155,8 +154,8 @@ public class StudentConnector {
                         studentRow[3],
                         studentRow[4],
                         studentRow[5],
-                        Double.parseDouble(studentRow[6]),
-                        0
+                        0.0,
+                        0.0
                     );
                 }
             }

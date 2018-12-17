@@ -18,7 +18,10 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));
 
         Parent splash = FXMLLoader.load(getClass().getResource("../view/splashScreen.fxml"));
-        Parent home = FXMLLoader.load(getClass().getResource("../view/homeScreen.fxml"));
+        FXMLLoader homeLoader = new FXMLLoader(getClass().getResource("../view/homeScreen.fxml"));
+        Parent home = homeLoader.load();
+        HomeScreen controller = homeLoader.getController();
+        controller.passStage(primaryStage);
         primaryStage.setTitle("GradeBook");
         primaryStage.setScene(new Scene(splash));
         primaryStage.setMaximized(true);
