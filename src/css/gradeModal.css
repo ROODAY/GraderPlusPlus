@@ -10,3 +10,7 @@
 .jfx-text-area {
     -jfx-focus-color: #F47E26;
 }
+
+.grad-slider {
+    -jfx-default-thumb: #5264AE;
+}

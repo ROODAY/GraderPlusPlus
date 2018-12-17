@@ -14,20 +14,37 @@
 
     <Text fx:id="header" text="Adjust Weights" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
 
-    <Label text="Homework" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-    <JFXSlider fx:id="hwField" prefWidth="200" value="15" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <Label text="Undergrad" GridPane.rowIndex="1" GridPane.columnIndex="0" />
 
-    <Label text="Quizzes" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-    <JFXSlider fx:id="quizField" prefWidth="200" value="30" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    <Text text="Homework" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="hwField" prefWidth="200" value="15" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-    <Label text="Exams" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-    <JFXSlider fx:id="examField" prefWidth="200" value="50" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    <Text text="Quizzes" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="quizField" prefWidth="200" value="30" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
-    <Label text="Participation" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-    <JFXSlider fx:id="partField" prefWidth="200" value="5" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    <Text text="Exams" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="examField" prefWidth="200" value="50" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
-    <Label fx:id="error" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-    <JFXButton fx:id="saveWeights" text="Save" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="flatBtn"/>
+    <Text text="Participation" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="partField" prefWidth="200" value="5" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+
+    <Label text="Graduate" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+
+    <Text text="Homework" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="gHwField" styleClass="grad-slider" prefWidth="200" value="15" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+    <Text text="Quizzes" GridPane.rowIndex="8" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="gQuizField" styleClass="grad-slider" prefWidth="200" value="30" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+
+    <Text text="Exams" GridPane.rowIndex="9" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="gExamField" styleClass="grad-slider" prefWidth="200" value="50" GridPane.rowIndex="9" GridPane.columnIndex="1" />
+
+    <Text text="Participation" GridPane.rowIndex="10" GridPane.columnIndex="0" />
+    <JFXSlider fx:id="gPartField" styleClass="grad-slider" prefWidth="200" value="5" GridPane.rowIndex="10" GridPane.columnIndex="1" />
+
+    <Label fx:id="error" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+    <JFXButton fx:id="saveWeights" text="Save" GridPane.rowIndex="11" GridPane.columnIndex="1" styleClass="flatBtn"/>
 
 
 
