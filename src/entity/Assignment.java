@@ -46,11 +46,12 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
     private int totalPoints;
     private String dateAssigned;
     private String type;
+    private String description;
     //private due date
 
     
     
-    public Assignment(int id, int courseId, String name, int totalPoints, String type, String dateAssigned) {
+    public Assignment(int id, int courseId, String name, int totalPoints, String type, String dateAssigned, String description) {
         super();
         this.id = id;
         this.courseId = courseId;
@@ -58,6 +59,7 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
         this.totalPoints = totalPoints;
         this.type = type;
         this.dateAssigned = dateAssigned;
+        this.description = description;
     }
 
     
@@ -184,6 +186,14 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
 
     public void setType(String type) {
         this.type = type;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     

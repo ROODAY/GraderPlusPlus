@@ -23,7 +23,7 @@ public class AssignmentClass {
     
     }
     
-    public static Assignment create(int courseId, String name, int totalPoints , String type, String dateAssigned) {
+    public static Assignment create(int courseId, String name, int totalPoints , String type, String dateAssigned, String description) {
 
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -35,6 +35,7 @@ public class AssignmentClass {
         assignment.setTotalPoints(totalPoints);
         assignment.setType(type);
         assignment.setDateAssigned(dateAssigned);
+        assignment.setDescription(description);
 
         entitymanager.persist( assignment );
         entitymanager.getTransaction().commit();
@@ -152,7 +153,21 @@ public class AssignmentClass {
         return arr;
     }
     
-    
+    public void updateStudent(Assignment sa) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        
+        Assignment na = entitymanager.find( Assignment.class, sa.getId());
+        
+        na.setDescription(sa.getDescription());
+        entitymanager.getTransaction().commit( );
+
+        //after update
+        System.out.println( na );
+        entitymanager.close();
+        emfactory.close();
+    }
     
     
 }
