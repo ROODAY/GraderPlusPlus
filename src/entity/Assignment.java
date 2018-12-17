@@ -13,10 +13,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -69,12 +66,19 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
     }
 
     public Button getInfoButton() {
-        Button button = new JFXButton("More Info");
+        Button button = new JFXButton("Grade");
         button.getStyleClass().add("flatBtn");
         button.setOnAction(event -> {
             JFXDialog dialog = new JFXDialog();
             try {
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
+
+                ((Text)dialogVbox.lookup("#header")).setText("Grade " + name + " (" + dateAssigned + ")");
+                ((Label)dialogVbox.lookup("#totalPoints")).setText("Total Points: " + totalPoints);
+                ((Label)dialogVbox.lookup("#average")).setText("Average Score: " + 0);
+                ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + 0);
+                ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + 0);
+
                 dialog.setContent(dialogVbox);
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
 

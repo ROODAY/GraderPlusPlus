@@ -6,3 +6,7 @@
 #header {
     -fx-font-size: 24px;
 }
+
+.jfx-text-area {
+    -jfx-focus-color: #F47E26;
+}
