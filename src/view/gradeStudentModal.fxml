@@ -15,13 +15,13 @@
 <VBox fx:id="modalWrapper" stylesheets="/css/gradeModal.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <GridPane hgap="5.0" vgap="10.0">
-        <Text fx:id="header" text="Grade Assignment" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Text fx:id="header" text="Grade Student" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
-        <Label fx:id="totalPoints" text="Total Points" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Label fx:id="average" text="Average Score" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label fx:id="currentGrade" text="Total Points" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label fx:id="program" text="Average Score" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-        <Label fx:id="min" text="Min Score" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Label fx:id="max" text="Max Score" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label fx:id="email" text="Min Score" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label fx:id="buid" text="Max Score" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
         <JFXTextArea fx:id="comments" labelFloat="false" promptText="Comments..." GridPane.columnIndex="0" GridPane.rowIndex="3">
         </JFXTextArea>
