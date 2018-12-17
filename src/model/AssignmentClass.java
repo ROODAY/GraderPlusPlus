@@ -63,9 +63,11 @@ public class AssignmentClass {
             
             StudentAssignment sa = new StudentAssignment();
             sa.setName(assignment.getName());
-            
+            sa.setStudentName(o.getFirst_name());
+            sa.setStudentLastName(o.getLastName());
             sa.setCourseId(assignment.getCourseId());
             sa.setSectionId(o.getSectionId());
+            
             sa.setStudentId(o.getId());
             sa.setAssignmentId(assignment.getId());
             sa.setPoints(0);
