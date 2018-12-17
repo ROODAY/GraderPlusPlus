@@ -44,7 +44,7 @@ public class StudentClass extends DBClass {
 
         //before update
         System.out.println( student );
-        student.setName("Luke");
+        student.setFirst_name("Luke");
         entitymanager.getTransaction().commit( );
 
         //after update
@@ -54,7 +54,7 @@ public class StudentClass extends DBClass {
     }
     
     
-    public static void create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program) {
+    public static Student create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -64,7 +64,7 @@ public class StudentClass extends DBClass {
         student.setId(bu_id);
         student.setSectionId(sectionId);
         student.setSectionId(courseId);
-        student.setName(name);
+        student.setFirst_name(name);
         student.setLastName(last_name);
         student.setEmail(email);
         student.setProgram(program);
@@ -74,6 +74,8 @@ public class StudentClass extends DBClass {
 
         entitymanager.close();
         emfactory.close();
+
+        return student;
     }
     
     public void uploadStudentsCSV(String location) {
@@ -114,7 +116,7 @@ public class StudentClass extends DBClass {
         
         System.out.println(student);
         System.out.println("student ID = " + student.getId());
-        System.out.println("student Name = " + student.getName());
+        System.out.println("student Name = " + student.getFirst_name());
         System.out.println("student Last Name = " + student.getLastName());
         System.out.println("student Email = " + student.getEmail());
         
