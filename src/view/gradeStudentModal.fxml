@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <VBox fx:id="modalWrapper" stylesheets="/css/gradeModal.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <GridPane hgap="5.0" vgap="10.0">
@@ -23,7 +24,13 @@
         <Label fx:id="email" text="Min Score" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <Label fx:id="buid" text="Max Score" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <JFXTextArea fx:id="comments" labelFloat="false" promptText="Comments..." GridPane.columnIndex="0" GridPane.rowIndex="3">
+        <Label text="Particpation" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <JFXTextField fx:id="participation" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="150"/>
+
+        <Label text="Extra Credit" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <JFXTextField fx:id="extraCredit" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="150"/>
+
+        <JFXTextArea fx:id="comments" labelFloat="false" promptText="Comments..." GridPane.columnIndex="0" GridPane.rowIndex="5">
         </JFXTextArea>
 
       <columnConstraints>

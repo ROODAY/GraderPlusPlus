@@ -83,6 +83,8 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
                 ((Label)dialogVbox.lookup("#program")).setText("Program: " + program);
                 ((Label)dialogVbox.lookup("#email")).setText("Email: " + email);
                 ((Label)dialogVbox.lookup("#buid")).setText("BU ID: U" + bu_id);
+                ((JFXTextField)dialogVbox.lookup("#participation")).setText("");
+                ((JFXTextField)dialogVbox.lookup("#extraCredit")).setText(String.valueOf(ec));
                 ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localstudent.comments);
 
                 dialog.setContent(dialogVbox);

@@ -7,7 +7,7 @@
     -fx-font-size: 24px;
 }
 
-.jfx-text-area {
+.jfx-text-area, .jfx-text-field {
     -jfx-focus-color: #F47E26;
 }
 
