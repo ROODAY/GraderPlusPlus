@@ -67,7 +67,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
     }
 
     public Button getInfoButton() {
-        Button button = new JFXButton("More Info");
+        Button button = new JFXButton("Grade");
         button.getStyleClass().add("flatBtn");
         button.setOnAction(event -> {
             JFXDialog dialog = new JFXDialog();
@@ -75,7 +75,7 @@ public class Student extends RecursiveTreeObject<Student> implements Serializabl
             try {
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeStudentModal.fxml"));
 
-                ((Text)dialogVbox.lookup("#header")).setText("Grade " + first_name + " " + last_name);
+                ((Text)dialogVbox.lookup("#header")).setText(first_name + " " + last_name);
                 ((Label)dialogVbox.lookup("#currentGrade")).setText("Current Grade: " + grade);
                 ((Label)dialogVbox.lookup("#program")).setText("Program: " + program);
                 ((Label)dialogVbox.lookup("#email")).setText("Email: " + email);

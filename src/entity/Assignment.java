@@ -69,6 +69,8 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
     }
 
     public Button getInfoButton() {
+        Assignment localassignment = this;
+
         Button button = new JFXButton("Grade");
         button.getStyleClass().add("flatBtn");
         button.setOnAction(event -> {
@@ -81,6 +83,7 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 ((Label)dialogVbox.lookup("#average")).setText("Average Score: " + 0);
                 ((Label)dialogVbox.lookup("#min")).setText("Min Score: " + 0);
                 ((Label)dialogVbox.lookup("#max")).setText("Max Score: " + 0);
+                ((JFXTextArea)dialogVbox.lookup("#comments")).setText(localassignment.description);
 
                 dialog.setContent(dialogVbox);
                 StackPane root = (StackPane) button.getScene().lookup("#dialogPane");
@@ -122,6 +125,10 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                     for (StudentAssignment sa : assignments) {
                         StudentClass.updateStudentAssignment(sa);
                     }
+
+                    localassignment.description = ((JFXTextArea)dialogVbox.lookup("#comments")).getText();
+                    AssignmentClass.updateAssignment(localassignment);
+
                     dialog.close();
                 });
 

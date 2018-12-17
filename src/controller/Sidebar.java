@@ -193,7 +193,7 @@ public class Sidebar extends AnchorPane {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(classname -> {
             int semesterId = (int) vbox.getProperties().get("semesterId");
-            int classId = CourseClass.create(classname, 1, semesterId);
+            int classId = CourseClass.create(classname, 1, semesterId, "");
             initClassPane(classname, classId, vbox);
         });
     }

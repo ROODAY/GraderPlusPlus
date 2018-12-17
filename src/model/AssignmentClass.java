@@ -153,7 +153,7 @@ public class AssignmentClass {
         return arr;
     }
     
-    public void updateStudent(Assignment sa) {
+    public static void updateAssignment(Assignment sa) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
