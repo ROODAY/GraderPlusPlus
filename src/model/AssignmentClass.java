@@ -67,6 +67,7 @@ public class AssignmentClass {
             sa.setStudentLastName(o.getLastName());
             sa.setCourseId(assignment.getCourseId());
             sa.setSectionId(o.getSectionId());
+            sa.setTotalPoints(assignment.getTotalPoints());
             
             sa.setStudentId(o.getId());
             sa.setAssignmentId(assignment.getId());
