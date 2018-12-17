@@ -25,12 +25,14 @@ public class StudentAssignment extends RecursiveTreeObject<StudentAssignment> im
     private String studentLastName;
     private String description;
     private String response;
+    private String type;
     private int courseId;
     private int sectionId;
     private int studentId;
     private int assignmentId;
     private int points;
     private int totalPoints;
+    
     
     public StudentAssignment(int id, String name, String studentName, String studentLastName, int sectionId, int studentId, int assignmentId, int courseId,  int points, String type,
             int totalPoints) {
@@ -45,6 +47,8 @@ public class StudentAssignment extends RecursiveTreeObject<StudentAssignment> im
         this.studentLastName = studentLastName;
         this.points = points;
         this.totalPoints = totalPoints;
+        this.type = type;
+        
     }
 
     
@@ -149,6 +153,14 @@ public class StudentAssignment extends RecursiveTreeObject<StudentAssignment> im
 
     public void setPoints(int points) {
         this.points = points;
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 

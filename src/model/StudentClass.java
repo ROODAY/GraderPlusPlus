@@ -55,7 +55,7 @@ public class StudentClass extends DBClass {
     }
     
     
-    public static Student create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program, String comments, double ec) {
+    public static Student create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program, String comments, double ec, double participation) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -72,6 +72,7 @@ public class StudentClass extends DBClass {
         student.setProgram(program);
         student.setComments(comments);
         student.setEc(ec);
+        student.setParticipation(participation);
 
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
@@ -109,7 +110,8 @@ public class StudentClass extends DBClass {
                         studentRow[3],
                         studentRow[4],
                         studentRow[5],
-                        Double.parseDouble(studentRow[6])
+                        Double.parseDouble(studentRow[6]),
+                        0
                     );
                 }
             }
@@ -200,6 +202,7 @@ public class StudentClass extends DBClass {
         StudentAssignment na = entitymanager.find( StudentAssignment.class, sa.getId());
         
         na.setPoints(sa.getpoints());
+        na.setType(sa.getType());
         entitymanager.getTransaction().commit( );
 
         //after update
@@ -217,6 +220,7 @@ public class StudentClass extends DBClass {
         
         na.setComments(sa.getComments());
         na.setEc(sa.getEc());
+        na.setParticipation(sa.getParticipation());
         entitymanager.getTransaction().commit( );
 
         //after update
