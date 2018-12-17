@@ -22,7 +22,9 @@ import model.SemesterClass;
 import model.WeightClass;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class Sidebar extends AnchorPane {
@@ -149,18 +151,11 @@ public class Sidebar extends AnchorPane {
                 Weights ugrad = weights.stream()
                         .filter(uw -> uw.getType() == 0)
                         .findAny()
-                        .orElse(null);
+                        .orElse(WeightClass.create(classId, 0, 50, 30, 15, 5));
                 Weights grad = weights.stream()
                         .filter(uw -> uw.getType() == 1)
                         .findAny()
-                        .orElse(null);
-
-                if (ugrad == null) {
-                    ugrad = new Weights(classId, 0);
-                }
-                if (grad == null) {
-                    grad = new Weights(classId, 1);
-                }
+                        .orElse(WeightClass.create(classId, 1, 50, 30, 15, 5));
 
                 JFXSlider hwField = ((JFXSlider)dialogContent.lookup("#hwField"));
                 hwField.setValue(ugrad.getHwWeight());
@@ -172,16 +167,47 @@ public class Sidebar extends AnchorPane {
                 partField.setValue(ugrad.getParticipationWeight());
 
                 JFXSlider gHwField = ((JFXSlider)dialogContent.lookup("#gHwField"));
-                gHwField.setValue(ugrad.getHwWeight());
+                gHwField.setValue(grad.getHwWeight());
                 JFXSlider gQuizField = ((JFXSlider)dialogContent.lookup("#gQuizField"));
-                gQuizField.setValue(ugrad.getQuizWeight());
+                gQuizField.setValue(grad.getQuizWeight());
                 JFXSlider gExamField = ((JFXSlider)dialogContent.lookup("#gExamField"));
-                gExamField.setValue(ugrad.getExamWeight());
+                gExamField.setValue(grad.getExamWeight());
                 JFXSlider gPartField = ((JFXSlider)dialogContent.lookup("#gPartField"));
-                gPartField.setValue(ugrad.getParticipationWeight());
+                gPartField.setValue(grad.getParticipationWeight());
+
+                List<JFXSlider> sliders = Arrays.asList(quizField, examField, hwField, partField, gQuizField, gExamField, gHwField, gPartField);
+                for (JFXSlider slider : sliders) {
+                    slider.valueProperty().addListener((obs, oldval, newVal) ->
+                            slider.setValue(Math.round(newVal.doubleValue())));
+                }
 
                 JFXButton saveButton = (JFXButton) dialogContent.lookup("#saveWeights");
                 Label error = (Label) dialogContent.lookup("#error");
+
+                saveButton.setOnAction(saveEvent -> {
+                    if ((hwField.getValue() + quizField.getValue() + examField.getValue() + partField.getValue()) != 100) {
+                        error.setText("Undergrad weights != 100!");
+                    } else if ((gHwField.getValue() + gQuizField.getValue() + gExamField.getValue() + gPartField.getValue()) != 100) {
+                        error.setText("Graduate weights != 100!");
+                    } else {
+                        error.setText("");
+
+                        ugrad.setHwWeight((int) hwField.getValue());
+                        ugrad.setQuizWeight((int) quizField.getValue());
+                        ugrad.setExamWeight((int) examField.getValue());
+                        ugrad.setParticipationWeight((int) partField.getValue());
+
+                        grad.setHwWeight((int) gHwField.getValue());
+                        grad.setQuizWeight((int) gQuizField.getValue());
+                        grad.setExamWeight((int) gExamField.getValue());
+                        grad.setParticipationWeight((int) gPartField.getValue());
+
+                        WeightClass.updateWeights(ugrad);
+                        WeightClass.updateWeights(grad);
+
+                        dialog.close();
+                    }
+                });
 
                 dialog.setContent(dialogContent);
                 StackPane root = (StackPane) classPane.getScene().lookup("#dialogPane");

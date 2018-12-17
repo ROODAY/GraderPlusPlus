@@ -20,15 +20,16 @@ import java.util.Collection;
  */
 public class WeightClass {
     
-    public static void create(int courseId, int type, int examWeight, int quizWeight, int hwWeight, int participationWeight) {
+    public static Weights create(int courseId, int type, int examWeight, int quizWeight, int hwWeight, int participationWeight) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
         entity.Weights w = new entity.Weights();
+        w.setCourseId(courseId);
         w.setType(type);
-        w.setExamWeight(hwWeight);
+        w.setExamWeight(examWeight);
         w.setQuizWeight(quizWeight);
         w.setHwWeight(hwWeight);
         w.setParticipationWeight(participationWeight);
@@ -38,6 +39,8 @@ public class WeightClass {
 
         entitymanager.close();
         emfactory.close();
+
+        return w;
     }
 
     public static Collection<Weights> getWeightsForCourse(int courseid) {
