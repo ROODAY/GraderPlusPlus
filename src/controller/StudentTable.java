@@ -67,7 +67,6 @@ public class StudentTable extends AnchorPane implements Table{
 
                     Student student = StudentClass.create(buid, Sidebar.getCurrentSectionId(), Sidebar.getCurrentCourseId(), fname, lname, email, program);
                     students.add(student);
-                    count.setText(students.size() + " Records");
                     dialog.close();
                 });
 
@@ -132,8 +131,7 @@ public class StudentTable extends AnchorPane implements Table{
                     || assignment.getValue().getLastName().contains(newVal));
         });
 
-        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records",
-                table.currentItemsCountProperty()));
+        count.textProperty().bind(Bindings.createStringBinding(()-> table.getCurrentItemsCount()+" Records", table.currentItemsCountProperty()));
     }
 
 }
