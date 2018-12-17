@@ -71,7 +71,7 @@ public class Course {
 	public double[] getAllGPA() {
 		double[] GPAlist = new double[studentList.size()];
 		for (int i = 0; i < studentList.size();i++){
-			GPAlist[i] = studentList.get(i).getGPA();
+			GPAlist[i] = studentList.get(i).getGPA().getValue();
 		}
 		return GPAlist;
 	}

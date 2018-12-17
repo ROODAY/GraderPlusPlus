@@ -18,10 +18,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Course;
 import model.CourseAssignment;
+import model.Student;
+import model.StudentAssignment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class AssignmentTable extends AnchorPane{
@@ -42,7 +46,97 @@ public class AssignmentTable extends AnchorPane{
             throw new RuntimeException(exception);
         }
     }
+    public void setCouse(){
 
+        StudentAssignment sa1_1 = new StudentAssignment();
+        sa1_1.setComments("not bad");
+        sa1_1.setLostpoints(11);
+        sa1_1.setTotalScore(30);
+        sa1_1.setScore();
+
+        StudentAssignment sa1_2 = new StudentAssignment();
+        sa1_2.setComments("good job");
+        sa1_2.setLostpoints(10);
+        sa1_2.setTotalScore(90);
+        sa1_2.setScore();
+
+        StudentAssignment sa1_3 = new StudentAssignment();
+        sa1_3.setComments("keep working");
+        sa1_3.setLostpoints(40);
+        sa1_3.setTotalScore(66);
+        sa1_3.setScore();
+
+        List<StudentAssignment> salist_1 = new ArrayList<>();
+        salist_1.add(sa1_1);
+        salist_1.add(sa1_2);
+        salist_1.add(sa1_3);
+
+        Student s1 = new Student("John","U12377","undergraduate","331@bu.edu");
+        s1.setAssignments(salist_1);
+
+
+        StudentAssignment sa2_1 = new StudentAssignment();
+        sa2_1.setComments("good job");
+        sa2_1.setLostpoints(1);
+        sa2_1.setTotalScore(30);
+        sa2_1.setScore();
+
+        StudentAssignment sa2_2 = new StudentAssignment();
+        sa2_2.setComments("good job");
+        sa2_2.setLostpoints(5);
+        sa2_2.setTotalScore(90);
+        sa2_2.setScore();
+
+        StudentAssignment sa2_3 = new StudentAssignment();
+        sa2_3.setComments("good job");
+        sa2_3.setLostpoints(5);
+        sa2_3.setTotalScore(66);
+        sa2_3.setScore();
+
+        List<StudentAssignment> salist_2 = new ArrayList<>();
+        salist_2.add(sa2_1);
+        salist_2.add(sa2_2);
+        salist_2.add(sa2_3);
+
+
+        Student s2 = new Student("Charles","U7235","graduate","34@gmail.com");
+        s2.setAssignments(salist_2);
+
+        CourseAssignment CS591_CA1 = new CourseAssignment("HW1","Homework",30,"01/10/2018");
+        CourseAssignment CS591_CA2 = new CourseAssignment("Midterm","Exam",99,"01/20/2018");
+        CS591_CA2.setAssignmentComments("Midterm about OOD");
+        CourseAssignment CS591_CA3 = new CourseAssignment("Lab1","Lab",66,"01/02/2018");
+        CS591_CA3.setAssignmentComments("Lab experiment");
+        List<CourseAssignment> coulist = new ArrayList<>();
+        coulist.add(CS591_CA1);
+        coulist.add(CS591_CA2);
+        coulist.add(CS591_CA3);
+
+        List<Student> stulist = new ArrayList<>();
+        int[] weights_CS591 = new int[]{30,30,40};
+        Course CS591 = new Course();
+        CS591.setCourseName("CS591");
+        CS591.setSemester("Fall");
+        CS591.setYear(2018);
+
+        CS591.setStudentList(stulist);
+        CS591.addStudent(s1);
+        CS591.addStudent(s2);
+        CS591.setWeights(weights_CS591);
+        CS591.setAllGPA();
+        CS591.setCourseAssignmentList(coulist);
+        CS591.setAssigenmentInfo();
+
+
+        this.course =  CS591;
+    }
+
+    public void addData(){
+        List<CourseAssignment> assignments = course.getCourseAssignmentList();
+        for (CourseAssignment ca:assignments){
+            data.add(ca);
+        }
+    }
     private void initializeTable() {
         filter.setPromptText("Search...");
 
@@ -85,25 +179,26 @@ public class AssignmentTable extends AnchorPane{
         });
 
 
-        ObservableList<CourseAssignment> assignments = FXCollections.observableArrayList();
+//        ObservableList<CourseAssignment> assignments = FXCollections.observableArrayList();
+//        String[] types = {"Homework", "Quiz", "Exam"};
+//        for (int i = 0; i < 1000; i++) {
+//            int index = new Random().nextInt(3);
+//            double points = new Random().nextInt(30) + 20;
+//
+//            Random rnd = new Random();
+//            long ms = -946771200000L + (Math.abs(rnd.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000));
+//            Date dt = new Date(ms);
+//
+//
+//            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//            String date = df.format(dt);
+//
+//            assignments.add(new CourseAssignment(types[index] + " " + i, types[index], points, date));
+//        }
+        setCouse();
+        addData();
 
-        String[] types = {"Homework", "Quiz", "Exam"};
-        for (int i = 0; i < 1000; i++) {
-            int index = new Random().nextInt(3);
-            double points = new Random().nextInt(30) + 20;
-
-            Random rnd = new Random();
-            long ms = -946771200000L + (Math.abs(rnd.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000));
-            Date dt = new Date(ms);
-
-
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            String date = df.format(dt);
-
-            assignments.add(new CourseAssignment(types[index] + " " + i, types[index], points, date));
-        }
-
-        final TreeItem<CourseAssignment> root = new RecursiveTreeItem<>(assignments, RecursiveTreeObject::getChildren);
+        final TreeItem<CourseAssignment> root = new RecursiveTreeItem<>(data, RecursiveTreeObject::getChildren);
         table.setRoot(root);
         table.setShowRoot(false);
         table.setEditable(true);

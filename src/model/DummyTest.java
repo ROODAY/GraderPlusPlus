@@ -28,12 +28,8 @@ public class DummyTest {
         salist_1.add(sa1_2);
         salist_1.add(sa1_3);
 
-        Student s1 = new Student();
+        Student s1 = new Student("John","U12377","undergraduate","331@bu.edu");
         s1.setAssignments(salist_1);
-        s1.setEmail("123@bu.edu");
-        s1.setGroup("undergraduate");
-        s1.setName("John");
-        s1.setsID("U12377");
 
 
         StudentAssignment sa2_1 = new StudentAssignment();
@@ -59,12 +55,8 @@ public class DummyTest {
         salist.add(sa2_2);
         salist.add(sa2_3);
 
-        Student s2 = new Student();
+        Student s2 = new Student("Charles","U7235","graduate","34@gmail.com");
         s2.setAssignments(salist);
-        s2.setEmail("789@bu.edu");
-        s2.setGroup("graduate");
-        s2.setName("Charles");
-        s2.setsID("U7235");
 
         /*
         CourseAssignment CS591_CA1 = new CourseAssignment();

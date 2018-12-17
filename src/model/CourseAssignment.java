@@ -72,7 +72,7 @@ public class CourseAssignment extends RecursiveTreeObject<CourseAssignment> {
                     dialogVbox.getChildren().add(new Text("   Assignment Min:  " + min + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment Max: " + max + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment median: " + median + "        "));
-                    dialogVbox.getChildren().add(new Text("   Assignment Total Points: " + totalPoints.toString() + "        "));
+                    dialogVbox.getChildren().add(new Text("   Assignment Total Points: " + totalPoints.getValue() + "        "));
                     dialogVbox.getChildren().add(new Text("   Assignment Comments : " + assignmentComments + "        "));
                     dialog.setContent(dialogVbox);
 

@@ -1,6 +1,7 @@
 package model;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.util.List;
-public class Student {
+public class Student extends RecursiveTreeObject<Student> {
 	private StringProperty Name;
 	private String sID;
 	private String email;
@@ -26,10 +27,11 @@ public class Student {
 	private List<StudentAssignment> assignments;
 	private JFXButton button;
 
-	public Student(String name, String sID, String group) {
+	public Student(String name, String sID, String group,String email) {
 		this.Name = new SimpleStringProperty(name);
 		this.sID = sID;
 		this.group = group;
+		this.email = email;
 		initInfoButton();
 	}
 
