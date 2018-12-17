@@ -15,13 +15,14 @@ import javax.persistence.Persistence;
  */
 public class WeightClass {
     
-    public static void create(int courseId, int examWeight, int quizWeight, int hwWeight, int participationWeight) {
+    public static void create(int courseId, int type, int examWeight, int quizWeight, int hwWeight, int participationWeight) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
         entity.Weights w = new entity.Weights();
+        w.setType(type);
         w.setExamWeight(hwWeight);
         w.setQuizWeight(quizWeight);
         w.setHwWeight(hwWeight);
@@ -30,6 +31,26 @@ public class WeightClass {
         entitymanager.persist( w );
         entitymanager.getTransaction().commit();
 
+        entitymanager.close();
+        emfactory.close();
+    }
+    
+    public void updateWeights(entity.Weights sa) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        
+        entity.Weights na = entitymanager.find( entity.Weights.class, sa.getId());
+        
+        na.setType(sa.getType());
+        na.setHwWeight(sa.getHwWeight());
+        na.setQuizWeight(sa.getQuizWeight());
+        na.setExamWeight(sa.getExamWeight());
+        na.setParticipationWeight(sa.getParticipationWeight());
+        entitymanager.getTransaction().commit( );
+
+        //after update
+        System.out.println( na );
         entitymanager.close();
         emfactory.close();
     }
