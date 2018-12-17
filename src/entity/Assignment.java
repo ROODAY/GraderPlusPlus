@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.AssignmentClass;
+import model.StudentClass;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -112,6 +113,14 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
                 treeView.setEditable(true);
                 treeView.getColumns().setAll(nameColumn, gradeColumn);
                 treeView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+                
+
+                JFXButton saveChanges = (JFXButton) dialogVbox.lookup("#saveGrades");
+                saveChanges.setOnAction(saveEvent -> {
+                    for (StudentAssignment sa : assignments) {
+                        StudentClass.updateStudentAssignment(sa);
+                    }
+                });
 
 
                 dialog.show(root);

@@ -184,7 +184,7 @@ public class StudentClass extends DBClass {
     
     
     
-    public void updateStudentAssignment(StudentAssignment sa) {
+    public static void updateStudentAssignment(StudentAssignment sa) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
