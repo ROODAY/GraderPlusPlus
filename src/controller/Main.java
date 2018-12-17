@@ -15,9 +15,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //StudentClass.create("Jane Doe", "jane@bu.edu", 4.0);
-        //StudentClass student = new StudentClass();
+        //StudentConnector.create(5, "Jane", "Doe", "jane@bu.edu", "BU");
+        //StudentConnector student = new StudentConnector();
         //student.uploadStudentsCSV("/Users/miguelvaldez/Desktop/students_roster.csv");
+
+
 
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/logo.png")));
@@ -43,7 +45,6 @@ public class Main extends Application {
             ft2.setToValue(1.0);
             ft2.play();
             primaryStage.setScene(new Scene(home, sceneWidth, sceneHeight));
-            //primaryStage.setMaximized(true);
 
 
             SplitPane splitPane = (SplitPane) primaryStage.getScene().lookup("#splitPane");

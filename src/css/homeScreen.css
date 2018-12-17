@@ -1,9 +1,23 @@
+.jfx-combo-box, .jfx-text-field {
+    -jfx-focus-color: #F47E26;
+}
+
 #createSemesterButton {
     -jfx-button-type: RAISED;
     -fx-background-color: #F47E26;
     -fx-font-size: 16px;
     -fx-text-fill: white;
     -fx-padding: 10px;
+}
+
+.jfx-snackbar-content {
+    -fx-background-color: #323232;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.jfx-snackbar-toast {
+    -fx-text-fill: white;
 }
 
 .jfx-tab-pane .tab-header-background {

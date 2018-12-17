@@ -1,5 +1,7 @@
 package entity;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class StudentAssignment implements Serializable {
+public class StudentAssignment extends RecursiveTreeObject<StudentAssignment> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -19,14 +21,41 @@ public class StudentAssignment implements Serializable {
     
     private int id;
     private String name;
+    private String studentName;
+    private String studentLastName;
     private String description;
     private String response;
+    private String type;
     private int courseId;
     private int sectionId;
     private int studentId;
     private int assignmentId;
     private int points;
+    private int totalPoints;
+    
+    
+    public StudentAssignment(int id, String name, String studentName, String studentLastName, int sectionId, int studentId, int assignmentId, int courseId,  int points, String type,
+            int totalPoints) {
+        super();
+        this.id = id;
+        this.courseId = courseId;
+        this.sectionId = sectionId;
+        this.studentId = studentId;
+        this.assignmentId = assignmentId;
+        this.name = name;
+        this.studentName = studentName;
+        this.studentLastName = studentLastName;
+        this.points = points;
+        this.totalPoints = totalPoints;
+        this.type = type;
+        
+    }
 
+    
+    
+    public StudentAssignment() {
+        super();
+    }
     
     
     
@@ -38,12 +67,28 @@ public class StudentAssignment implements Serializable {
         this.id = id;
     }
     
-     public String getName() {
+    public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+    
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
     }
     
      public String getDescription() {
@@ -81,6 +126,14 @@ public class StudentAssignment implements Serializable {
     public int getStudentId() {
         return studentId;
     }
+    
+     public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
+    
+    public int getTotalPoints() {
+        return totalPoints;
+    }
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
@@ -100,6 +153,14 @@ public class StudentAssignment implements Serializable {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 

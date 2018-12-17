@@ -27,14 +27,16 @@ public class Course implements Serializable {
     private String name;
     private int teacherId;
     private int semesterId;
+    private String comments;
     
     
-    public Course(int id, String name, int teacherId, int semesterId) {
+    public Course(int id, String name, int teacherId, int semesterId, String comments) {
         super();
         this.id = id;
         this.name = name;
         this.teacherId = teacherId;
         this.semesterId = semesterId;
+        this.comments = comments;
     }
 
     public Course( ) {
@@ -64,6 +66,14 @@ public class Course implements Serializable {
 
     public void setTeacherId(int teacherId) {
         this.teacherId = teacherId;
+    }
+    
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
     
     public int getSemesterId() {
