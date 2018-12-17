@@ -32,6 +32,16 @@ public class StudentClass extends DBClass {
         Student student = entitymanager.find( Student.class, id );
         entitymanager.remove( student );
         entitymanager.getTransaction().commit();
+        
+        Collection<StudentAssignment> sas = getAssignmentsbyStudent(id);
+        
+        for(StudentAssignment sa : sas) {
+            StudentAssignment s = entitymanager.find( StudentAssignment.class, id);
+            
+            entitymanager.remove(s);
+            entitymanager.getTransaction().commit();
+        }        
+        
         entitymanager.close();
         emfactory.close();
     }
@@ -78,7 +88,6 @@ public class StudentClass extends DBClass {
 
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
-        entitymanager.close();
         
         //check if that course has assignments, if it does, create the student assignments
         CourseClass cc = new CourseClass();
@@ -88,7 +97,6 @@ public class StudentClass extends DBClass {
         if(assignments.size() > 0) {
             for(Assignment a : assignments) {
                 
-                entitymanager.getTransaction().begin();
                 
                 StudentAssignment sa = new StudentAssignment();
                 sa.setName(a.getName());
@@ -100,17 +108,15 @@ public class StudentClass extends DBClass {
                 sa.setType(a.getType());
                 sa.setStudentId(student.getId());
                 sa.setAssignmentId(a.getId());
-                sa.setPoints(0);
-                
+                sa.setPoints(0);                
                 
                 entitymanager.persist( sa );
-                entitymanager.getTransaction().commit();
-                entitymanager.close();
+                entitymanager.getTransaction().commit();                
                 
             }
         }
 
-        
+        entitymanager.close();
         emfactory.close();
 
         return student;

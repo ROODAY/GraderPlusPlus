@@ -130,6 +130,20 @@ public class AssignmentClass {
         Assignment assignment = entitymanager.find( Assignment.class, id );
         entitymanager.remove( assignment );
         entitymanager.getTransaction().commit();
+        
+        
+        //delete all the student assignments with this assignment id
+        Collection<StudentAssignment> sas = getAllStudentwithAssignment(id);
+        
+        for(StudentAssignment sa : sas) {
+            StudentAssignment s = entitymanager.find( StudentAssignment.class, id);
+            
+            entitymanager.remove(s);
+            entitymanager.getTransaction().commit();
+        }
+        
+        
+        
         entitymanager.close();
         emfactory.close();
     }
