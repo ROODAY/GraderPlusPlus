@@ -26,22 +26,21 @@ public class Assignment implements Serializable {
     private int id;
     private int courseId;
     private String name;
-    private int possiblePoints;
-    private int weight;
+    private int totalPoints;
+    private String dateAssigned;
     private String type;
     //private due date
 
     
     
-    public Assignment(int id, int courseId, String name, int possiblePoints, int weight, String type) {
+    public Assignment(int id, int courseId, String name, int totalPoints, String type, String dateAssigned) {
         super();
         this.id = id;
         this.courseId = courseId;
         this.name = name;
-        this.possiblePoints = possiblePoints;
-        this.weight = weight;
+        this.totalPoints = totalPoints;
         this.type = type;
-   
+        this.dateAssigned = dateAssigned;
     }
 
     
@@ -74,20 +73,20 @@ public class Assignment implements Serializable {
         this.courseId = courseId;
     }
     
-    public int getPossiblePoints() {
-        return possiblePoints;
+    public String getDateAssigned() {
+        return dateAssigned;
     }
 
-    public void setPossiblePoints(int possiblePoints) {
-        this.possiblePoints = possiblePoints;
+    public void setDateAssigned(String dateAssigned) {
+        this.dateAssigned = dateAssigned;
     }
     
-    public int getWeight() {
-        return weight;
+    public int getTotalPoints() {
+        return totalPoints;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
     }
     
     public String getType() {
