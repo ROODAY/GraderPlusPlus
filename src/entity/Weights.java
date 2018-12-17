@@ -24,6 +24,7 @@ public class Weights implements Serializable {
     
     private int id;
     private int courseId;
+    private int type;
     private int examWeight;
     private int quizWeight;
     private int homeworkWeight;
@@ -35,6 +36,14 @@ public class Weights implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
     
     public int getCourseId() {
@@ -53,7 +62,7 @@ public class Weights implements Serializable {
         this.quizWeight = weight;
     }
     
-    public int hwWeight() {
+    public int getHwWeight() {
         return homeworkWeight;
     }
 

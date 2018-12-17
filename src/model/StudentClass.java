@@ -55,7 +55,7 @@ public class StudentClass extends DBClass {
     }
     
     
-    public static Student create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program, String comments) {
+    public static Student create(int bu_id, int sectionId, int courseId, String name, String last_name, String email, String program, String comments, double ec) {
        
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
         EntityManager entitymanager = emfactory.createEntityManager();
@@ -71,6 +71,7 @@ public class StudentClass extends DBClass {
         student.setEmail(email);
         student.setProgram(program);
         student.setComments(comments);
+        student.setEc(ec);
 
         entitymanager.persist( student );
         entitymanager.getTransaction().commit();
@@ -81,11 +82,13 @@ public class StudentClass extends DBClass {
         return student;
     }
     
-    public void uploadStudentsCSV(String location) {
+    public void uploadStudentsCSV(String location, int courseId, int sectionId) {
         
         String csvFile = location;
         String line = "";
         String csvSplitBy = ",";
+        
+        //bu id, comments, courseid, email, first name, lastname, grade, program
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             
@@ -97,13 +100,17 @@ public class StudentClass extends DBClass {
                 if(studentRow.length > 0 && !studentRow[0].equals("ID")) {
                     
                     Student student = new Student();
-//                    create(
-//                        Integer.parseInt(studentRow[0]),
-//                        studentRow[1],
-//                        studentRow[2],
-//                        studentRow[3],
-//                        studentRow[4]
-//                    );
+                    create(
+                        Integer.parseInt(studentRow[0]),
+                        sectionId,
+                        courseId,
+                        studentRow[1],
+                        studentRow[2],
+                        studentRow[3],
+                        studentRow[4],
+                        studentRow[5],
+                        Double.parseDouble(studentRow[6])
+                    );
                 }
             }
 
@@ -209,6 +216,7 @@ public class StudentClass extends DBClass {
         Student na = entitymanager.find( Student.class, sa.getId());
         
         na.setComments(sa.getComments());
+        na.setEc(sa.getEc());
         entitymanager.getTransaction().commit( );
 
         //after update
