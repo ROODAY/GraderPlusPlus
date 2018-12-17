@@ -175,6 +175,25 @@ public class AssignmentConnector {
         
         return arr;
     }
+
+    public static Collection<StudentAssignment> getAssignmentsWithSection(int sectionid, int assignmentId) {
+
+
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
+        String queryString = "SELECT e FROM StudentAssignment e WHERE e.sectionId = " + sectionid + " AND e.assignmentId = " + assignmentId;
+
+        Query query = entitymanager.createQuery(queryString);
+        Collection<StudentAssignment> arr = query.getResultList();
+
+        System.out.println(arr);
+
+        entitymanager.close();
+        emfactory.close();
+
+        return arr;
+    }
     
     public static void updateAssignment(Assignment sa) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("GradingSystemPU");

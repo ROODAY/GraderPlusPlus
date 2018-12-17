@@ -85,7 +85,7 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
             try {
                 VBox dialogVbox = FXMLLoader.load(getClass().getResource("../view/gradeAssignmentModal.fxml"));
 
-                Collection<StudentAssignment> dbassignments = AssignmentConnector.getAllStudentwithAssignment(id);
+                Collection<StudentAssignment> dbassignments = AssignmentConnector.getAssignmentsWithSection(Sidebar.getCurrentSectionId(), id);
                 ObservableList<StudentAssignment> assignments = FXCollections.observableArrayList();
                 assignments.addAll(dbassignments);
 
