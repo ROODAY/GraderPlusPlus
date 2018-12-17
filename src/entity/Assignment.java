@@ -97,7 +97,8 @@ public class Assignment extends RecursiveTreeObject<Assignment> implements Seria
 
                 gradeColumn.setCellFactory((TreeTableColumn<StudentAssignment, Number> param) -> new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder()));
                 gradeColumn.setOnEditCommit((TreeTableColumn.CellEditEvent<StudentAssignment, Number> t)->{
-                    t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue().setPoints((Integer) t.getNewValue());
+                    StudentAssignment sa = t.getTreeTableView().getTreeItem(t.getTreeTablePosition().getRow()).getValue();
+                    sa.setPoints(Integer.parseInt(String.valueOf(t.getNewValue())));
                 });
 
                 final TreeItem<StudentAssignment> tableroot = new RecursiveTreeItem<>(assignments, RecursiveTreeObject::getChildren);
